@@ -79,8 +79,8 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics{
                 win.getJGraphics().drawImage(_image.getImage(), 0, 100, null);
             }
         }
-        finally{
-            win.getJGraphics().dispose();
+        catch(Exception e){
+
         }
     }
 

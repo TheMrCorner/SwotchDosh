@@ -76,6 +76,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
                     _win.getJGraphics().dispose();
                 }
 
+                //_logic.render();
+
             } while(_win.getBufferStrategy().contentsRestored());
             _win.getBufferStrategy().show();
         } while(_win.getBufferStrategy().contentsLost());
