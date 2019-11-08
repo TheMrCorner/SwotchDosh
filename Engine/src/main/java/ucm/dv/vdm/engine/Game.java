@@ -20,4 +20,10 @@ public interface Game {
     void setLogic(Logic l);
 
     void HandleException(Exception e);
+
+    int getWidth();
+
+    int getHeight();
+
+
 }

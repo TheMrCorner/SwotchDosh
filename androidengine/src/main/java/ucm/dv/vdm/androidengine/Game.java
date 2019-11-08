@@ -26,4 +26,14 @@ public class Game implements ucm.dv.vdm.engine.Game{
 
     }
 
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
+
 }

@@ -18,17 +18,19 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     long _lastFrameTime;
     long _currentTime, _nanoElapsedTime;
     double _elapsedTime;
+    int _width;
+    int _height;
 
     public Game(){
 
         //Window generation
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        _width = gd.getDisplayMode().getWidth();
+        _height = gd.getDisplayMode().getHeight();
         String name = "SwotchDosh";
 
-        _win = new Window(width, height, name, this);
+        _win = new Window(_width, _height, name, this);
         _ip = new Input();
         _g = new Graphics(_win);
 
@@ -61,6 +63,25 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         _logic.update(_elapsedTime);
     }
 
+    void render(){
+        //_g.clear(0);
+
+
+        do {
+            do {
+                try {
+                    _logic.render();
+                }
+                finally {
+                    _win.getJGraphics().dispose();
+                }
+
+            } while(_win.getBufferStrategy().contentsRestored());
+            _win.getBufferStrategy().show();
+        } while(_win.getBufferStrategy().contentsLost());
+
+    }
+
     @Override
     public void setLogic(Logic l){
         _logic = l;
@@ -72,13 +93,14 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         //Principal Loop
         while(true){
 
-            update();
-
             //Inicio del frame, render de la lógica y final del frame dentro de un do while (finaliza el frame)
 
+            update();
+
+
+
             //Clear and update graphics
-            //_g.clear(0);
-            _logic.render();
+            render();
 
         }
 
@@ -87,6 +109,16 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     @Override
     public void HandleException(Exception e){
         System.err.println(e);
+    }
+
+    @Override
+    public int getWidth(){
+        return _width;
+    }
+
+    @Override
+    public int getHeight(){
+        return _height;
     }
 
 }

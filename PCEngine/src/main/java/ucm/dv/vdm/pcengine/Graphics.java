@@ -45,17 +45,26 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics{
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) {
         try {
             if(_image != null){
-                win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image)image).getImage(), x, y, source.getWidth(), source.getHeight(), null);
+                win.getJGraphics().drawImage(((Image)image).getImage(), x, y, source.getWidth(), source.getHeight(),
+                        source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
         }
-        finally{
-            win.getJGraphics().dispose();
+        catch(Exception e){
+
         }
     }
 
     @Override
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest) {
+        try {
+            if(_image != null){
+                win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image)image).getImage(), dest.getLeft(), dest.getTop(), dest.getRight(), dest.getBottom(),
+                        source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
+            }
+        }
+        catch(Exception e){
 
+        }
     }
 
     @Override

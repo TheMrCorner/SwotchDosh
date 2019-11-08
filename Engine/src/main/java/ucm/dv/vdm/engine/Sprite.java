@@ -14,6 +14,10 @@ public class Sprite {
         g.drawImage(_image, _rect, x, y);
     }
 
+    public void draw(Graphics g, Rect dest){
+        g.drawImage(_image, _rect, dest);
+    }
+
     //Método que divide las imágenes que le pase la lógica y los guarda en un vector que devuelve
     //Como parámetros pasarán la imagen para coger medidas y actuar sobre ella y el numero de divisiones a realizar
     public static Sprite[] spriteMaker (Image sImage, int width, int height){ // Width es el nº de sprites que hay a lo ancho y height a lo alto
@@ -35,15 +39,28 @@ public class Sprite {
         int top = 0;
         int bottom = 0;
 
+        int i = 0;
+        int k = 0;
+
         // Create sprites and put them in the Array
         for(int j = 0; j < width*height; j++){
-            right = j * sw;
-            left = (j+1) *sw;
-            top = j * sh;
-            bottom = (j+1) * sh;
-            Rect r = new Rect (right, left, top, bottom); // Rectangle for Sprite
 
+            left = k * sw;
+            right = (k+1) *sw;
+            top = i * sh;
+            bottom = (i+1) * sh;
+
+            Rect r = new Rect (right, left, top, bottom);
             sprites[j] = new Sprite(sImage, r);
+
+            if(k < width) {
+                k++;
+            }
+
+            if(height != 1 && k == width){
+                i++;
+                k = 0;
+            }
         }
 
         return sprites; // Returns all sprites separated in different images

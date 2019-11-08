@@ -17,6 +17,7 @@ public class Window extends JFrame{
         //Revisar si esto lo queremos así o que el graphics no dependa de la ventana
         setSize(w, h);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setIgnoreRepaint(true);
 
         int trys = 100;

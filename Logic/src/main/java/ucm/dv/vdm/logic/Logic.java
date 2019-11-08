@@ -2,6 +2,7 @@ package ucm.dv.vdm.logic;
 
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Image;
+import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
 public class Logic implements ucm.dv.vdm.engine.Logic{
@@ -82,7 +83,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         // Load sprites
         _sbackground = Sprite.spriteMaker(_background, 9, 1);
-        _sArrows =  Sprite.spriteMaker(_background, 1, 5)[0];
+        _sArrows =  Sprite.spriteMaker(_arrow, 1, 5)[0];
+        _sballs = Sprite.spriteMaker(_ball, 10, 2);
 
     }
 
@@ -93,7 +95,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     @Override
     public void render(){
-        _sbackground[0].draw(_game.getGraphics(), 0, 0);
+        Rect dest = new Rect(_game.getWidth(), 0, 0, _game.getHeight());
+        _sbackground[6].draw(_game.getGraphics(), dest);
+        _sballs[0].draw(_game.getGraphics(), 200, 200);
 
     }
 }
