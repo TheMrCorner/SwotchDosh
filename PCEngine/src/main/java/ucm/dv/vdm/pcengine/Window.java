@@ -6,8 +6,9 @@ import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame{
 
-    public Window(int width, int height, String title){
+    public Window(int width, int height, String title, Game game){
         super(title);
+        _game = game;
         init(width, height);
     }
 
@@ -18,9 +19,22 @@ public class Window extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIgnoreRepaint(true);
 
-        createBufferStrategy(2);
+        int trys = 100;
+        while(trys-- > 0) {
+            try {
+                createBufferStrategy(1);
+                break;
+            }
+            catch(Exception e) {
+                _game.HandleException(e);
+            }
+        } // while asking for the buffeStrategy creation
 
+        setVisible(true);
 
+        // Obtenemos el Buffer Strategy que se supone acaba de crearse.
+        str = getBufferStrategy();
+        setGraphics(str);
 
     }
 
@@ -35,5 +49,8 @@ public class Window extends JFrame{
     java.awt.image.BufferStrategy str;
 
     java.awt.Graphics g;
+
+    Game _game;
+
 
 }

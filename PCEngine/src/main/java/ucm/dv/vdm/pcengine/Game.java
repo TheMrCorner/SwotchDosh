@@ -28,9 +28,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         int height = gd.getDisplayMode().getHeight();
         String name = "SwotchDosh";
 
-        _win = new Window(width, height, name);
-        _win.setVisible(true);
-
+        _win = new Window(width, height, name, this);
         _ip = new Input();
         _g = new Graphics(_win);
 
