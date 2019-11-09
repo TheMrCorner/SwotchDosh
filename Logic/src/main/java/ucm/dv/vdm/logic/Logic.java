@@ -98,6 +98,5 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         Rect dest = new Rect(_game.getWidth(), 0, 0, _game.getHeight());
         _sbackground[6].draw(_game.getGraphics(), dest);
         _sballs[0].draw(_game.getGraphics(), 200, 200);
-
     }
 }

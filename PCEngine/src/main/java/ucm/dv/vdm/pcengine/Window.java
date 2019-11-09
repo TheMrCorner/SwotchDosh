@@ -6,51 +6,101 @@ import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame{
 
+    /**
+     * Wondow constructor. Sets the values for JFrame, saves Game instance in the atributes and
+     * initializate in the init() function with the width and height values.
+     * @param width Width of the window
+     * @param height Height of the window
+     * @param title Title that the window will have
+     * @param game An instance of Game to save it in the atribute
+     */
     public Window(int width, int height, String title, Game game){
         super(title);
         _game = game;
         init(width, height);
     }
 
+    /**
+     * Initialization function for the window. Sets the size the window will have. States
+     * EXITO_ON_CLOSE as default close operation and sets fullscreen from the beginning.
+     * It is configured to use active painting.
+     * Then creates the StrategyBuffer to be used while painting. Sets that BufferStrategy to
+     * the Graphics.
+     * @param w width of the window
+     * @param h height of the window
+     */
     public void init(int w, int h) {
 
-        //Revisar si esto lo queremos así o que el graphics no dependa de la ventana
+        // Set the size of the window and configure it
         setSize(w, h);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setIgnoreRepaint(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set close operation
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Set window FullScreen
+        setIgnoreRepaint(true); // Active Painting
 
-        int trys = 100;
-        while(trys-- > 0) {
-            try {
+        // Set window Visible
+        setVisible(true);
+
+        // Create BufferStrategy
+        int tries = 100; // Try to create the buffer strategy 100 times
+        while(tries-- > 0) {
+            try { // Ideally it will make this only once
                 createBufferStrategy(1);
                 break;
             }
-            catch(Exception e) {
+            catch(Exception e) { // Handle Exception if it fails
                 _game.HandleException(e);
             }
-        } // while asking for the buffeStrategy creation
+        }
 
-        setVisible(true);
+        // Just for debugging
+        if(tries == 0){
+            // if buffer strategy is not created
+            System.err.println("BufferStrategy not created");
+            // End init (maybe return an error or something?)
+            return;
+        }
 
-        // Obtenemos el Buffer Strategy que se supone acaba de crearse.
+        // Save that buffer strategy (if created)
         str = getBufferStrategy();
-        setGraphics(str);
+        setGraphics(str); // Set the Graphics with the BufferStrategy
 
     }
 
+    /**
+     * Sets the Graphics from the BufferStrategy in order to paint correctly.
+     * @param str BufferStrategy created in window.
+     */
     public void setGraphics(BufferStrategy str){
+
+        // Get the BufferStrategy created before and set the graphics
         g = str.getDrawGraphics();
     }
 
+    /**
+     * Get the Graphics from Java and return it. Used to draw images and etc.
+     * @return Return the Swing library Graphics.
+     */
     public java.awt.Graphics getJGraphics (){
         return g;
     }
 
+    //---------------------------------------------------------------
+    //----------------------Pivate Atributes-------------------------
+    //---------------------------------------------------------------
+
+    /**
+     * BufferStrategy created in the init() function.
+     */
     java.awt.image.BufferStrategy str;
 
+    /**
+     * Graphics from Swing.
+     */
     java.awt.Graphics g;
 
+    /**
+     * Game instance saved here to be referenced.
+     */
     Game _game;
 
 
