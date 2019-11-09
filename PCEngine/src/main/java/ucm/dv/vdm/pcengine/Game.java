@@ -9,22 +9,6 @@ import java.awt.image.BufferStrategy;
 import ucm.dv.vdm.engine.Logic;
 
 public class Game implements ucm.dv.vdm.engine.Game, Runnable{
-
-    // Instances needed to initialize and get everything working.
-    Window _win;
-    Graphics _g;
-    Input _ip;
-    Logic _logic;
-
-    // Atributes for calculations and time.
-    long _lastFrameTime;
-    long _currentTime, _nanoElapsedTime;
-    double _elapsedTime;
-    int _width;
-    int _height;
-    int _frames;
-    long _info;
-
     /**
      * Constructor of the class.
      * Gets information about the graphics device (the screen) and saves it to be used later.
@@ -179,5 +163,24 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         return _ip;
     }
 
+    //---------------------------------------------------------------
+    //----------------------Pivate Atributes-------------------------
+    //---------------------------------------------------------------
+
+
+    // Instances needed to initialize and get everything working.
+    Window _win;
+    Graphics _g;
+    Input _ip;
+    Logic _logic;
+
+    // Atributes for calculations and time.
+    long _lastFrameTime;
+    long _currentTime, _nanoElapsedTime;
+    double _elapsedTime;
+    int _width;
+    int _height;
+    int _frames;
+    long _info;
 
 }
