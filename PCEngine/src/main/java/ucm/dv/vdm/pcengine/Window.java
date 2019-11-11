@@ -7,8 +7,8 @@ import java.awt.image.BufferStrategy;
 public class Window extends JFrame{
 
     /**
-     * Wondow constructor. Sets the values for JFrame, saves Game instance in the atributes and
-     * initializate in the init() function with the width and height values.
+     * Window constructor. Sets the values for JFrame, saves Game instance in the atributes and
+     * initialize in the init() function with the width and height values.
      * @param width Width of the window
      * @param height Height of the window
      * @param title Title that the window will have

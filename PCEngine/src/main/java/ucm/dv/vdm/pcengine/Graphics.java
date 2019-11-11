@@ -141,7 +141,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     /**
      * Return the height value of the window.
      *
-     * @return WIndow height
+     * @return Window height
      */
     @Override
     public int getHeight() {
