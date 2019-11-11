@@ -73,7 +73,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) {
         try {
             if (image != null) { // If the image exists, try to draw it
-                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, source.getWidth(), source.getHeight(),
+                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, x + source.getWidth(), y + source.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
         } catch (Exception e) { // Handle Exception

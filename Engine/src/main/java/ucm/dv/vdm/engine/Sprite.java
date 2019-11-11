@@ -67,6 +67,10 @@ public class Sprite {
 
     } // tiene que devolver un Array de Sprites, de tamaño fijo
 
+    public Rect get_rect() {
+        return _rect;
+    }
+
     private Image _image;
 
     private Rect _rect;
