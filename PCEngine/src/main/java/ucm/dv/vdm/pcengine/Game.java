@@ -35,7 +35,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         _win = new Window(_width, _height, name, this);
 
         // Create the Input instance
-        _ip = new Input();
+        _ip = new Input(_win);
 
         // Create Graphics instance
         _g = new Graphics(_win);

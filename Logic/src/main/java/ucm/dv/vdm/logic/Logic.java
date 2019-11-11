@@ -1,7 +1,10 @@
 package ucm.dv.vdm.logic;
 
+import java.util.List;
+
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Image;
+import ucm.dv.vdm.engine.Input;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
@@ -78,7 +81,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         int numFlechas = (_game.getHeight() / _sArrows.get_rect().getHeight()) +1;
         for(int i = 1; i <= numFlechas; i++) {
-            Rect arrowDest = new Rect((_game.getWidth()/2) + (_sArrows.get_rect().getWidth()/2), (_game.getWidth()/2) - (_sArrows.get_rect().getWidth()/2),
+            Rect arrowDest = new Rect((_game.getWidth()/2) + (_sArrows.get_rect().getWidth()/2),
+                    (_game.getWidth()/2) - (_sArrows.get_rect().getWidth()/2),
                     0 + _sArrows.get_rect().getHeight()* (i -1), _sArrows.get_rect().getHeight() * i);
             _sArrows.draw(_game.getGraphics(), arrowDest);
         }
@@ -93,7 +97,34 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     @Override
     public void update(double t) {
+        processInput();
         //Solo actualiza
+    }
+
+    /**
+     * Gets the TouchEvent list from the Input created in the game and processes it.
+     */
+    private void processInput(){
+        List<Input.TouchEvent> e = _game.getInput().getTouchEvent(); // Get the list of TouchEvents
+
+        int ptr = 0; // Pointer to roam the list
+
+        while(!e.isEmpty()){ // While list is not empty
+
+            Input.TouchEvent te = e.get(ptr); // Get the TouchEvent at the pointer position
+
+            switch(te.getType()){ // Process the type of the TouchEvent
+                case MOVED:
+                    break;
+                case RELEASED:
+                    break;
+                case PRESSED_DOWN:
+                    break;
+            }
+
+            e.remove(ptr); // Remove that TouchEvent from the list
+            ptr++; // Continue Roaming
+        }
     }
 
     /**
