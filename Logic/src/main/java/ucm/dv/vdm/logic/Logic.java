@@ -7,7 +7,14 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Logic implements ucm.dv.vdm.engine.Logic{
 
+    /**
+     * Instance of Game. Used to render and create Images.
+     */
     Game _game;
+
+    /**
+     * ResourceManager. Used to access it and load different Resources.
+     */
     ResourceManager _rm;
 
     // Sprites
@@ -18,36 +25,46 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Sprite _sPlayers[];
     Sprite _sArrows;
 
+    /**
+     * Logic Constructor, creates a new instance of Logic.
+     * @param g Game instance to store it and interact with the engine.
+     */
+    public Logic(Game g){
+        _game = g; // Save the game instance for future use.
+        init(); // Initialize everything
+    }
 
     //---------------------------
 
     //-------Internal Logic------
 
-
     //---------------------------
 
-    public Logic(Game g){
-        _game = g;
-        init();
-    }
-
-
+    /**
+     * Initialize all resources needed for the game and all gameobjects.
+     */
     public void init(){
-        try{
+        try{ // Try to create the ResourceManager and load all resources.
             _rm = ResourceManager.getResourceMan(_game);
-            loadResources();
+            createSprites();
         }
-        catch (Exception e){
+        catch (Exception e){ // Catch the exception if it fails.
             _game.HandleException(e);
         }
 
+        // Create all gameObjects and CanvasObjects
+
+        // First render
         initRenderPosition();
     }
 
-    void loadResources(){
-
-
+    /**
+     * Calls the spriteMaker function of the different sprites to create them. Then save that info
+     * in arrays of Sprites.
+     */
+    void createSprites(){
         // Load sprites
+        // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
         _sballs = Sprite.spriteMaker(_rm.getGameObject("Balls"), 10, 2);
@@ -70,11 +87,18 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     }
 
+    /**
+     * Updates all positions and simulates the game. (Collisions, points added to the player, etc.)
+     * @param t Current time.
+     */
     @Override
     public void update(double t) {
         //Solo actualiza
     }
 
+    /**
+     * Render every object of the game with the updated information from update().
+     */
     @Override
     public void render(){
 

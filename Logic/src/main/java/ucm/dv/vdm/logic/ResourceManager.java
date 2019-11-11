@@ -10,10 +10,15 @@ import ucm.dv.vdm.engine.Image;
 
 /**
  * This class serves as a provider of Resources, makes the code much cleaner and more flexible.
- * Singleton. (?)
+ * Singleton
  */
 public class ResourceManager {
 
+    /**
+     * Private constructor. Creates a new Resource manager, initialize all maps and calls initResources
+     * to fill them with all the images/resources (if there were any sounds etc.
+     * @param g Game instance to initialize images.
+     */
     private ResourceManager(Game g){ // Create the ResourceManager and initialize the resources
         _intF = new HashMap<String, Image>();
         _gb = new HashMap<String, Image>();

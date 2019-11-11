@@ -8,6 +8,11 @@ import java.awt.image.BufferStrategy;
 
 import ucm.dv.vdm.engine.Logic;
 
+/**
+ * Class that will control all the game: call the update of the logic to update positions and
+ * simulate the game, call render to update graphics on the screen and update the time passed
+ * between frames and also store information about the frames.
+ */
 public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
     /**
