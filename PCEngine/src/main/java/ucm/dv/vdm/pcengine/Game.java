@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import ucm.dv.vdm.engine.Logic;
 
 public class Game implements ucm.dv.vdm.engine.Game, Runnable{
+
     /**
      * Constructor of the class.
      * Gets information about the graphics device (the screen) and saves it to be used later.

@@ -8,26 +8,7 @@ import ucm.dv.vdm.engine.Sprite;
 public class Logic implements ucm.dv.vdm.engine.Logic{
 
     Game _game;
-
-    //IMAGES -------------------
-    //Interface
-    private Image _background;
-    private Image _arrow;
-    private Image _button;
-    private Image _white;
-
-    //GameObjects
-    private Image _ball;
-    private Image _player;
-
-    //Text
-    private Image _gameOver;
-    private Image _howToPlay;
-    private Image _instructions;
-    private Image _playAgain;
-    private Image _logo;
-    private Image _tapToPlay;
-    private Image _scoreFont;
+    ResourceManager _rm;
 
     // Sprites
     Sprite _sbackground[];
@@ -53,6 +34,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     public void init(){
         try{
+            _rm = ResourceManager.getResourceMan(_game);
             loadResources();
         }
         catch (Exception e){
@@ -64,29 +46,11 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     void loadResources(){
 
-        //Interfaces
-        _background = _game.getGraphics().newImage("./Sprites/backgrounds.png");
-        _arrow = _game.getGraphics().newImage("./Sprites/arrowsBackground.png");
-        _button = _game.getGraphics().newImage("./Sprites/buttons.png");
-        _white = _game.getGraphics().newImage("./Sprites/white.png");
-
-        //GameObjects
-        _ball = _game.getGraphics().newImage("./Sprites/balls.png");
-        _player = _game.getGraphics().newImage("./Sprites/players.png");
-
-        //Text
-        _gameOver = _game.getGraphics().newImage("./Sprites/gameOver.png");
-        _howToPlay = _game.getGraphics().newImage("./Sprites/howToPlay.png");
-        _instructions = _game.getGraphics().newImage("./Sprites/instructions.png");
-        _playAgain = _game.getGraphics().newImage("./Sprites/playAgain.png");
-        _logo = _game.getGraphics().newImage("./Sprites/switchDashLogo.png");
-        _tapToPlay = _game.getGraphics().newImage("./Sprites/tapToPlay.png");
-        _scoreFont = _game.getGraphics().newImage("./Sprites/scoreFont.png");
 
         // Load sprites
-        _sbackground = Sprite.spriteMaker(_background, 9, 1);
-        _sArrows =  Sprite.spriteMaker(_arrow, 1, 5)[0];
-        _sballs = Sprite.spriteMaker(_ball, 10, 2);
+        _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
+        _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
+        _sballs = Sprite.spriteMaker(_rm.getGameObject("Balls"), 10, 2);
 
     }
 
