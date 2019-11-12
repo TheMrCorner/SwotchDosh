@@ -86,7 +86,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             _touchEvn.add(aux);
         }
 
-        System.out.println("Liberado EL RATON YAY");
+        System.out.println("LIBERADO EL RATON YAY");
     }
 
     /**
