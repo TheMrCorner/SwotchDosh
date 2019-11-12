@@ -20,6 +20,11 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     ResourceManager _rm;
 
+    /**
+     * GameState
+     */
+    
+
     // Sprites
     Sprite _sbackground[];
     Sprite _sballs[];
@@ -97,8 +102,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     @Override
     public void update(double t) {
+        // Get the Input
         processInput();
-        //Solo actualiza
+
+        // Update everything with the information of ProcessInput
     }
 
     /**
