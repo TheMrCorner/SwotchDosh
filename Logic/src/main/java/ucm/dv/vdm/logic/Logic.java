@@ -23,7 +23,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     /**
      * GameState
      */
-    GameState _gameState;
+    GameState[] _gameState;
+    int _currentState;
 
     // Sprites
     Sprite _sbackground[];
@@ -39,7 +40,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     public Logic(Game g){
         _game = g; // Save the game instance for future use.
-        _gameState = new GameState(); //Save de gameState instance for future use.
+        _gameState = new GameState[4]; //Save de gameState instance for future use.
         init(); // Initialize everything
     }
 
@@ -55,7 +56,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     public void init(){
 
         // Create all gameObjects and CanvasObjects
-        _gameState.createGameObjects();
+        for(int i = 0; i < _gameState.length; i++){
+            _gameState[i] = new GameState(i);
+            _gameState[i].initState();
+        }
 
         try{ // Try to create the ResourceManager and load all resources.
             _rm = ResourceManager.getResourceMan(_game);

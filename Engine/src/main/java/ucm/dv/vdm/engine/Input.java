@@ -19,10 +19,11 @@ public interface Input {
          * @param y Position Y (pixels)
          * @param t TouchType of the event
          */
-        public TouchEvent(int x, int y, TouchType t){
+        public TouchEvent(int x, int y, TouchType t, int i){
             _x = x;
             _y = y;
             _t = t;
+            _idf = i;
         }
 
         /**
@@ -52,6 +53,9 @@ public interface Input {
         // Private Atributes
         // Position X and Y
         int _x, _y;
+
+        // Identifier
+        int _idf;
 
         /**
          * TouchType of the TouchEvent.

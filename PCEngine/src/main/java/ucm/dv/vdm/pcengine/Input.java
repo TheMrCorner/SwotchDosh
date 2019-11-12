@@ -68,7 +68,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     public void mousePressed(MouseEvent mouseEvent) {
         // Click Izquierdo pa probar
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.PRESSED_DOWN);
+            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.PRESSED_DOWN, 0);
             _touchEvn.add(aux);
         }
 
@@ -82,7 +82,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.RELEASED);
+            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.RELEASED, 0);
             _touchEvn.add(aux);
         }
 
@@ -122,7 +122,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
      */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
-        TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.MOVED);
+        TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.MOVED, 0);
         _touchEvn.add(aux);
 
         System.out.println("MOUSE MOVED");
