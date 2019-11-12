@@ -4,11 +4,7 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Ball extends GameObject{
 
-    Ball(Sprite s, int x, int y){
-        _sprite = s;
-        _x = x;
-        _y = y;
-    }
+    Ball(){}
 
 
     @Override

@@ -23,7 +23,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     /**
      * GameState
      */
-    
+    GameState _gameState;
 
     // Sprites
     Sprite _sbackground[];
@@ -39,6 +39,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     public Logic(Game g){
         _game = g; // Save the game instance for future use.
+        _gameState = new GameState(); //Save de gameState instance for future use.
         init(); // Initialize everything
     }
 
@@ -52,6 +53,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      * Initialize all resources needed for the game and all gameobjects.
      */
     public void init(){
+
+        // Create all gameObjects and CanvasObjects
+        _gameState.createGameObjects();
+
         try{ // Try to create the ResourceManager and load all resources.
             _rm = ResourceManager.getResourceMan(_game);
             createSprites();
@@ -59,8 +64,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         catch (Exception e){ // Catch the exception if it fails.
             _game.HandleException(e);
         }
-
-        // Create all gameObjects and CanvasObjects
 
         // First render
         initRenderPosition();
@@ -75,12 +78,18 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
+
         _sballs = Sprite.spriteMaker(_rm.getGameObject("Balls"), 10, 2);
+        _sPlayers = Sprite.spriteMaker(_rm.getGameObject("Players"), 1, 2);
+
+        //DEBERIAMOS PASAR TODOS ESTOS SPRITES A GAMESTATE O RESOURCE MANAGER PARA QUE VAYA ASIGNANDO EL NECESARIO EN LOS UPDATES (YA QUE CAMBIAN DE COLOR)
+
 
     }
 
     private void initRenderPosition(){
 
+        //TODA INICIALIZACION DEBEMOS PASARLA A SU INIT DE GAMESTATE
         Rect backDest = new Rect(_game.getWidth(), 0, 0, _game.getHeight());
         _sbackground[6].draw(_game.getGraphics(), backDest);
 

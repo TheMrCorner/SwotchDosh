@@ -1,5 +1,7 @@
 package ucm.dv.vdm.logic;
 
+import ucm.dv.vdm.engine.Sprite;
+
 /**
  * State of the game. Defines the actual state of the game. (Main Menú, Pause Menú, Game Over, Game Run)
  */
@@ -13,8 +15,22 @@ public class GameState {
     //The state that is running in this moment
     State _actualState;
 
+    //GameObjects
+    Ball _goball;
+    Player _goplayer;
+
     //GETTER PROVISIONAL PUES EL ENUMERADO NO ESTARÁ EN LAS DEMÁS CLASES
     public State getActualGameState(){ return _actualState;}
+
+    /**
+     * Calls the construction of all the gameObjects.
+     */
+    public void createGameObjects(){
+
+        _goball = new Ball ();
+        _goplayer = new Player ();
+
+    }
 
     //-------STATE INITS-------------------------------------------------
 
