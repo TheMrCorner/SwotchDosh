@@ -4,7 +4,9 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Ball extends GameObject{
 
-    Ball(){}
+    Ball(){
+        _actv = true;
+    }
 
 
     @Override
@@ -16,5 +18,17 @@ public class Ball extends GameObject{
     public void render() {
 
     }
+
+    public void setActive(boolean b){
+        _actv = b;
+    }
+
+    public boolean isActive(){
+        return _actv;
+    }
+
+    // Active
+    boolean _actv;
+
 
 }

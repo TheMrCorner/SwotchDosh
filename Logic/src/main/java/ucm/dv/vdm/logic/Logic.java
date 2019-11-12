@@ -58,7 +58,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // Create all gameObjects and CanvasObjects
         for(int i = 0; i < _gameState.length; i++){
             _gameState[i] = new GameState(i);
-            _gameState[i].initState();
+            _gameState[i].initState(_rm);
         }
 
         try{ // Try to create the ResourceManager and load all resources.

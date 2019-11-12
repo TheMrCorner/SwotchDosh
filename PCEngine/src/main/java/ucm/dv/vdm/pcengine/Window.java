@@ -71,7 +71,6 @@ public class Window extends JFrame{
      * @param str BufferStrategy created in window.
      */
     public void setGraphics(BufferStrategy str){
-
         // Get the BufferStrategy created before and set the graphics
         g = str.getDrawGraphics();
     }

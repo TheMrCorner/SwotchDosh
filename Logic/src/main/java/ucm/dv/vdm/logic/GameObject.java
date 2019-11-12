@@ -26,9 +26,8 @@ public class GameObject {
     public void setPosX (int x) {_x = x;}
     public void setPosY (int y) {_y = y;}
 
-    void update(){};
-    void render(){
+    void update(){}
 
-    }
+    void render(){}
 
 }

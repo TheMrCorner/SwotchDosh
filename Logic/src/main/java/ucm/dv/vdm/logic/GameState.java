@@ -37,41 +37,42 @@ public class GameState {
     //-------STATE INITS-------------------------------------------------
 
     //Background and arrows are always renderer
-
     //Calls the different initiation when the actual game state changes
-    public void initState(){
+    public void initState(ResourceManager r){
         switch(_state) {
 
             case MainMenu:
-                initMenu();
+                initMenu(r);
                 break;
             case Pause:
-                initPause();
+                initPause(r);
                 break;
             case GameOver:
-                initOver();
+                initOver(r);
                 break;
             case GameRun:
-                initGame();
+                initGame(r);
                 break;
         }
 
     }
 
-    void initMenu (){
+    void initMenu (ResourceManager r){
+        _go = new GameObject[4]; // Title, 2 buttons, Tap to Play
+
 
     }
 
-    void initPause (){
-
+    void initPause (ResourceManager r){
+        _go = new GameObject[4]; // How to Play, Instructions, Button, Tap to Play
     }
 
-    void initOver (){
-
+    void initOver (ResourceManager r){
+        _go = new GameObject[6]; // 2 buttons, Game Over, Play Again?, Points, Punctuation
     }
 
-    void initGame (){
-
+    void initGame (ResourceManager r){
+        _go = new GameObject[2]; // Player, BallPool (Object Pool)
     }
 
 
