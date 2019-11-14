@@ -8,7 +8,12 @@ import java.util.List;
  */
 public class BallPool extends GameObject {
 
-    public BallPool(){
+    public BallPool(int x, int y){
+        // Set the generic position for the Ball generation
+        _x = x;
+        _y = y;
+
+        // Create the pool
         _balls = new ArrayList<Ball>();
     }
 
@@ -22,6 +27,11 @@ public class BallPool extends GameObject {
     public void update() { // Call update for all balls (if they are active)
         if(!_avbl){
             AddNewBall();
+        }
+        else {
+            _balls.get(_temp).setActive(true);
+            _balls.get(_temp).setPosX(_x);
+            _balls.get(_temp).setPosY(_y);
         }
 
         for (int i = 0; i < _balls.size(); i++){
@@ -44,7 +54,11 @@ public class BallPool extends GameObject {
     List<Ball> _balls;
 
     // A ball is Available
+    int _temp; // Saves the ball that is inactive (for efficiency)
     boolean _avbl;
+
+    // Generic position (top of the screen)
+    int _x, _y;
 
 
 }

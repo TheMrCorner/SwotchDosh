@@ -2,7 +2,7 @@ package ucm.dv.vdm.engine;
 
 public interface Graphics {
 
-    void setCanvasSize(int x, int y);
+    void setCanvasSize(Rect c);
 
     /**
      * Creates new Image from resource container
@@ -10,7 +10,7 @@ public interface Graphics {
      * @return  new Image
      *
      */
-    public Image newImage(String name);
+    Image newImage(String name);
 
     /**
      * Clears screen, fills it with color
@@ -18,7 +18,7 @@ public interface Graphics {
      * @return  void
      *
      */
-    public void clear(int color);
+    void clear(int color);
 
     /**
      * Gets an image and shows it in the screen
@@ -38,7 +38,7 @@ public interface Graphics {
      * @return  int window width
      *
      */
-    public int getWidth();
+    int getWidth();
 
     /**
      * Get Window Height
@@ -46,6 +46,16 @@ public interface Graphics {
      * @return  int window height
      *
      */
-    public int getHeight();
+    int getHeight();
+
+    /**
+     * Scalates an image counting on the Window Height and Width from the original dimensions.
+     *
+     * @param src Original size of the image.
+     * @return The new Sizes of he image.
+     */
+    Rect dimensions(Rect src);
+
+    void setCanvasPos(int x, int y);
 
 }

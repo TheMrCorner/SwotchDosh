@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 import ucm.dv.vdm.engine.Logic;
+import ucm.dv.vdm.engine.Rect;
 
 /**
  * Class that will control all the game: call the update of the logic to update positions and
@@ -63,13 +64,16 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      * per loop.
      */
     void render(){
-        //_g.clear(0); // Clear the whole buffer
+        _g.clear(0); // Clear the whole buffer
 
         // Ideally this will only do 1 iteration per loop
         do {
             do {
+                _win.setGraphics();
                 try { // Try to paint in the Graphics
-                    _logic.render();
+                    //_logic.render();
+                    // Set the position of the canvas
+                    _g.testCanvas(_win);
                 }
                 finally { // If not, still dispose the Swing Graphics
                     _win.getJGraphics().dispose();
@@ -94,17 +98,42 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     @Override
     public void run() {
+        Rect temp;
+        Rect temp2;
 
         //Main Loop
         while(true){
+            // Actualizamos el ancho y alto para calcular mierdas
+            _width = _win.getWidth();
+            _height = _win.getHeight();
             // Calculate time pased between frames and convert it to seconds (from miliseconds?)
             _currentTime = System.nanoTime();
             _nanoElapsedTime = _currentTime - _lastFrameTime;
             _lastFrameTime = _currentTime;
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
+            // RESIZE
+            // Get window size (as a rectangle)
+            temp2 = new Rect(_win.getWidth(), 0, 0, _win.getHeight());
+
+            // Get Logic's canvas
+            temp = _logic.getCanvasSize();
+
+            // Set the window as a canvas reference in Grpahics
+            _g.setCanvasSize(temp2);
+
+            // Resize the Logic's canvas with that reference
+            temp = _g.dimensions(temp);
+
+            // Set the new canvas resized as the canvas for Graphics
+            _g.setCanvasSize(temp);
+
+            _g.setCanvasPos(((_win.getWidth()/2) - (temp.getWidth() / 2)), ((_win.getHeight()/2) - (temp.getHeight() / 2)));
+
+
+
             // Update all Logic
-            update();
+            update(); // Pasarle el tiempo
 
             // Inform about the fps (Debug only)
             if(_currentTime - _info > 1000000000l){
@@ -117,9 +146,10 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
             //Clear and update graphics
             render();
+
+            //_win.update(_win.getJGraphics());
         }
         // TODO: Deberíamos pensar alguna manera de poner el loop que no sea un while(true) (?)
-
     }
 
     /**
@@ -149,15 +179,18 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         return _height;
     }
 
+    @Override
+    public Rect getCanvas() {
+        return null;
+    }
+
     /**
      * Returns the Graphics in order to paint things and update the screen.
      * @return Graphics instance saved here.
      */
     @Override
     public Graphics getGraphics() {
-
         return _g;
-
     }
 
     /**
@@ -172,7 +205,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     //---------------------------------------------------------------
     //----------------------Pivate Atributes-------------------------
     //---------------------------------------------------------------
-
 
     // Instances needed to initialize and get everything working.
     Window _win;

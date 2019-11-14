@@ -2,7 +2,9 @@ package ucm.dv.vdm.engine;
 
 public interface Logic {
 
-    public void update(double t);
-    public void render();
+    Rect getCanvasSize();
+
+    void update(double t);
+    void render();
 
 }

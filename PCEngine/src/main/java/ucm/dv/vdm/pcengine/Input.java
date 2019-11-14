@@ -1,5 +1,7 @@
 package ucm.dv.vdm.pcengine;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
-public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListener, MouseMotionListener {
+public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListener, MouseMotionListener, ComponentListener {
 
     /**
      * Constructor of the Input System. Singleton
@@ -72,7 +74,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             _touchEvn.add(aux);
         }
 
-        System.out.println("PULSADO EL RATON YAY");
+        //System.out.println("PULSADO EL RATON YAY");
     }
 
     /**
@@ -86,7 +88,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             _touchEvn.add(aux);
         }
 
-        System.out.println("LIBERADO EL RATON YAY");
+        //System.out.println("LIBERADO EL RATON YAY");
     }
 
     /**
@@ -125,7 +127,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
         TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.MOVED, 0);
         _touchEvn.add(aux);
 
-        System.out.println("MOUSE MOVED");
+       // System.out.println("MOUSE MOVED");
     }
 
 
@@ -154,4 +156,24 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
 
     // Event list (Or even Queue)
     List<TouchEvent> _touchEvn;
+
+    @Override
+    public void componentResized(ComponentEvent componentEvent) {
+        TouchEvent ev = new TouchEvent(0, 0, TouchEvent.TouchType.RESIZED, 0);
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent componentEvent) {
+
+    }
 }

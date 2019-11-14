@@ -7,22 +7,30 @@ import ucm.dv.vdm.engine.Rect;
 
 public class Graphics implements ucm.dv.vdm.engine.Graphics {
 
+    public void testCanvas(Window w){
+        if(w != _win){
+            System.out.println("PERRONES");
+        }
+        _win.getJGraphics().setColor(Color.pink);
+        _win.getJGraphics().fillRect(_can.getX(), _can.getY(), _can.getWidth(), _can.getHeight());
+    }
+
     /**
      * Graphics constructor. Saves an instance of the window.
      * @param w Window instance
      */
     public Graphics(Window w) {
         _win = w;
+        _can = new Rect(0, 0, 0, 0);
     }
 
     /**
      * Set a size for the canvas to place objects in the menus and UI
-     * @param x Width for the canvas
-     * @param y Height of the canvas
+     * @param c Size of canvas
      */
     @Override
-    public void setCanvasSize(int x, int y) {
-
+    public void setCanvasSize(Rect c) {
+        _can = c;
     }
 
     //Hacer dos métodos que inicien y acaben el frame
@@ -56,7 +64,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     @Override
     public void clear(int color) {
         // Set color to paint in the Swing Graphics.
-        _win.getJGraphics().setColor(Color.getColor("White", color));
+        _win.getJGraphics().setColor(Color.BLACK);
         // Paint the hole screen with it.
         _win.getJGraphics().fillRect(0, 0, _win.getWidth(), _win.getHeight());
     }
@@ -120,6 +128,9 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      */
     @Override
     public void drawImage(ucm.dv.vdm.engine.Image image, int x, int y) {
+
+
+
         try {
             if (image != null) { // If the image exists, try to draw it
                 _win.getJGraphics().drawImage(((Image) image).getImage(), 0, 100, null);
@@ -148,6 +159,38 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
         return _win.getHeight();
     }
 
+    /**
+     * DIMENSIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOn
+     */
+    @Override
+    public Rect dimensions(Rect src){
+        Rect temp; // Temporal rectangle for calculations
+
+        int width = src.getWidth(); //
+        int height = src.getHeight();
+
+        if(width > _can.getWidth()){
+           width = _can.getWidth();
+
+           height = (width * src.getHeight()) / src.getWidth();
+        }
+
+        if(height > _can.getHeight()){
+            height = _can.getHeight();
+
+            width = (height * src.getWidth()) / src.getHeight();
+        }
+
+        temp = new Rect (width, 0, 0, height);
+
+        return temp;
+    }
+
+    @Override
+    public void setCanvasPos(int x, int y) {
+        _can.setPosition(x, y);
+    }
+
     //---------------------------------------------------------------
     //----------------------Pivate Atributes-------------------------
     //---------------------------------------------------------------
@@ -156,5 +199,8 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      * Atribute that saves an instance of the window to get the Swing Graphics
      */
     Window _win;
+
+    // Canvas
+    Rect _can;
 
 }

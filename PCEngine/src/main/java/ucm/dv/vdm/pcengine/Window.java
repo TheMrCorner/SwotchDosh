@@ -33,8 +33,9 @@ public class Window extends JFrame{
 
         // Set the size of the window and configure it
         setSize(w, h);
+        //setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set close operation
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Set window FullScreen
+        //setExtendedState(JFrame.MAXIMIZED_BOTH); // Set window FullScreen
         setIgnoreRepaint(true); // Active Painting
 
         // Set window Visible
@@ -44,7 +45,7 @@ public class Window extends JFrame{
         int tries = 100; // Try to create the buffer strategy 100 times
         while(tries-- > 0) {
             try { // Ideally it will make this only once
-                createBufferStrategy(1);
+                createBufferStrategy(2);
                 break;
             }
             catch(Exception e) { // Handle Exception if it fails
@@ -62,16 +63,18 @@ public class Window extends JFrame{
 
         // Save that buffer strategy (if created)
         str = getBufferStrategy();
-        setGraphics(str); // Set the Graphics with the BufferStrategy
+        setGraphics(); // Set the Graphics with the BufferStrategy
 
     }
 
     /**
      * Sets the Graphics from the BufferStrategy in order to paint correctly.
-     * @param str BufferStrategy created in window.
      */
-    public void setGraphics(BufferStrategy str){
+    public synchronized void setGraphics(){
         // Get the BufferStrategy created before and set the graphics
+        if(str == null){
+            str = getBufferStrategy();
+        }
         g = str.getDrawGraphics();
     }
 

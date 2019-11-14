@@ -1,12 +1,18 @@
 package ucm.dv.vdm.engine;
 
+// TODO: COMENTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
+
 public class Rect {
 
     // Pixel where it begins
-    public int _right = 0;
-    public int _left = 0;
-    public int _top = 0;
-    public int _bottom = 0;
+    int _right = 0;
+    int _left = 0;
+    int _top = 0;
+    int _bottom = 0;
+
+    // Positions
+    int _x = 0;
+    int _y = 0;
 
     // MEH
     public int width = 0;
@@ -30,6 +36,11 @@ public class Rect {
         return height;
     }
 
+    public void setPosition(int x, int y) {
+        _x = x;
+        _y = y;
+    }
+
     public int getLeft(){
         return _left;
     }
@@ -42,5 +53,7 @@ public class Rect {
     public int getBottom(){
         return _bottom;
     }
+    public int getX(){ return _x; }
+    public int getY() { return _y; }
 
 }
