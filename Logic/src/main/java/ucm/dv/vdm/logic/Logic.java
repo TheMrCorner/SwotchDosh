@@ -118,7 +118,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     @Override
     public void update(double t) {
         // Get the Input
-        //processInput();
+        processInput();
 
         // Update everything with the information of ProcessInput
     }

@@ -8,9 +8,6 @@ import ucm.dv.vdm.engine.Rect;
 public class Graphics implements ucm.dv.vdm.engine.Graphics {
 
     public void testCanvas(Window w){
-        if(w != _win){
-            System.out.println("PERRONES");
-        }
         _win.getJGraphics().setColor(Color.pink);
         _win.getJGraphics().fillRect(_can.getX(), _can.getY(), _can.getWidth(), _can.getHeight());
     }
