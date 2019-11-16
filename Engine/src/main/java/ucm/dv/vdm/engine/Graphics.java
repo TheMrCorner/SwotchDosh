@@ -2,7 +2,9 @@ package ucm.dv.vdm.engine;
 
 public interface Graphics {
 
-    void setCanvasSize(Rect c);
+    void setCanvasSize(Rect c, Rect dim);
+
+    Rect getCanvas();
 
     void setReferenceCanvas(Rect c);
 

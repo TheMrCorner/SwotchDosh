@@ -99,8 +99,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     @Override
     public void run() {
-        int counter = 0; // BORRAR ESTA MIERDA POR FAVOR
-
         //Main Loop
         while(true){
             // Actualizamos el ancho y alto para calcular mierdas
@@ -129,9 +127,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
             //Clear and update graphics
             render();
-
-            //_win.update(_win.getJGraphics());
-            counter++; // TODO: ESTO NO ESTÄ BONICO, DEJARLO BONICO
         }
         // TODO: Deberíamos pensar alguna manera de poner el loop que no sea un while(true) (?)
     }
@@ -148,12 +143,9 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         temp = _logic.getCanvasSize();
 
         // Resize the Logic's canvas with that reference
-        temp = _g.dimensions(temp, temp2);
+        _g.setCanvasSize(temp, temp2);
 
-        // Set the new canvas resized as the canvas for Graphics
-        _g.setCanvasSize(temp);
-
-        _g.setCanvasPos(((_win.getWidth()/2) - (temp.getWidth() / 2)), ((_win.getHeight()/2) - (temp.getHeight() / 2)));
+        _g.setCanvasPos(((_win.getWidth()/2) - (_g.getCanvas().getWidth() / 2)), ((_win.getHeight()/2) - (_g.getCanvas().getHeight() / 2)));
     }
 
     /**

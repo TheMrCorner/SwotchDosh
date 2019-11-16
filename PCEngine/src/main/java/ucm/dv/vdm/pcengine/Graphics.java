@@ -27,8 +27,32 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      * @param c Size of canvas
      */
     @Override
-    public void setCanvasSize(Rect c) {
-        _can = c;
+    public void setCanvasSize(Rect c, Rect dim) {
+        Rect temp; // Temporal rectangle for calculations
+
+        int width = c.getWidth(); //
+        int height = c.getHeight();
+
+        if(width > dim.getWidth()){
+            width = dim.getWidth();
+
+            height = (width * c.getHeight()) / c.getWidth();
+        }
+
+        if(height > dim.getHeight()){
+            height = dim.getHeight();
+
+            width = (height * c.getWidth()) / c.getHeight();
+        }
+
+        temp = new Rect (width, 0, 0, height);
+
+        _can = temp;
+    }
+
+    @Override
+    public Rect getCanvas() {
+        return _can;
     }
 
     @Override
@@ -90,7 +114,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
             y = _can.getY() + repositionY(y);
 
             if (image != null) { // If the image exists, try to draw it
-                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, _can.getX() + source.getWidth(), _can.getY() + source.getHeight(),
+                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, source.getWidth(), source.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
         } catch (Exception e) { // Handle Exception
@@ -108,12 +132,15 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest) {
         try {
             dest = dimensions(dest, _can);
-            source = dimensions(source, dest);
 
-            dest.setPosition(_can.getX() + repositionX(dest.getX()), _can.getY() + repositionY(dest.getY()));
+            int x = repositionX(dest.getX());
+            int y = repositionY(dest.getY());
+
+            dest.setPosition(x + _can.getX(), y + _can.getY());
 
             if (image != null) {
-                _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(), dest.getX(), dest.getY(), _can.getX() + dest.getWidth(), _can.getY() + dest.getHeight(),
+                _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(), dest.getX(), dest.getY(),
+                        dest.getX() + dest.getWidth(), dest.getY() + dest.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
         } catch (Exception e) {
@@ -184,18 +211,20 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
         int height = src.getHeight();
 
         if(width > dim.getWidth()){
-           width = dim.getWidth();
+           width = repositionX(width);
 
            height = (width * src.getHeight()) / src.getWidth();
         }
 
         if(height > dim.getHeight()){
-            height = dim.getHeight();
+            height = repositionY(height);
 
             width = (height * src.getWidth()) / src.getHeight();
         }
 
         temp = new Rect (width, 0, 0, height);
+
+        temp.setPosition(src.getX(), src.getY());
 
         return temp;
     }
