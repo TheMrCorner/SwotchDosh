@@ -52,6 +52,10 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
         return tmp;
     }
 
+    @Override
+    public WindEvent getWindowEvent(){
+        return _ev;
+    }
 
     //-------------------------------------------------
     //------------------Mouse Events-------------------
@@ -157,9 +161,12 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     // Event list (Or even Queue)
     List<TouchEvent> _touchEvn;
 
+    // Input de reescalado
+    WindEvent _ev;
+
     @Override
     public void componentResized(ComponentEvent componentEvent) {
-        TouchEvent ev = new TouchEvent(0, 0, TouchEvent.TouchType.RESIZED, 0);
+        _ev = new WindEvent(WindEvent.WinType.RESIZED);
     }
 
     @Override

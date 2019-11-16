@@ -10,8 +10,7 @@ public interface Input {
         public enum TouchType{
             PRESSED_DOWN,
             RELEASED,
-            MOVED,
-            RESIZED
+            MOVED
         }
 
         /**
@@ -64,6 +63,25 @@ public interface Input {
         TouchType _t;
     }
 
+    class WindEvent{
+        public enum WinType {
+            RESIZED
+        }
+
+        public WindEvent(WinType t){
+            _t = t;
+        }
+
+        public WinType getType(){
+            return _t;
+        }
+
+        WinType _t;
+
+    }
+
     List<TouchEvent> getTouchEvent();
+
+    WindEvent getWindowEvent();
 
 }

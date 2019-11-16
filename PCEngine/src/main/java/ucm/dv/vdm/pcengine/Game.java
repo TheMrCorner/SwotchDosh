@@ -71,9 +71,9 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             do {
                 _win.setGraphics();
                 try { // Try to paint in the Graphics
-                    //_logic.render();
-                    // Set the position of the canvas
                     _g.testCanvas(_win);
+                    _logic.render();
+                    // Set the position of the canvas
                 }
                 finally { // If not, still dispose the Swing Graphics
                     _win.getJGraphics().dispose();
@@ -90,6 +90,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     @Override
     public void setLogic(Logic l){
         _logic = l;
+        _g.setReferenceCanvas(_logic.getCanvasSize());
     }
 
     /**
@@ -98,8 +99,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     @Override
     public void run() {
-        Rect temp;
-        Rect temp2;
+        int counter = 0; // BORRAR ESTA MIERDA POR FAVOR
 
         //Main Loop
         while(true){
@@ -112,25 +112,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             _lastFrameTime = _currentTime;
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
-            // RESIZE
-            // Get window size (as a rectangle)
-            temp2 = new Rect(_win.getWidth(), 0, 0, _win.getHeight());
-
-            // Get Logic's canvas
-            temp = _logic.getCanvasSize();
-
-            // Set the window as a canvas reference in Grpahics
-            _g.setCanvasSize(temp2);
-
-            // Resize the Logic's canvas with that reference
-            temp = _g.dimensions(temp);
-
-            // Set the new canvas resized as the canvas for Graphics
-            _g.setCanvasSize(temp);
-
-            _g.setCanvasPos(((_win.getWidth()/2) - (temp.getWidth() / 2)), ((_win.getHeight()/2) - (temp.getHeight() / 2)));
-
-
+            //RESIZE
+            resize();
 
             // Update all Logic
             update(); // Pasarle el tiempo
@@ -148,8 +131,29 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             render();
 
             //_win.update(_win.getJGraphics());
+            counter++; // TODO: ESTO NO ESTÄ BONICO, DEJARLO BONICO
         }
         // TODO: Deberíamos pensar alguna manera de poner el loop que no sea un while(true) (?)
+    }
+
+    public void resize(){
+        Rect temp;
+        Rect temp2;
+
+        // RESIZE
+        // Get window size (as a rectangle)
+        temp2 = new Rect(_win.getWidth(), 0, 0, _win.getHeight());
+
+        // Get Logic's canvas
+        temp = _logic.getCanvasSize();
+
+        // Resize the Logic's canvas with that reference
+        temp = _g.dimensions(temp, temp2);
+
+        // Set the new canvas resized as the canvas for Graphics
+        _g.setCanvasSize(temp);
+
+        _g.setCanvasPos(((_win.getWidth()/2) - (temp.getWidth() / 2)), ((_win.getHeight()/2) - (temp.getHeight() / 2)));
     }
 
     /**

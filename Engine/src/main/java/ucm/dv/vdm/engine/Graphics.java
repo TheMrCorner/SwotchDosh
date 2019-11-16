@@ -4,6 +4,8 @@ public interface Graphics {
 
     void setCanvasSize(Rect c);
 
+    void setReferenceCanvas(Rect c);
+
     /**
      * Creates new Image from resource container
      *
@@ -54,8 +56,11 @@ public interface Graphics {
      * @param src Original size of the image.
      * @return The new Sizes of he image.
      */
-    Rect dimensions(Rect src);
+    Rect dimensions(Rect src, Rect dim);
 
     void setCanvasPos(int x, int y);
+
+    int repositionX(int x);
+    int repositionY(int y);
 
 }

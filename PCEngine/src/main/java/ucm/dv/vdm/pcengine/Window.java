@@ -64,10 +64,9 @@ public class Window extends JFrame{
         // Save that buffer strategy (if created)
         synchronized (this) {
             str = getBufferStrategy();
+
+            setGraphics(); // Set the Graphics with the BufferStrategy
         }
-
-        setGraphics(); // Set the Graphics with the BufferStrategy
-
     }
 
     /**

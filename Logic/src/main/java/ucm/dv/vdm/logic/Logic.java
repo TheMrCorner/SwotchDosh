@@ -118,7 +118,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     @Override
     public void update(double t) {
         // Get the Input
-        processInput();
+        //processInput();
 
         // Update everything with the information of ProcessInput
     }
@@ -158,16 +158,22 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         Rect backDest = new Rect(_width, 0, 0, _height);
         _sbackground[6].draw(_game.getGraphics(), backDest);
 
-        int numFlechas = (_height / _sArrows.get_rect().getHeight()) +1;
+        /*int numFlechas = (_height / _sArrows.get_rect().getHeight()) +1;
 
         for(int i = 1; i <= numFlechas; i++) {
             Rect arrowDest = new Rect((_width/2) + (_sArrows.get_rect().getWidth()/2),
                     (_width/2) - (_sArrows.get_rect().getWidth()/2),
                     0 + _sArrows.get_rect().getHeight()* (i -1), _sArrows.get_rect().getHeight() * i);
 
+
+            arrowDest.setPosition(0, 0);
+
             _sArrows.draw(_game.getGraphics(), arrowDest);
-        }
+        }*/
         //La bola está aquí de prueba pero lo normal es que se vaya generando una nueva en el render
-        _sballs[0].draw(_game.getGraphics(), (_width/2) - (_sballs[0].get_rect().getWidth()/2), 200);
+        int x = (_width/2) - (_sballs[0].get_rect().getWidth()/2);
+        int y = 200;
+        Rect dest = new Rect(x + _sballs[0].get_rect().getWidth(), x, y, y + _sballs[0].get_rect().getHeight());
+        _sballs[0].draw(_game.getGraphics(), dest);
     }
 }
