@@ -3,28 +3,41 @@ package ucm.dv.vdm.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import ucm.dv.vdm.engine.Graphics;
+import ucm.dv.vdm.engine.Image;
+import ucm.dv.vdm.engine.Sprite;
+
 /**
  * Simple class to store the Ball pools. Efficiency.
  */
-public class BallPool extends GameObject {
+public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
-    public BallPool(int x, int y){
+    public BallPool(int x, int y, Image sprite){
+        super(x, y, Sprite.spriteMaker(sprite, 10, 2));
+
         // Set the generic position for the Ball generation
         _x = x;
         _y = y;
+
+        // Init counter
+        _cnt = 0;
 
         // Create the pool
         _balls = new ArrayList<Ball>();
     }
 
     public void AddNewBall(){
-        Ball n = new Ball();
+        Sprite[] sprt = new Sprite[1];
+
+        sprt[0] = _sprite[0]; // Esto puede cambiar
+
+        Ball n = new Ball(_x, _y, sprt);
 
         _balls.add(n);
     }
 
     @Override
-    public void update() { // Call update for all balls (if they are active)
+    public void update(double t) { // Call update for all balls (if they are active)
         if(!_avbl){
             AddNewBall();
         }
@@ -36,16 +49,21 @@ public class BallPool extends GameObject {
 
         for (int i = 0; i < _balls.size(); i++){
             if(_balls.get(i).isActive()){
-                _balls.get(i).update();
+                _balls.get(i).update(t);
+            }
+
+            if(_cnt == 10){
+                _balls.get(i).faster();
+                _cnt = 0;
             }
         }
     }
 
     @Override
-    public void render() { // Call render for all balls (if they are active)
+    public void render(Graphics g) { // Call render for all balls (if they are active)
         for (int i = 0; i < _balls.size(); i++){
             if(_balls.get(i).isActive()){
-                _balls.get(i).render();
+                _balls.get(i).render(g);
             }
         }
     }
@@ -59,6 +77,9 @@ public class BallPool extends GameObject {
 
     // Generic position (top of the screen)
     int _x, _y;
+
+    // Balls get
+    int _cnt;
 
 
 }

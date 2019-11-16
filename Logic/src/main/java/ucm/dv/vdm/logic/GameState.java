@@ -1,5 +1,6 @@
 package ucm.dv.vdm.logic;
 
+import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Sprite;
 
 /**
@@ -17,7 +18,9 @@ public class GameState {
         return _state;
     }
 
-    public GameState(int s){
+    public GameState(int s, Logic l){
+        _l = l;
+
         switch (s){
             case 0:
                 _state = State.MainMenu;
@@ -40,7 +43,6 @@ public class GameState {
     //Calls the different initiation when the actual game state changes
     public void initState(ResourceManager r){
         switch(_state) {
-
             case MainMenu:
                 initMenu(r);
                 break;
@@ -60,7 +62,7 @@ public class GameState {
     void initMenu (ResourceManager r){
         _go = new GameObject[4]; // Title, 2 buttons, Tap to Play
 
-
+        _sprites = new Sprite[4][10];
     }
 
     void initPause (ResourceManager r){
@@ -73,19 +75,36 @@ public class GameState {
 
     void initGame (ResourceManager r){
         _go = new GameObject[2]; // Player, BallPool (Object Pool)
+
+        _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
+        _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, 0, r.getGameObject("Balls"));
     }
 
 
-    public void update(){
+    public void update(double t){
         for(int i = 0; i < _go.length; i++){
-            _go[i].update();
+            _go[i].update(t);
+        }
+    }
+
+    public void render(Graphics g){
+        for(int i = 0; i < _go.length; i++){
+            _go[i].render(g);
         }
     }
 
     //The state that is running in this moment
     State _state;
 
+    Logic _l;
+
     //GameObjects
     GameObject[] _go;
+    Sprite[][] _sprites;
+
+    Sprite _sballs[];
+    Sprite _sbuttons[];
+    Sprite _sFont[];
+    Sprite _sPlayers[];
 
 }

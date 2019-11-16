@@ -1,22 +1,29 @@
 package ucm.dv.vdm.logic;
 
+import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Sprite;
 
 public class Ball extends GameObject{
 
-    Ball(){
+    Ball(int x, int y, Sprite[] s){
+        super(9, 9, s);
+
+        setPosX(x - (_sprite[0].get_rect().getWidth()/2));
+
+        _vel = 430; // Initializes to 430
+
         _actv = true;
     }
 
 
     @Override
-    public void update() {
-
+    public void update(double t) {
+        _y += _vel * (int)t;
     }
 
     @Override
-    public void render() {
-
+    public void render(Graphics g) {
+        _sprite[0].draw(g, _x, _y);
     }
 
     public void setActive(boolean b){
@@ -27,8 +34,15 @@ public class Ball extends GameObject{
         return _actv;
     }
 
+    public void faster(){
+        _vel += 90;
+    }
+
     // Active
     boolean _actv;
+
+    // Velocity
+    int _vel;
 
 
 }

@@ -31,12 +31,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     GameState[] _gameState;
     int _currentState;
 
-    // Sprites
     Sprite _sbackground[];
-    Sprite _sballs[];
-    Sprite _sbuttons[];
-    Sprite _sFont[];
-    Sprite _sPlayers[];
     Sprite _sArrows;
 
     /**
@@ -60,13 +55,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     public void init(){
 
-        // Create all gameObjects and CanvasObjects
-        for(int i = 0; i < _gameState.length; i++){
-            _gameState[i] = new GameState(i);
-            _gameState[i].initState(_rm);
-        }
-
-        try{ // Try to create the ResourceManager and load all resources.
+        try{ // Try to get the ResourceManager and load all resources.
             _rm = ResourceManager.getResourceMan(_game);
             createSprites();
         }
@@ -78,6 +67,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _width = _canvas.getWidth();
         _height = _canvas.getHeight();
+
+        _currentState = 3;
 
         // First render
         initRenderPosition();
@@ -92,9 +83,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
-
-        _sballs = Sprite.spriteMaker(_rm.getGameObject("Balls"), 10, 2);
-        _sPlayers = Sprite.spriteMaker(_rm.getGameObject("Players"), 1, 2);
 
         //DEBERIAMOS PASAR TODOS ESTOS SPRITES A GAMESTATE O RESOURCE MANAGER PARA QUE VAYA ASIGNANDO EL NECESARIO EN LOS UPDATES (YA QUE CAMBIAN DE COLOR)
 
@@ -111,6 +99,15 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         return _canvas;
     }
 
+    @Override
+    public void initLogic() {
+        // Create all gameObjects and CanvasObjects
+        for(int i = 0; i < _gameState.length; i++){
+            _gameState[i] = new GameState(i, this);
+            _gameState[i].initState(_rm);
+        }
+    }
+
     /**
      * Updates all positions and simulates the game. (Collisions, points added to the player, etc.)
      * @param t Current time.
@@ -121,6 +118,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         //processInput();
 
         // Update everything with the information of ProcessInput
+        _gameState[_currentState].update(t);
     }
 
     /**
@@ -165,14 +163,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
                     0,0, _sArrows.get_rect().getHeight());
 
 
-            arrowDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), _sArrows.get_rect().getHeight() * i);
+            arrowDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), (_sArrows.get_rect().getHeight() - i) * i);
 
-            _sArrows.draw(_game.getGraphics(), arrowDest);
+            _sArrows.draw(_game.getGraphics(), arrowDest, 0.9f);
         }
-        //La bola está aquí de prueba pero lo normal es que se vaya generando una nueva en el render
-        /*int x = (_width/2) - (_sballs[0].get_rect().getWidth()/2);
-        int y = 200;
-        Rect dest = new Rect(x + _sballs[0].get_rect().getWidth(), x, y, y + _sballs[0].get_rect().getHeight());
-        _sballs[0].draw(_game.getGraphics(), dest);*/
+
+        _gameState[_currentState].render(_game.getGraphics());
+
     }
 }

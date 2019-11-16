@@ -33,7 +33,7 @@ public interface Graphics {
     void drawImage(Image image, int x, int y);
     void drawImage(Image image, Rect source, int x, int y);
     void drawImage(Image image, Rect source, Rect dest);
-    void drawImage(Image image, Rect source, Rect dest, int alpha);
+    void drawImage(Image image, Rect source, Rect dest, float alpha);
 
     // Get window information
     /**

@@ -99,6 +99,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     @Override
     public void run() {
+        _logic.initLogic();
+
         //Main Loop
         while(true){
             // Actualizamos el ancho y alto para calcular mierdas

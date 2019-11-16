@@ -1,6 +1,6 @@
 package ucm.dv.vdm.engine;
 
-public class Sprite {
+public class Sprite { // TODO: COmentar esta señora
 
     public Sprite(Image i, Rect r){
         // Aquí pasan cosas
@@ -17,6 +17,12 @@ public class Sprite {
     public void draw(Graphics g, Rect dest){
         g.drawImage(_image, _rect, dest);
     }
+
+    public void draw(Graphics g, Rect dest, float alpha){
+        g.drawImage(_image, _rect, dest, alpha);
+    }
+
+
 
     //Método que divide las imágenes que le pase la lógica y los guarda en un vector que devuelve
     //Como parámetros pasarán la imagen para coger medidas y actuar sobre ella y el numero de divisiones a realizar

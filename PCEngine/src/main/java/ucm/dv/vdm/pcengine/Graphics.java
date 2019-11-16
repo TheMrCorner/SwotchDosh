@@ -7,7 +7,7 @@ import ucm.dv.vdm.engine.Rect;
 
 public class Graphics implements ucm.dv.vdm.engine.Graphics {
 
-    public void testCanvas(Window w){
+    public void testCanvas(Window w){ // TODO: Lo dejamos(?)
         _win.getJGraphics().setColor(Color.pink);
         _win.getJGraphics().fillRect(_can.getX(), _can.getY(), _can.getWidth(), _can.getHeight());
     }
@@ -27,7 +27,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      * @param c Size of canvas
      */
     @Override
-    public void setCanvasSize(Rect c, Rect dim) {
+    public void setCanvasSize(Rect c, Rect dim) { // TODO: Recomentar
         Rect temp; // Temporal rectangle for calculations
 
         int width = c.getWidth(); //
@@ -97,6 +97,23 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     }
 
     /**
+     * Draws an image in a specific location.
+     * @param image Image that wil be painted
+     * @param x Position x of the image
+     * @param y Position y of the image
+     */
+    @Override
+    public void drawImage(ucm.dv.vdm.engine.Image image, int x, int y) {
+        try {
+            if (image != null) { // If the image exists, try to draw it
+                _win.getJGraphics().drawImage(((Image) image).getImage(), 0, 100, null);
+            }
+        } catch (Exception e) { // Handle Exception
+
+        }
+    }
+
+    /**
      * Draws an image (or a part of it (Sprite)) in a specific location, counting with the values of
      * the image.
      * @param image Image to paint
@@ -105,16 +122,18 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      * @param y Position Y to place the image (top left corner)
      */
     @Override
-    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) {
+    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) { // TODO: Comentar
         try {
             Rect temp = new Rect (repositionX(source.getWidth()), 0, 0, repositionY(source.getHeight()));
-            source = dimensions(source, temp);
+            //temp = dimensions(source, temp);
 
             x = _can.getX() + repositionX(x);
             y = _can.getY() + repositionY(y);
 
+            temp.setPosition(x, y);
+
             if (image != null) { // If the image exists, try to draw it
-                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, source.getWidth(), source.getHeight(),
+                _win.getJGraphics().drawImage(((Image) image).getImage(), x, y, temp.getX() + temp.getWidth(), temp.getY() + temp.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
         } catch (Exception e) { // Handle Exception
@@ -129,7 +148,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      * @param dest Rectangle in which we will draw
      */
     @Override
-    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest) {
+    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest) { // TODO: Comentar
         try {
             dest = dimensions(dest, _can);
 
@@ -151,32 +170,32 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     /**
      * Draws an image (or a part of it (Sprite)) in a specific rectangle with an specific alpha
      * value (transparency).
+     * TODO: Preguntar como se haría esta wea
      * @param image Image to paint
      * @param source Rectangle of the image.
      * @param dest Rectangle destination to paint the image.
      * @param alpha Alpha value for the color.
      */
     @Override
-    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest, int alpha) {
-
-    }
-
-    /**
-     * Draws an image in a specific location.
-     * @param image Image that wil be painted
-     * @param x Position x of the image
-     * @param y Position y of the image
-     */
-    @Override
-    public void drawImage(ucm.dv.vdm.engine.Image image, int x, int y) {
-
-
-
+    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest, float alpha) { // TODO: comentar
         try {
-            if (image != null) { // If the image exists, try to draw it
-                _win.getJGraphics().drawImage(((Image) image).getImage(), 0, 100, null);
+            dest = dimensions(dest, _can);
+
+            int x = repositionX(dest.getX());
+            int y = repositionY(dest.getY());
+
+            dest.setPosition(x + _can.getX(), y + _can.getY());
+
+            Color c = new Color(0.0f, 0.0f, 0.0f, alpha);
+
+            if (image != null) {
+                _win.getJGraphics().setColor(c);
+
+                _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(), dest.getX(), dest.getY(),
+                        dest.getX() + dest.getWidth(), dest.getY() + dest.getHeight(),
+                        source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
-        } catch (Exception e) { // Handle Exception
+        } catch (Exception e) {
 
         }
     }
@@ -201,34 +220,46 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     }
 
     /**
-     * DIMENSIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOn
+     * Change the size of a Rectangle using another rectangle as a reference. Maintains the aspect
+     * ratio of the Rectangle (proportions) and returns the new rectangle.
+     * @param src Rectangle to be resized
+     * @param dim Rectangle to use as a reference.
+     * @return Resized src rectangle maintaining the aspect ratio of it.
      */
     @Override
     public Rect dimensions(Rect src, Rect dim){
         Rect temp; // Temporal rectangle for calculations
 
-        int width = src.getWidth(); //
-        int height = src.getHeight();
+        int width = src.getWidth(); // Save the src width
+        int height = src.getHeight(); // Save the src height
 
+        // If the src width is higher than the reference width
         if(width > dim.getWidth()){
+            // Set the new width but resized proportionally
            width = repositionX(width);
-
+            // Change height keeping proportions
            height = (width * src.getHeight()) / src.getWidth();
         }
 
+        // If the src height (or the changed height) is bigger than the reference one
         if(height > dim.getHeight()){
+            // Set the new height but resized proportionally
             height = repositionY(height);
-
+            // Change width proportionally
             width = (height * src.getWidth()) / src.getHeight();
         }
 
+        // Save the changes to the new Rectangle
         temp = new Rect (width, 0, 0, height);
 
+        // Set the original position in canvas of the source Rectangle
         temp.setPosition(src.getX(), src.getY());
 
+        // Return result
         return temp;
     }
 
+    // TODO: COmentar de aquí para abajo.
     @Override
     public void setCanvasPos(int x, int y) {
         _can.setPosition(x, y);

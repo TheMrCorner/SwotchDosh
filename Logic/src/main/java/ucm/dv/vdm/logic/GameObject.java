@@ -1,18 +1,23 @@
 package ucm.dv.vdm.logic;
 
+import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Sprite;
 
 public class GameObject {
 
-    Sprite _sprite;
+    /**
+     * Initializes GameObject. (Create _sprite,
+     */
+    public GameObject(int x, int y, Sprite[] s){
+        setPosX(x);
+        setPosY(y);
 
-    //First point position
-    int _x;
-    int _y;
+        setSprite(s);
+    }
 
     //Getters
-    public Sprite getSprite() {
-        return _sprite;
+    public Sprite getSprite(int i) {
+        return _sprite[i];
     }
 
     public int getPosX() { return _x; }
@@ -21,13 +26,22 @@ public class GameObject {
     }
 
     //Setters
-    public void setSprite(Sprite s) {_sprite = s;}
+    public void setSprite(Sprite[] s) {_sprite = s;}
 
-    public void setPosX (int x) {_x = x;}
-    public void setPosY (int y) {_y = y;}
+    void setPosX (int x) {_x = x;}
+    void setPosY (int y) {_y = y;}
 
-    void update(){}
+    public void update(double t){}
 
-    void render(){}
+    public void render(Graphics g){}
+
+    //---------------------------------------------
+    //----------------Atributes--------------------
+    //---------------------------------------------
+    Sprite[] _sprite;
+
+    //First point position
+    int _x;
+    int _y;
 
 }
