@@ -63,7 +63,10 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-
+        if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
+            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.CLICKED, 0);
+            _touchEvn.add(aux);
+        }
     }
 
     /**
@@ -77,8 +80,6 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.PRESSED_DOWN, 0);
             _touchEvn.add(aux);
         }
-
-        //System.out.println("PULSADO EL RATON YAY");
     }
 
     /**
@@ -91,8 +92,6 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.RELEASED, 0);
             _touchEvn.add(aux);
         }
-
-        //System.out.println("LIBERADO EL RATON YAY");
     }
 
     /**

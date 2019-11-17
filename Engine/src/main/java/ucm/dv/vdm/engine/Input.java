@@ -10,7 +10,8 @@ public interface Input {
         public enum TouchType{
             PRESSED_DOWN,
             RELEASED,
-            MOVED
+            MOVED,
+            CLICKED
         }
 
         /**

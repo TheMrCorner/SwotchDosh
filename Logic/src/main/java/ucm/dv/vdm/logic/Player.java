@@ -20,6 +20,11 @@ public class Player extends GameObject{
 
     @Override
     public void render(Graphics g) {
-
+        if(_c == Color.BLACK){
+            _sprite[1].draw(g, (int)_x, (int)_y);
+        }
+        else{
+            _sprite[0].draw(g, (int)_x, (int)_y);
+        }
     }
 }

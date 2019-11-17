@@ -5,6 +5,11 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class GameObject {
 
+    public enum Color {
+        WHITE,
+        BLACK
+    }
+
     /**
      * Initializes GameObject. (Create _sprite,
      */
@@ -13,9 +18,11 @@ public class GameObject {
         setPosY(y);
 
         setSprite(s);
+
+        _c = null;
     }
 
-    //Getters
+    // Getters
     public Sprite getSprite(int i) {
         return _sprite[i];
     }
@@ -25,11 +32,19 @@ public class GameObject {
         return _y;
     }
 
-    //Setters
+    // Setters
     public void setSprite(Sprite[] s) {_sprite = s;}
 
     void setPosX (int x) {_x = x;}
     void setPosY (int y) {_y = y;}
+
+    void setColor(Color c){
+        _c = c;
+    }
+
+    public Color getColor(){
+        return _c;
+    }
 
     public void update(double t){}
 
@@ -40,7 +55,10 @@ public class GameObject {
     //---------------------------------------------
     Sprite[] _sprite;
 
-    //First point position
+    // Color of the sprite
+    Color _c;
+
+    // First point position
     double _x;
     double _y;
 

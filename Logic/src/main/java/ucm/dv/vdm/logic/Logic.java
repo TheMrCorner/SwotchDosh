@@ -69,9 +69,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _height = _canvas.getHeight();
 
         _currentState = 3;
-
-        // First render
-        initRenderPosition();
     }
 
     /**
@@ -85,11 +82,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
 
         //DEBERIAMOS PASAR TODOS ESTOS SPRITES A GAMESTATE O RESOURCE MANAGER PARA QUE VAYA ASIGNANDO EL NECESARIO EN LOS UPDATES (YA QUE CAMBIAN DE COLOR)
-
-
-    }
-
-    private void initRenderPosition(){
 
 
     }
@@ -115,36 +107,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     @Override
     public void update(double t) {
         // Get the Input
-        //processInput();
+        _gameState[_currentState].processInput(_game);
 
         // Update everything with the information of ProcessInput
         _gameState[_currentState].update(t);
-    }
-
-    /**
-     * Gets the TouchEvent list from the Input created in the game and processes it.
-     */
-    private void processInput(){
-        List<Input.TouchEvent> e = _game.getInput().getTouchEvent(); // Get the list of TouchEvents
-
-        int ptr = 0; // Pointer to roam the list
-
-        while(!e.isEmpty()){ // While list is not empty
-
-            Input.TouchEvent te = e.get(ptr); // Get the TouchEvent at the pointer position
-
-            switch(te.getType()){ // Process the type of the TouchEvent
-                case MOVED:
-                    break;
-                case RELEASED:
-                    break;
-                case PRESSED_DOWN:
-                    break;
-            }
-
-            e.remove(ptr); // Remove that TouchEvent from the list
-            ptr++; // Continue Roaming
-        }
     }
 
     /**
@@ -169,5 +135,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         }
 
         _gameState[_currentState].render(_game.getGraphics());
+    }
+
+    public void changeState(int i, int pts){
+        _currentState = i;
+        _gameState[_currentState].setPunctuation(pts);
     }
 }

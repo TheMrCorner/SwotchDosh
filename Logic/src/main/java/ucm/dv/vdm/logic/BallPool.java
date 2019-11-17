@@ -12,6 +12,12 @@ import ucm.dv.vdm.engine.Sprite;
  */
 public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
+    /**
+     * Constructor of the Ball Pool. Initializes a new BallPool.
+     * @param x
+     * @param y
+     * @param sprite
+     */
     public BallPool(int x, int y, Image sprite){
         super(x, y, Sprite.spriteMaker(sprite, 10, 2));
 
@@ -39,14 +45,23 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         n.setActive(true);
 
+        n.setColor(Color.WHITE);
+
         _balls.add(n);
+    }
+
+    public void destroy(int i){
+        _balls.get(i).setActive(false);
+
+        _avbl = true;
+        _temp = i;
     }
 
     @Override
     public void update(double t) { // Call update for all balls (if they are active)
         _time += t;
 
-        if(_balls.isEmpty() || (!_avbl && _time >= 1.0)){
+        if((!_avbl && _time >= 1.0) || _balls.isEmpty()){
             AddNewBall();
             _time = 0.0;
         }
@@ -66,6 +81,19 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
                 _cnt = 0;
             }
         }
+    }
+
+    public Ball colision(int i){
+        if(_balls.get(i).isActive()){
+            return _balls.get(i);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public int getNBalls(){
+        return _balls.size();
     }
 
     @Override
