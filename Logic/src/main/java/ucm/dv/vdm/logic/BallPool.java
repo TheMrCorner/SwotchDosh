@@ -33,6 +33,8 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         _temp = 0;
 
+        _time = 0.0;
+
         _avbl = false;
     }
 
@@ -52,23 +54,23 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
     public void destroy(int i){
         _balls.get(i).setActive(false);
-
+        _balls.get(i).setPosY(_y);
         _avbl = true;
         _temp = i;
     }
 
     @Override
     public void update(double t) { // Call update for all balls (if they are active)
+
         _time += t;
 
-        if((!_avbl && _time >= 1.0) || _balls.isEmpty()){
+        if((!_avbl && _time >= 1) || _balls.isEmpty()){
             AddNewBall();
             _time = 0.0;
         }
         else {
             _balls.get(_temp).setActive(true);
-            _balls.get(_temp).setPosX(_x);
-            _balls.get(_temp).setPosY(_y);
+
         }
 
         for (int i = 1; i < _balls.size(); i++){
