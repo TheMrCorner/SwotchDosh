@@ -18,12 +18,12 @@ public class Ball extends GameObject{
 
     @Override
     public void update(double t) {
-        _y += _vel * (int)t;
+        _y += _vel * t;
     }
 
     @Override
     public void render(Graphics g) {
-        _sprite[0].draw(g, _x, _y);
+        _sprite[0].draw(g, (int)_x, (int)_y);
     }
 
     public void setActive(boolean b){

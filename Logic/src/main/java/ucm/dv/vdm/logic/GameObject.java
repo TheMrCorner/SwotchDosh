@@ -20,8 +20,8 @@ public class GameObject {
         return _sprite[i];
     }
 
-    public int getPosX() { return _x; }
-    public int getPosY() {
+    public double getPosX() { return _x; }
+    public double getPosY() {
         return _y;
     }
 
@@ -41,7 +41,7 @@ public class GameObject {
     Sprite[] _sprite;
 
     //First point position
-    int _x;
-    int _y;
+    double _x;
+    double _y;
 
 }

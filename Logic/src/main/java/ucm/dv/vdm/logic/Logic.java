@@ -169,6 +169,5 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         }
 
         _gameState[_currentState].render(_game.getGraphics());
-
     }
 }

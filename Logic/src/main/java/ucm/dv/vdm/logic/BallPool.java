@@ -24,6 +24,10 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         // Create the pool
         _balls = new ArrayList<Ball>();
+
+        AddNewBall();
+
+        _avbl = false;
     }
 
     public void AddNewBall(){
@@ -33,13 +37,18 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         Ball n = new Ball(_x, _y, sprt);
 
+        n.setActive(true);
+
         _balls.add(n);
     }
 
     @Override
     public void update(double t) { // Call update for all balls (if they are active)
-        if(!_avbl){
+        _time += t;
+
+        if(!_avbl && _time >= 1.0){
             AddNewBall();
+            _time = 0.0;
         }
         else {
             _balls.get(_temp).setActive(true);
@@ -74,6 +83,9 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
     // A ball is Available
     int _temp; // Saves the ball that is inactive (for efficiency)
     boolean _avbl;
+
+    // Time since last gen
+    double _time;
 
     // Generic position (top of the screen)
     int _x, _y;
