@@ -25,7 +25,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
         // Create the pool
         _balls = new ArrayList<Ball>();
 
-        AddNewBall();
+        _temp = 0;
 
         _avbl = false;
     }
@@ -46,7 +46,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
     public void update(double t) { // Call update for all balls (if they are active)
         _time += t;
 
-        if(!_avbl && _time >= 1.0){
+        if(_balls.isEmpty() || (!_avbl && _time >= 1.0)){
             AddNewBall();
             _time = 0.0;
         }

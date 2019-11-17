@@ -6,7 +6,7 @@ import ucm.dv.vdm.engine.Sprite;
 public class Ball extends GameObject{
 
     Ball(int x, int y, Sprite[] s){
-        super(9, 9, s);
+        super(x, y, s);
 
         setPosX(x - (_sprite[0].get_rect().getWidth()/2));
 
