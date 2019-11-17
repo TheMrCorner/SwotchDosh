@@ -56,7 +56,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
             _balls.get(_temp).setPosY(_y);
         }
 
-        for (int i = 0; i < _balls.size(); i++){
+        for (int i = 1; i < _balls.size(); i++){
             if(_balls.get(i).isActive()){
                 _balls.get(i).update(t);
             }
@@ -70,7 +70,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
     @Override
     public void render(Graphics g) { // Call render for all balls (if they are active)
-        for (int i = 0; i < _balls.size(); i++){
+        for (int i = 1; i < _balls.size(); i++){
             if(_balls.get(i).isActive()){
                 _balls.get(i).render(g);
             }
