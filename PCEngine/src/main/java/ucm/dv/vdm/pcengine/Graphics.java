@@ -179,6 +179,9 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     @Override
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest, float alpha) { // TODO: comentar
         try {
+            // Set alpha value received from the function call
+            ((Graphics2D)_win.getJGraphics()).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
             dest = dimensions(dest, _can);
 
             int x = repositionX(dest.getX());
@@ -195,9 +198,14 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
                         dest.getX() + dest.getWidth(), dest.getY() + dest.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
+
+            // Reset alpha value to 1.0f
+            ((Graphics2D)_win.getJGraphics()).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         } catch (Exception e) {
 
         }
+
+
     }
 
     /**

@@ -15,6 +15,10 @@ public class Ball extends GameObject{
         _actv = true;
     }
 
+    public int getVel(){
+        return _vel;
+    }
+
 
     @Override
     public void update(double t) {
@@ -23,7 +27,12 @@ public class Ball extends GameObject{
 
     @Override
     public void render(Graphics g) {
-        _sprite[0].draw(g, (int)_x, (int)_y);
+        if(_c == Color.BLACK){
+            _sprite[1].draw(g, (int)_x, (int)_y);
+        }
+        else{
+            _sprite[0].draw(g, (int)_x, (int)_y);
+        }
     }
 
     public void setActive(boolean b){
@@ -32,6 +41,10 @@ public class Ball extends GameObject{
 
     public boolean isActive(){
         return _actv;
+    }
+
+    public void set_vel(int vel){
+        _vel = vel;
     }
 
     public void faster(){

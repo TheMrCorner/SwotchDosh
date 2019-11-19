@@ -131,7 +131,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
             arrowDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), (_sArrows.get_rect().getHeight() - i) * i);
 
-            _sArrows.draw(_game.getGraphics(), arrowDest, 0.9f);
+            _sArrows.draw(_game.getGraphics(), arrowDest, 0.6f);
         }
 
         _gameState[_currentState].render(_game.getGraphics());

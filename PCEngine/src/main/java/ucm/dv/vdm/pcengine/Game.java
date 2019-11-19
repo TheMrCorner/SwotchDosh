@@ -53,6 +53,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     void update(){ // Deberíamos pensar si esto es realmente útil tho y cambiarlo si eso
         _logic.update(_elapsedTime);
+        System.out.println(_elapsedTime);
     }
 
     /**
