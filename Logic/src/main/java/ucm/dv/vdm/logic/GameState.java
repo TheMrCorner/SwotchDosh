@@ -151,13 +151,8 @@ public class GameState {
     }
 
     void colisions(){
-        //int i = 1;
-        boolean colision = false;
-
-        Ball n = ((BallPool)_go[1]).colision();
-
-        if(_go[0].getPosY() <= n.getPosY()){
-            if(n.getColor() == _go[0].getColor()){
+        if(_go[0].getPosY() <= ((BallPool)_go[1]).getLowerBall().getPosY()){
+            if(((BallPool)_go[1]).getLowerBall().getColor() == _go[0].getColor()){
                 _pts++;
 
                 ((BallPool)_go[1]).destroy();
@@ -165,8 +160,6 @@ public class GameState {
             else{
                 _l.changeState(2, _pts);
             }
-
-            colision = true;
         }
     }
 

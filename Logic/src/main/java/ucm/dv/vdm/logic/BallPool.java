@@ -2,6 +2,7 @@ package ucm.dv.vdm.logic;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
@@ -10,15 +11,16 @@ import ucm.dv.vdm.engine.Image;
 import ucm.dv.vdm.engine.Sprite;
 
 /**
- * Simple class to store the Ball pools. Efficiency.
+ * Simple class to store the Ball pools.
  */
 public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
     /**
-     * Constructor of the Ball Pool. Initializes a new BallPool.
-     * @param x
-     * @param y
-     * @param sprite
+     * Constructor of the BallPool. Initializes it's position, the counter, creates the BallPool in
+     * order to instantiate them correctly. Sets available to false. Creates the first ball.
+     * @param x X position on the screen.
+     * @param y Y position on the screen.
+     * @param sprite Sprite to put in the objects.
      */
     public BallPool(int x, int y, Image sprite){
         super(x, y, Sprite.spriteMaker(sprite, 10, 2));
@@ -33,30 +35,39 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
         // Create the pool
         _balls = new ArrayDeque<Ball>();
 
-        _avbl = false;
+        // Set available to false
+        _avbl = 0;
 
         AddNewBall();
     }
 
+    /**
+     * Creates a new ball and add it to the pool of objects. Set it to the generic Y position for all
+     * balls. Activate it and set the RandomColor. Add it at the end of the queue.
+     */
     public void AddNewBall(){
+        // Create the sprite array
         Sprite[] sprt = new Sprite[2];
 
-        sprt[0] = _sprite[0]; // Esto puede cambiar
+        // Add the created sprites for the balls to the Ball sprite
+        sprt[0] = _sprite[0];
         sprt[1] = _sprite[10];
 
+        // Create the new Ball
         Ball n = new Ball(_x, _y, sprt);
 
+        // Activate the ball
         n.setActive(true);
 
+        // Give it a random color depending on the ball bellow
         n.setColor(randomColor());
 
-        _balls.add(n); // Adds at the end of the queue
-
-        System.out.println("A ver, fiera, hemos creado un peloto to tocho");
+        // Add it to the last position of the queue
+        _balls.add(n);
     }
 
     /**
-     * Removes the first element of the queue.
+     * Removes the lowest element of the queue.
      */
     public void destroy(){
         // Save that ball to a new variable
@@ -68,55 +79,77 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         d.setColor(randomColor());
 
-        _balls.add(d); // Add that element to the end of the queue
+        // Add that element to the end of the queue
+        _balls.add(d);
 
-        _avbl = true; // Set available to true
+        // Number of balls available
+        _avbl++;
 
         _cnt++;
     }
 
+    /**
+     * Updates all balls (that are active). Called every frame
+     * @param t Time elapsed since last update
+     */
     @Override
-    public void update(double t) { // Call update for all balls (if they are active)
+    public void update(double t) {
         _c += _balls.peek().getVel() * t;
 
+        // If the last ball's position is greater than the maximum distance
         if(_c >= _d){
-            if (!_avbl) {
+            System.out.println(_avbl);
+            // Create a new ball
+            // If there is no ball available
+            if (_avbl == 0) {
+                //Create a new ball
                 AddNewBall();
-                _balls.getLast().set_vel(_balls.peek().getVel());
+                // Give it the velocity of all the balls
+                _balls.getLast().set_vel(_balls.peek().getVel()); // TODO: Mirar si guardar la vel aquí en BallPool (Decisions)
             }
+            // If there is a ball available
             else {
-                _balls.getLast().setActive(true);
-                _avbl = false;
+                // Searching the older ball destroyed
+                Iterator b = _balls.descendingIterator();
+                // See the number of balls available
+                int i = _avbl;
+
+                // Search
+                do{
+                    if(i == 1){ // The older ball available
+                        // Activate that ball
+                        ((Ball)b.next()).setActive(true);
+                        // Reduce the number of balls available
+                        _avbl--;
+                    }
+                    // Keep searching
+                    else {
+                        b.next();
+                    }
+                    i--;
+                } while(i > 0);
             }
+
+            // Reset interval
             _c = 0.0;
         }
 
+        // Update all the balls that are active
         for(Ball b : _balls){ // Iterator
             if(b.isActive()){
                 b.update(t);
             }
 
+            // Increase velocity when 10 balls are destroyed
             if(_cnt == 10){
                 b.faster();
             }
         }
 
+        // Reset ball destroyed counter
         if(_cnt == 10) {
             _cnt = 0;
         }
-    }
-
-    public Ball colision(){
-        if(_balls.peek().isActive()){
-            return _balls.peek();
-        }
-        else {
-            return null;
-        }
-    }
-
-    public int getNBalls(){
-        return _balls.size();
     }
 
     @Override
@@ -126,6 +159,22 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
                 b.render(g);
             }
         }
+    }
+
+    /**
+     * Get a reference to the lower ball.
+     * @return Lower ball
+     */
+    public Ball getLowerBall(){
+        return _balls.peek();
+    }
+
+    /**
+     * Get the number of balls registered in the pool.
+     * @return Size of the pool (int).
+     */
+    public int getNBalls(){
+        return _balls.size();
     }
 
     Color randomColor (){
@@ -159,7 +208,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
     ArrayDeque<Ball> _balls;
 
     // A ball is Available
-    boolean _avbl;
+    int _avbl;
 
     // Distance
     int _d = 395;

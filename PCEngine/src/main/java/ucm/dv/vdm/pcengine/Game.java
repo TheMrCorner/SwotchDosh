@@ -53,7 +53,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
      */
     void update(){ // Deberíamos pensar si esto es realmente útil tho y cambiarlo si eso
         _logic.update(_elapsedTime);
-        System.out.println(_elapsedTime);
+        //System.out.println(_elapsedTime);
     }
 
     /**
@@ -107,7 +107,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             // Actualizamos el ancho y alto para calcular mierdas
             _width = _win.getWidth();
             _height = _win.getHeight();
-            // Calculate time pased between frames and convert it to seconds (from miliseconds?)
+            // Calculate time passed between frames and convert it to seconds
             _currentTime = System.nanoTime();
             _nanoElapsedTime = _currentTime - _lastFrameTime;
             _lastFrameTime = _currentTime;
