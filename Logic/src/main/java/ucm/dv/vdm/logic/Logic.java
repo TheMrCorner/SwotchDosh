@@ -34,6 +34,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Sprite _sbackground[];
     Sprite _sArrows;
 
+    Arrow _arrows[];
+
     /**
      * Logic Constructor, creates a new instance of Logic.
      * @param g Game instance to store it and interact with the engine.
@@ -93,11 +95,30 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     @Override
     public void initLogic() {
+
+        initArrows();
+
         // Create all gameObjects and CanvasObjects
         for(int i = 0; i < _gameState.length; i++){
             _gameState[i] = new GameState(i, this);
             _gameState[i].initState(_rm);
         }
+    }
+
+    void initArrows () {
+
+        int numArrows = (_height / _sArrows.get_rect().getHeight()) +1; //Number of sprites of arrows that we need at a specific canvas
+
+        _arrows = new Arrow[numArrows];
+
+        //Keeps all the arrows in an array to update them later and draw the first position
+        for(int i = 0; i < numArrows; i++) {
+
+            Arrow a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2), (_sArrows.get_rect().getHeight() ) * i, _sArrows);
+
+            _arrows[i] = a;
+        }
+
     }
 
     /**
@@ -108,6 +129,11 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     public void update(double t) {
         // Get the Input
         _gameState[_currentState].processInput(_game);
+
+        for (int i = 0; i < _arrows.length; i++){
+            _arrows[i].update(t, _canvas.getHeight());
+
+        }
 
         // Update everything with the information of ProcessInput
         _gameState[_currentState].update(t);
@@ -122,16 +148,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         Rect backDest = new Rect(_width, 0, 0, _height);
         _sbackground[6].draw(_game.getGraphics(), backDest);
 
-        int numFlechas = (_height / _sArrows.get_rect().getHeight()) +1;
-
-        for(int i = 0; i < numFlechas; i++) {
-            Rect arrowDest = new Rect(_sArrows.get_rect().getWidth(),
-                    0,0, _sArrows.get_rect().getHeight());
-
-
-            arrowDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), (_sArrows.get_rect().getHeight() - i) * i);
-
-            _sArrows.draw(_game.getGraphics(), arrowDest, 0.6f);
+        for (int i = 0; i < _arrows.length; i++){
+            _arrows[i].render(_game.getGraphics());
         }
 
         _gameState[_currentState].render(_game.getGraphics());

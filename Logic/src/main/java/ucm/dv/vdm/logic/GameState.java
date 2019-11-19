@@ -141,6 +141,8 @@ public class GameState {
     }
 
     public void update(double t) {
+
+
         for (int i = 0; i < _go.length; i++) {
             _go[i].update(t);
         }
@@ -148,6 +150,7 @@ public class GameState {
         if(_state == State.GameRun){
             colisions();
         }
+
     }
 
     void colisions(){
