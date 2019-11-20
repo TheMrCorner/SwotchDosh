@@ -63,6 +63,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _height = _canvas.getHeight();
 
         _currentState = 3;
+
     }
 
     /**
@@ -88,7 +89,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         backDest = new Rect(_sArrows.get_rect().getWidth() - 2, 0, 0, _height);
         backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
-        _color = randomBackColor();
+        _currentColor = randomBackColor();
+
+        clearBackground();
 
         initArrows();
 
@@ -113,9 +116,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         for(int i = 1; i < numArrows; i++) {
 
             a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
-                    _arrows.getLast().getY() - _sArrows.get_rect().getHeight(), _sArrows);
-
-            System.out.println(a.getY());
+                    _arrows.getLast().getY() - (_sArrows.get_rect().getHeight()), _sArrows);
 
             _arrows.add(a);
         }
@@ -142,7 +143,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         if (_arrows.peek().getY() >= _canvas.getHeight()){
             // Reposition arrow
             Arrow a = _arrows.poll();
-            a.setY(_arrows.getLast().getY() - _sArrows.get_rect().getHeight());
+            a.setY(_arrows.getLast().getY() - (_sArrows.get_rect().getHeight()));
             // Add that element to the end of the queue
             _arrows.add(a);
 
@@ -159,7 +160,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     @Override
     public void render(){
 
-        _sbackground[_color].draw(_game.getGraphics(), backDest);
+        clearBackground();
+
+        _sbackground[_currentColor].draw(_game.getGraphics(), backDest);
 
         for (Arrow a : _arrows){
             a.render(_game.getGraphics());
@@ -186,14 +189,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      * Change the iterator of the background color
      */
     public void changeBackgroundColor(){
-        _color = randomBackColor();
+        _currentColor = randomBackColor();
     }
 
-    void clearBackgroun(){
+    void clearBackground(){
 
-        //Llamar al clear de graphics con estos colores segun el iterador de background color
-        //0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
-        //0xd14b41 y 0x75706b
+        _game.getGraphics().clear(_planeColor[_currentColor]);
 
     }
 
@@ -228,7 +229,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Rect backDest;
 
     private Random rnd;
-    BackColor _currentColor;
-    int _color; //Background sprites iterator
+    //BackColor _currentColor;
+    int _currentColor; //Background sprites iterator
+    int _planeColor[] = {0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
+            0xd14b41, 0x75706b};
 
 }
