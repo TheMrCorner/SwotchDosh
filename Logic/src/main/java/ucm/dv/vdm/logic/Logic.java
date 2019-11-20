@@ -173,9 +173,27 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _gameState[_currentState].setPunctuation(pts);
     }
 
+    /**
+     * Generates a random iterator to the background color
+     */
     int randomBackColor(){
 
         return rnd.nextInt(9);
+
+    }
+
+    /**
+     * Change the iterator of the background color
+     */
+    public void changeBackgroundColor(){
+        _color = randomBackColor();
+    }
+
+    void clearBackgroun(){
+
+        //Llamar al clear de graphics con estos colores segun el iterador de background color
+        //0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
+        //0xd14b41 y 0x75706b
 
     }
 
@@ -211,6 +229,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     private Random rnd;
     BackColor _currentColor;
-    int _color;
+    int _color; //Background sprites iterator
 
 }
