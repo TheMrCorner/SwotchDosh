@@ -1,6 +1,10 @@
 package ucm.dv.vdm.logic;
 
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Random;
+
+import javax.swing.BoxLayout;
 
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Image;
@@ -10,31 +14,17 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Logic implements ucm.dv.vdm.engine.Logic{
 
-    /**
-     * Instance of Game. Used to render and create Images.
-     */
-    Game _game;
-
-    // Aspect ratio of the game
-    int _width;
-    int _height;
-    Rect _canvas;
-
-    /**
-     * ResourceManager. Used to access it and load different Resources.
-     */
-    ResourceManager _rm;
-
-    /**
-     * GameState
-     */
-    GameState[] _gameState;
-    int _currentState;
-
-    Sprite _sbackground[];
-    Sprite _sArrows;
-
-    Arrow _arrows[];
+    public enum BackColor {
+        GREEN,
+        TURQUOISE,
+        LIGHTBLUE,
+        BLUE,
+        PURPLE,
+        DARKBLUE,
+        YELLOW,
+        ORANGE,
+        BROWN
+    }
 
     /**
      * Logic Constructor, creates a new instance of Logic.
@@ -44,6 +34,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _game = g; // Save the game instance for future use.
         _gameState = new GameState[4]; //Save de gameState instance for future use.
         init(); // Initialize everything
+
+        rnd = new Random();
     }
 
     //---------------------------
@@ -83,8 +75,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
 
-        //DEBERIAMOS PASAR TODOS ESTOS SPRITES A GAMESTATE O RESOURCE MANAGER PARA QUE VAYA ASIGNANDO EL NECESARIO EN LOS UPDATES (YA QUE CAMBIAN DE COLOR)
-
 
     }
 
@@ -95,6 +85,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     @Override
     public void initLogic() {
+
+        backDest = new Rect(_sArrows.get_rect().getWidth() - 2, 0, 0, _height);
+        backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
+        _color = randomBackColor();
 
         initArrows();
 
@@ -107,16 +101,23 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     void initArrows () {
 
-        int numArrows = (_height / _sArrows.get_rect().getHeight()) +1; //Number of sprites of arrows that we need at a specific canvas
+        int numArrows = (_height / _sArrows.get_rect().getHeight()) +2; //Number of sprites of arrows that we need at a specific canvas
 
-        _arrows = new Arrow[numArrows];
+        _arrows = new ArrayDeque<>();
+
+        Arrow a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
+                _canvas.getHeight() - _sArrows.get_rect().getHeight(), _sArrows);
+        _arrows.add(a);
 
         //Keeps all the arrows in an array to update them later and draw the first position
-        for(int i = 0; i < numArrows; i++) {
+        for(int i = 1; i < numArrows; i++) {
 
-            Arrow a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2), (_sArrows.get_rect().getHeight() ) * i, _sArrows);
+            a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
+                    _arrows.getLast().getY() - _sArrows.get_rect().getHeight(), _sArrows);
 
-            _arrows[i] = a;
+            System.out.println(a.getY());
+
+            _arrows.add(a);
         }
 
     }
@@ -130,13 +131,26 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // Get the Input
         _gameState[_currentState].processInput(_game);
 
-        for (int i = 0; i < _arrows.length; i++){
-            _arrows[i].update(t, _canvas.getHeight());
-
-        }
+        updateArrows(t);
 
         // Update everything with the information of ProcessInput
         _gameState[_currentState].update(t);
+    }
+
+    void updateArrows (double t){
+
+        if (_arrows.peek().getY() >= _canvas.getHeight()){
+            // Reposition arrow
+            Arrow a = _arrows.poll();
+            a.setY(_arrows.getLast().getY() - _sArrows.get_rect().getHeight());
+            // Add that element to the end of the queue
+            _arrows.add(a);
+
+        }
+
+        for (Arrow a : _arrows){
+            a.update(t);
+        }
     }
 
     /**
@@ -144,12 +158,11 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     @Override
     public void render(){
-        //TODA INICIALIZACION DEBEMOS PASARLA A SU INIT DE GAMESTATE
-        Rect backDest = new Rect(_width, 0, 0, _height);
-        _sbackground[6].draw(_game.getGraphics(), backDest);
 
-        for (int i = 0; i < _arrows.length; i++){
-            _arrows[i].render(_game.getGraphics());
+        _sbackground[_color].draw(_game.getGraphics(), backDest);
+
+        for (Arrow a : _arrows){
+            a.render(_game.getGraphics());
         }
 
         _gameState[_currentState].render(_game.getGraphics());
@@ -159,4 +172,45 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _currentState = i;
         _gameState[_currentState].setPunctuation(pts);
     }
+
+    int randomBackColor(){
+
+        return rnd.nextInt(9);
+
+    }
+
+    /**
+     * Instance of Game. Used to render and create Images.
+     */
+    Game _game;
+
+    // Aspect ratio of the game
+    int _width;
+    int _height;
+    Rect _canvas;
+
+    /**
+     * ResourceManager. Used to access it and load different Resources.
+     */
+    ResourceManager _rm;
+
+    /**
+     * GameState
+     */
+    GameState[] _gameState;
+    int _currentState;
+
+    Sprite _sbackground[];
+    Sprite _sArrows;
+
+    // Pool
+    ArrayDeque<Arrow> _arrows;
+
+    //Rect of the background
+    Rect backDest;
+
+    private Random rnd;
+    BackColor _currentColor;
+    int _color;
+
 }

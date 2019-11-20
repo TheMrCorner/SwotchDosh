@@ -18,13 +18,9 @@ public class Arrow {
 
    }
 
-    public void update (double t, int h){
+    public void update (double t){
 
        _y += _vel*t;
-
-       if (_y >= h){
-           _y = - (_sprite.get_rect().getHeight());
-       }
 
     }
 
