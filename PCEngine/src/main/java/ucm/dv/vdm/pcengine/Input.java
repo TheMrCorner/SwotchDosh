@@ -15,21 +15,23 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     /**
      * Constructor of the Input System. Singleton
      */
-    Input (Window w){
+    Input (Window w, Graphics g){
         // Create the TouchEventList
         _touchEvn = new ArrayList<TouchEvent>();
         w.addMouseListener(this);
         w.addKeyListener(this);
         w.addMouseMotionListener(this);
+
+        _g = g;
     }
 
     /**
      * FUnction to get access to the Input.
      * @return Instance of Input
      */
-    public Input getInput(Window w){
+    public Input getInput(Window w, Graphics g){
         if(_inp == null){
-            _inp = new Input(w);
+            _inp = new Input(w, g);
         }
 
         return _inp;
@@ -64,7 +66,18 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
-            TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.CLICKED, 0);
+            int x, y;
+
+            if(_g.isInCanvas(mouseEvent.getX(), mouseEvent.getY())){
+                x = _g.reverseRepositionX(mouseEvent.getX() - _g.getCanvas().getX());
+                y = _g.reverseRepositionY(mouseEvent.getY() - _g.getCanvas().getY());
+            }
+            else{
+                x = mouseEvent.getX();
+                y = mouseEvent.getY();
+            }
+
+            TouchEvent aux = new TouchEvent(x, y, TouchEvent.TouchType.CLICKED, 0);
             _touchEvn.add(aux);
         }
     }
@@ -162,6 +175,9 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
 
     // Input de reescalado
     WindEvent _ev;
+
+    // Instance of Graphics for checking position
+    Graphics _g;
 
     @Override
     public void componentResized(ComponentEvent componentEvent) {

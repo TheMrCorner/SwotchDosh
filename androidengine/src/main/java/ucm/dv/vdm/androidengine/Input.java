@@ -9,4 +9,9 @@ public class Input implements ucm.dv.vdm.engine.Input{
         return null;
     }
 
+    @Override
+    public WindEvent getWindowEvent() {
+        return null;
+    }
+
 }

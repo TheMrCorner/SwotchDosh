@@ -1,191 +1,69 @@
 package ucm.dv.vdm.logic;
 
-import java.util.List;
+import java.util.List; // TODO: Esto hay que mirar si realmente es útil
 
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Input;
 import ucm.dv.vdm.engine.Sprite;
 
+
 /**
- * State of the game. Defines the actual state of the game. (Main Menú, Pause Menú, Game Over, Game Run)
+ * Abstract class for GameState. Defines the constructor, abstract methods and common atributes.
  */
-public class GameState {
+public class GameState{
 
-    //The different states of the game
-    public enum State {
-        MainMenu, Pause, GameOver, GameRun
-    }
-
-    //GETTER PROVISIONAL PUES EL ENUMERADO NO ESTARÁ EN LAS DEMÁS CLASES
-    public State getActualGameState() {
-        return _state;
-    }
-
-    public GameState(int s, Logic l){
+    /**
+     * Constructor of GameState. Receives an instance of Logic to call it when needed. Receives
+     * the player's score when needed (coming from GamRun to GameOver to show punctuation).
+     * @param l Logic instance.
+     * @param score Player's actual score.
+     */
+    public GameState (Logic l, int score){
         _l = l;
 
-        switch (s){
-            case 0:
-                _state = State.MainMenu;
-                break;
-            case 1:
-                _state = State.Pause;
-                break;
-            case 2:
-                _state = State.GameOver;
-                break;
-            case 3:
-                _state = State.GameRun;
-                break;
-        }
-    }
-
-    //-------STATE INITS-------------------------------------------------
-
-    //Background and arrows are always renderer
-    //Calls the different initiation when the actual game state changes
-    public void initState(ResourceManager r){
-        switch(_state) {
-            case MainMenu:
-                initMenu(r);
-                break;
-            case Pause:
-                initPause(r);
-                break;
-            case GameOver:
-                initOver(r);
-                break;
-            case GameRun:
-                initGame(r);
-                break;
-        }
-
-    }
-
-    void initMenu (ResourceManager r){
-        _go = new GameObject[4]; // Title, 2 buttons, Tap to Play
-
-        _sprites = new Sprite[4][10];
-    }
-
-    void initPause (ResourceManager r){
-        _go = new GameObject[4]; // How to Play, Instructions, Button, Tap to Play
-    }
-
-    void initOver (ResourceManager r){
-        _go = new GameObject[4]; // 2 buttons, Game Over, Play Again?, Points, Punctuation
-
-        _go[0] = new GameObject(_l.getCanvasSize().getWidth()/2, 364, Sprite.spriteMaker(r.getText("GameOver"), 1, 1));
-        _go[1] = new GameObject(_l.getCanvasSize().getWidth()/2, 1396, Sprite.spriteMaker(r.getText("PlayAgain"), 1, 1));
-        _go[2] = new GameObject(0, 30, Sprite.spriteMaker(r.getInterface("Buttons"), 10, 2));
-        _go[3] = new GameObject(0, 0,  Sprite.spriteMaker(r.getText("Font"), 15, 7));
-    }
-
-    void initGame (ResourceManager r){
-        _go = new GameObject[2]; // Player, BallPool (Object Pool)
-        _pts = 0;
-
-        _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
-        _go[0].setColor(GameObject.Color.BLACK);
-        _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, 0, r.getGameObject("Balls"));
-    }
-
-    public void setPunctuation (int p){
-        _pts = p;
+        _pts = score;
     }
 
     /**
-     * Gets the TouchEvent list from the Input created in the game and processes it.
+     * Initializes the GameState with all the sprites needed, provided by the ResourceManager
+     * @param r ResourceManager instance.
      */
-    public void processInput(Game g){
-        List<Input.TouchEvent> e = g.getInput().getTouchEvent(); // Get the list of TouchEvents
+    public void initState(ResourceManager r){}
 
-        int ptr = e.size() - 1; // Pointer to roam the list
+    /**
+     * Updates all GameObjects in this State with the time passed since the las update.
+     * @param t Time elapsed since the last frame.
+     */
+    public void update(double t){}
 
-        while(!e.isEmpty() && ptr >= -1){ // While list is not empty
+    /**
+     * Renders all GameObjects in their specific locations. Receives an instance of Graphics
+     * to call the drawing methods.
+     * @param g Instance of Graphics
+     */
+    public void render(Graphics g){}
 
-            Input.TouchEvent te = e.get(ptr); // Get the TouchEvent at the pointer position
+    /**
+     * Method that processes the Input received from the Logic.
+     * @param g Game instance to get the Input.
+     */
+    public void processInput (Game g){}
 
-            switch(te.getType()){ // Process the type of the TouchEvent
-                case CLICKED:
-                    if(_state == State.GameRun) {
-                        if(_go[0].getColor() == GameObject.Color.BLACK) {
-                            _go[0].setColor(GameObject.Color.WHITE);
-                        }
-                        else{
-                            _go[0].setColor(GameObject.Color.BLACK);
-                        }
-                    }
+    /**
+     * Method to change to the next state. Each state knows to which state it has to change.
+     */
+    public GameState changeState(){ return null; }
 
-                    if(_state == State.MainMenu){
-                        _l.changeState(1, 0);
-                    }
-
-                    if(_state == State.Pause){
-                        _l.changeState(3, 0);
-                    }
-
-                    if(_state == State.GameOver) {
-                        _l.changeState(3, 0);
-                    }
-                    break;
-                default:
-                    //Anything else, do nothing.
-                    break;
-            }
-
-            e.remove(ptr); // Remove that TouchEvent from the list
-            ptr--;
-        }
-    }
-
-    public void update(double t) {
-
-
-        for (int i = 0; i < _go.length; i++) {
-            _go[i].update(t);
-        }
-
-        if(_state == State.GameRun){
-            colisions();
-        }
-
-    }
-
-    void colisions(){
-        if(_go[0].getPosY() <= ((BallPool)_go[1]).getLowerBall().getPosY()){
-            if(((BallPool)_go[1]).getLowerBall().getColor() == _go[0].getColor()){
-                _pts++;
-
-                ((BallPool)_go[1]).destroy();
-            }
-            else{
-                _l.changeState(2, _pts);
-            }
-        }
-    }
-
-    public void render(Graphics g){
-        for(int i = 0; i < _go.length; i++){
-            _go[i].render(g);
-        }
-    }
-
-    //The state that is running in this moment
-    State _state;
-
+    // Saves an instance of Logic in case it is necessary
     Logic _l;
 
+    // Score points
     int _pts;
 
-    //GameObjects
+    // GameObjects
+    // Array that contains all GameObjects in this State
     GameObject[] _go;
-    Sprite[][] _sprites;
 
-    Sprite _sballs[];
-    Sprite _sbuttons[];
-    Sprite _sFont[];
-    Sprite _sPlayers[];
-
+    Sprite[][] _sprites; // TODO: esto hay que revisarlo porque no sé dónde se usa
 }

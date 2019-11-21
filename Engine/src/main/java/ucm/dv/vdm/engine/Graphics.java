@@ -62,7 +62,12 @@ public interface Graphics {
 
     void setCanvasPos(int x, int y);
 
+    boolean isInCanvas(int x, int y);
+
     int repositionX(int x);
     int repositionY(int y);
+
+    int reverseRepositionX(int x);
+    int reverseRepositionY(int y);
 
 }

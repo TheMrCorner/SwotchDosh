@@ -6,7 +6,17 @@ import ucm.dv.vdm.engine.Rect;
 public class Graphics implements ucm.dv.vdm.engine.Graphics{
 
     @Override
-    public void setCanvasSize(int x, int y) {
+    public void setCanvasSize(Rect c, Rect dim) {
+
+    }
+
+    @Override
+    public Rect getCanvas() {
+        return null;
+    }
+
+    @Override
+    public void setReferenceCanvas(Rect c) {
 
     }
 
@@ -36,7 +46,7 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics{
     }
 
     @Override
-    public void drawImage(Image image, Rect source, Rect dest, int alpha) {
+    public void drawImage(Image image, Rect source, Rect dest, float alpha) {
 
     }
 
@@ -47,6 +57,26 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics{
 
     @Override
     public int getHeight() {
+        return 0;
+    }
+
+    @Override
+    public Rect dimensions(Rect src, Rect dim) {
+        return null;
+    }
+
+    @Override
+    public void setCanvasPos(int x, int y) {
+
+    }
+
+    @Override
+    public int repositionX(int x) {
+        return 0;
+    }
+
+    @Override
+    public int repositionY(int y) {
         return 0;
     }
 

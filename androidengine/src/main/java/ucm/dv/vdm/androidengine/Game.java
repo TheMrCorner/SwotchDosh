@@ -3,6 +3,7 @@ package ucm.dv.vdm.androidengine;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Input;
 import ucm.dv.vdm.engine.Logic;
+import ucm.dv.vdm.engine.Rect;
 
 public class Game implements ucm.dv.vdm.engine.Game{
 
@@ -34,6 +35,11 @@ public class Game implements ucm.dv.vdm.engine.Game{
     @Override
     public int getHeight() {
         return 0;
+    }
+
+    @Override
+    public Rect getCanvas() {
+        return null;
     }
 
 }

@@ -32,7 +32,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     public Logic(Game g){
         _game = g; // Save the game instance for future use.
-        _gameState = new GameState[4]; //Save de gameState instance for future use.
         init(); // Initialize everything
 
         rnd = new Random();
@@ -61,8 +60,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _width = _canvas.getWidth();
         _height = _canvas.getHeight();
-
-        _currentState = 3;
     }
 
     /**
@@ -92,11 +89,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         initArrows();
 
-        // Create all gameObjects and CanvasObjects
-        for(int i = 0; i < _gameState.length; i++){
-            _gameState[i] = new GameState(i, this);
-            _gameState[i].initState(_rm);
-        }
+        _currentGameState = new MainMenuState(this, 0);
+
+        _currentGameState.initState(_rm);
     }
 
     void initArrows () {
@@ -128,13 +123,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      */
     @Override
     public void update(double t) {
-        // Get the Input
-        _gameState[_currentState].processInput(_game);
+        _currentGameState.processInput(_game);
 
         updateArrows(t);
 
         // Update everything with the information of ProcessInput
-        _gameState[_currentState].update(t);
+        _currentGameState.update(t);
     }
 
     void updateArrows (double t){
@@ -161,16 +155,16 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _sbackground[_color].draw(_game.getGraphics(), backDest);
 
-        for (Arrow a : _arrows){
+        /*for (Arrow a : _arrows){
             a.render(_game.getGraphics());
-        }
+        }*/
 
-        _gameState[_currentState].render(_game.getGraphics());
+        _currentGameState.render(_game.getGraphics());
     }
 
-    public void changeState(int i, int pts){
-        _currentState = i;
-        _gameState[_currentState].setPunctuation(pts);
+    public void changeState(GameState gs){
+        _currentGameState = gs;
+        gs.initState(_rm);
     }
 
     int randomBackColor(){
@@ -197,8 +191,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     /**
      * GameState
      */
-    GameState[] _gameState;
-    int _currentState;
+    GameState _currentGameState;
 
     Sprite _sbackground[];
     Sprite _sArrows;

@@ -48,7 +48,11 @@ public class GameObject {
 
     public void update(double t){}
 
-    public void render(Graphics g){}
+    public void render(Graphics g){
+        for(int i = 0; i < _sprite.length; i++){
+            _sprite[i].draw(g, (int)_x, (int)_y);
+        }
+    }
 
     //---------------------------------------------
     //----------------Atributes--------------------

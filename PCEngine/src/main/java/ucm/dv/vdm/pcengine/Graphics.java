@@ -170,32 +170,34 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     /**
      * Draws an image (or a part of it (Sprite)) in a specific rectangle with an specific alpha
      * value (transparency).
-     * TODO: Preguntar como se haría esta wea
+     *
      * @param image Image to paint
      * @param source Rectangle of the image.
      * @param dest Rectangle destination to paint the image.
      * @param alpha Alpha value for the color.
      */
     @Override
-    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest, float alpha) { // TODO: comentar
+    public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, Rect dest, float alpha) {
         try {
             // Set alpha value received from the function call
             ((Graphics2D)_win.getJGraphics()).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
-            dest = dimensions(dest, _can);
+            Rect temp = new Rect (repositionX(dest.getWidth()), 0, 0, repositionY(dest.getHeight()));
+
+            temp = dimensions(temp, _can);
 
             int x = repositionX(dest.getX());
             int y = repositionY(dest.getY());
 
-            dest.setPosition(x + _can.getX(), y + _can.getY());
+            temp.setPosition(x + _can.getX(), y + _can.getY());
 
             Color c = new Color(0.0f, 0.0f, 0.0f, alpha);
 
             if (image != null) {
                 _win.getJGraphics().setColor(c);
 
-                _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(), dest.getX(), dest.getY(),
-                        dest.getX() + dest.getWidth(), dest.getY() + dest.getHeight(),
+                _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(), temp.getX(), temp.getY(),
+                        temp.getX() + temp.getWidth(), temp.getY() + temp.getHeight(),
                         source.getLeft(), source.getTop(), source.getRight(), source.getBottom(), null);
             }
 
@@ -274,6 +276,17 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     }
 
     @Override
+    public boolean isInCanvas(int x, int y) {
+        if( ((x >= _can.getX()) && (x < (_can.getX() + _can.getWidth())))
+                && ((y >= _can.getY()) && (y < (_can.getY() + _can.getHeight())))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
     public int repositionX(int x) {
         return (x * _can.getWidth()) / _refCan.getWidth();
     }
@@ -281,6 +294,16 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     @Override
     public int repositionY(int y) {
         return (y * _can.getHeight()) / _refCan.getHeight();
+    }
+
+    @Override
+    public int reverseRepositionX(int x) {
+        return (x * _refCan.getWidth()) / _can.getWidth();
+    }
+
+    @Override
+    public int reverseRepositionY(int y) {
+        return (y * _refCan.getHeight()) / _can.getHeight();
     }
 
     //---------------------------------------------------------------
