@@ -72,7 +72,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             do {
                 _win.setGraphics();
                 try { // Try to paint in the Graphics
-                    _g.testCanvas(_win);
+                    //_g.testCanvas(_win);
                     _logic.render();
                     // Set the position of the canvas
                 }
