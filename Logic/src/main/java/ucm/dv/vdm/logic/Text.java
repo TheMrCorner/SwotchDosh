@@ -15,7 +15,9 @@ public class Text extends GameObject{
     public Text(int x, int y, Sprite[] s) {
         super(x, y, s);
 
-        _character = 0;
+        _active = true;
+
+        _character = 52;
     }
 
     public void setCharacter (char c){
@@ -150,55 +152,68 @@ public class Text extends GameObject{
             case 'Z':
                 _character = 25;
                 break;
-            //NUMBERS
-            case '0':
-                _character = 26;
+
+        }
+
+    }
+
+    public void setNumber (int n){
+
+        switch (n) {
+            case 0:
+                _character = 52;
                 break;
 
-            case '1':
-                _character = 27;
+            case 1:
+                _character = 53; //27
                 break;
 
-            case '2':
-                _character = 28;
+            case 2:
+                _character = 54;
                 break;
 
-            case '3':
-                _character = 29;
+            case 3:
+                _character = 55;
                 break;
 
-            case '4':
-                _character = 30;
+            case 4:
+                _character = 56;
                 break;
 
-            case '5':
-                _character = 31;
+            case 5:
+                _character = 57;
                 break;
 
-            case '6':
-                _character = 32;
+            case 6:
+                _character = 58;
                 break;
 
-            case '7':
-                _character = 33;
+            case 7:
+                _character = 59;
                 break;
 
-            case '8':
-                _character = 34;
+            case 8:
+                _character = 60;
                 break;
 
-            case '9':
-                _character = 35;
+            case 9:
+                _character = 61;
                 break;
-
         }
 
     }
 
     @Override
     public void render(Graphics g) {
-       _sprite[_character].draw(g, (int)_x, (int)_y);
+        if (_active) {
+            _sprite[_character].draw(g, (int) _x, (int) _y);
+        }
     }
 
+    public void setActive(boolean a){ _active = a;}
+    public boolean getActive(){ return _active;}
+
     int _character; //Iterator to a specific letter or number
+
+    boolean _active;
 }

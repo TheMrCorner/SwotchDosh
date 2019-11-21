@@ -76,6 +76,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
 
+        _sText = Sprite.spriteMaker(_rm.getText("Font"), 15, 7);
+
 
     }
 
@@ -100,6 +102,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
             _gameState[i] = new GameState(i, this);
             _gameState[i].initState(_rm);
         }
+
+        _points = new Text[3];
+        for (int i = 0; i < _points.length; i++) {
+            _points[i] = new Text( 1100 + (i*100), 30, _sText);
+        }
+
     }
 
     void initArrows () {
@@ -134,6 +142,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         updateArrows(t);
 
+        //para probar
+        updatePoints(873);
+
         // Update everything with the information of ProcessInput
         _gameState[_currentState].update(t);
     }
@@ -154,6 +165,21 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         }
     }
 
+    void updatePoints(int p){
+
+        int i = 2;
+        int div = p;
+        while(div > 0){
+            _points[i].setNumber(div % 10);
+            div = div / 10;
+
+            i--;
+        }
+
+        //_points[].setNumber(p % 10);
+
+    }
+
     /**
      * Render every object of the game with the updated information from update().
      */
@@ -166,6 +192,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         for (Arrow a : _arrows){
             a.render(_game.getGraphics());
+        }
+
+        for (Text t : _points) {
+            t.render(_game.getGraphics());
         }
 
         _gameState[_currentState].render(_game.getGraphics());
@@ -221,6 +251,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     Sprite _sbackground[];
     Sprite _sArrows;
+    Sprite _sText[];
 
     // Pool
     ArrayDeque<Arrow> _arrows;
@@ -233,5 +264,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     int _currentColor; //Background sprites iterator
     int _planeColor[] = {0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
             0xd14b41, 0x75706b};
+
+    //Points font
+    Text _points[];
+
 
 }
