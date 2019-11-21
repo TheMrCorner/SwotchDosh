@@ -93,8 +93,6 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
 
         Color c = new Color(color);
 
-        System.out.println(color);
-
         // Set color to paint in the Swing Graphics.
         _win.getJGraphics().setColor(c);
         // Paint the hole screen with it.

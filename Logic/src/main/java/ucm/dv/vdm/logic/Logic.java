@@ -14,18 +14,6 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Logic implements ucm.dv.vdm.engine.Logic{
 
-    public enum BackColor {
-        GREEN,
-        TURQUOISE,
-        LIGHTBLUE,
-        BLUE,
-        PURPLE,
-        DARKBLUE,
-        YELLOW,
-        ORANGE,
-        BROWN
-    }
-
     /**
      * Logic Constructor, creates a new instance of Logic.
      * @param g Game instance to store it and interact with the engine.
@@ -74,7 +62,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // Load sprites
         // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
-        _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 5)[0];
+        _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 1)[0];
 
         _sText = Sprite.spriteMaker(_rm.getText("Font"), 15, 7);
 
@@ -93,9 +81,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
         _currentColor = randomBackColor();
 
-        clearBackground();
-
-        initArrows();
+        initArrow();
 
         // Create all gameObjects and CanvasObjects
         for(int i = 0; i < _gameState.length; i++){
@@ -103,31 +89,18 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
             _gameState[i].initState(_rm);
         }
 
+        //Para el init del game state
         _points = new Text[3];
         for (int i = 0; i < _points.length; i++) {
-            _points[i] = new Text( _canvas.getWidth() + (i*100), 60, _sText);
+            _points[i] = new Text( _canvas.getWidth() - ((30 + _sText[i].get_rect().getWidth())*i), 90, _sText);
         }
 
     }
 
-    void initArrows () {
+    void initArrow () {
 
-        int numArrows = (_height / _sArrows.get_rect().getHeight()) +2; //Number of sprites of arrows that we need at a specific canvas
-
-        _arrows = new ArrayDeque<>();
-
-        Arrow a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
+        _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
                 _canvas.getHeight() - _sArrows.get_rect().getHeight(), _sArrows);
-        _arrows.add(a);
-
-        //Keeps all the arrows in an array to update them later and draw the first position
-        for(int i = 1; i < numArrows; i++) {
-
-            a = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
-                    _arrows.getLast().getY() - (_sArrows.get_rect().getHeight()), _sArrows);
-
-            _arrows.add(a);
-        }
 
     }
 
@@ -151,20 +124,18 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     void updateArrows (double t){
 
-        if (_arrows.peek().getY() >= _canvas.getHeight()){
+        if (_arrow.getY() >= _canvas.getHeight()){
+
             // Reposition arrow
-            Arrow a = _arrows.poll();
-            a.setY(_arrows.getLast().getY() - (_sArrows.get_rect().getHeight()));
-            // Add that element to the end of the queue
-            _arrows.add(a);
+            _arrow.setY(0);
 
         }
 
-        for (Arrow a : _arrows){
-            a.update(t);
-        }
+        _arrow.update(t);
+
     }
 
+    //Pasara al game state necesario
     void updatePoints(int p){
 
         int i = 2;
@@ -190,9 +161,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _sbackground[_currentColor].draw(_game.getGraphics(), backDest);
 
-        for (Arrow a : _arrows){
-            a.render(_game.getGraphics());
-        }
+        _arrow.render(_game.getGraphics());
+
 
         for (Text t : _points) {
             t.render(_game.getGraphics());
@@ -254,14 +224,16 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Sprite _sText[];
 
     // Pool
-    ArrayDeque<Arrow> _arrows;
+    //ArrayDeque<Arrow> _arrows;
+    Arrow _arrow;
 
     //Rect of the background
     Rect backDest;
 
     private Random rnd;
-    //BackColor _currentColor;
+
     int _currentColor; //Background sprites iterator
+    //GREEN, TURQUOISE, LIGHTBLUE, BLUE, PURPLE, DARKBLUE, YELLOW, ORANGE, BROWN
     int _planeColor[] = {0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
             0xd14b41, 0x75706b};
 
