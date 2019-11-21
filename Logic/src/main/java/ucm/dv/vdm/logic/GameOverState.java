@@ -29,7 +29,7 @@ public class GameOverState extends GameState {
     public void initState(ResourceManager r){ // This one needs GameOverText, SoundButton, HelpMenuButton, PlayAgainText, TextPoints, TextNumber
         // PlayAgain tambien BLINKEA
         // Init _go
-        _go = new GameObject[4]; // Player, BallPool, Text for punctuation
+        _go = new GameObject[5]; // Player, BallPool, Text for punctuation
 
         Sprite[] buttons = Sprite.spriteMaker(r.getInterface("Buttons"), 10, 1);
 
@@ -47,7 +47,10 @@ public class GameOverState extends GameState {
 
         _go[2] = new Button (Button.Position.LEFT, _l._canvas.getWidth(), soundButtons); // SoundButton
         _go[3] = new Button (Button.Position.RIGHT, _l._canvas.getWidth(), helpButton); // HelpMenuButton
-        //_go[4] = ;
+
+        Sprite[] font = Sprite.spriteMaker(r.getText("Font"), 15, 7);
+
+        _go[4] = new Points (0, 780, font, (_l._canvas.getWidth()/2), this);
         //_go[5] = ; // TODO: Hacer los textos con la clase nueva de KAI
 
         // Initialize alpha value to 1
@@ -101,7 +104,15 @@ public class GameOverState extends GameState {
 
             switch(te.getType()){ // Process the type of the TouchEvent
                 case CLICKED:
-                    _l.changeState(new GameRunState(_l, _pts));
+                    if(((Button)_go[2]).isPressed(te.getX(), te.getY())){ // Sound Button
+                        ((Button)_go[2]).changeButton();
+                    }
+                    else if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
+                        _l.changeState(new HelpMenuState(_l, 0));
+                    }
+                    else{
+                        _l.changeState(new GameRunState(_l, 0));
+                    }
                     break;
                 default:
                     //Anything else, do nothing.

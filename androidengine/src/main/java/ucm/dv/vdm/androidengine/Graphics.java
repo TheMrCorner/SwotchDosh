@@ -71,12 +71,27 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics{
     }
 
     @Override
+    public boolean isInCanvas(int x, int y) {
+        return false;
+    }
+
+    @Override
     public int repositionX(int x) {
         return 0;
     }
 
     @Override
     public int repositionY(int y) {
+        return 0;
+    }
+
+    @Override
+    public int reverseRepositionX(int x) {
+        return 0;
+    }
+
+    @Override
+    public int reverseRepositionY(int y) {
         return 0;
     }
 

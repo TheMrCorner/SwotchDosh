@@ -59,10 +59,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
         _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 1)[0];
-
-        _sText = Sprite.spriteMaker(_rm.getText("Font"), 15, 7);
-
-
     }
 
     @Override
@@ -84,14 +80,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _currentGameState.initState(_rm);
     }
 
-        //Para el init del game state
-        _points = new Text[3];
-        for (int i = 0; i < _points.length; i++) {
-            _points[i] = new Text( _canvas.getWidth() - ((30 + _sText[i].get_rect().getWidth())*i), 90, _sText);
-        }
-
-    }
-
     void initArrow () {
 
         _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
@@ -108,9 +96,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _currentGameState.processInput(_game);
 
         updateArrows(t);
-
-        //para probar
-        updatePoints(873);
 
         // Update everything with the information of ProcessInput
         _currentGameState.update(t);
@@ -129,22 +114,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     }
 
-    //Pasara al game state necesario
-    void updatePoints(int p){
-
-        int i = 2;
-        int div = p;
-        while(div > 0){
-            _points[i].setNumber(div % 10);
-            div = div / 10;
-
-            i--;
-        }
-
-        //_points[].setNumber(p % 10);
-
-    }
-
     /**
      * Render every object of the game with the updated information from update().
      */
@@ -156,11 +125,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _sbackground[_currentColor].draw(_game.getGraphics(), backDest);
 
         _arrow.render(_game.getGraphics());
-
-
-        for (Text t : _points) {
-            t.render(_game.getGraphics());
-        }
 
         _currentGameState.render(_game.getGraphics());
     }
@@ -214,8 +178,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     Sprite _sbackground[];
     Sprite _sArrows;
-    Sprite _sText[];
-
     // Pool
     //ArrayDeque<Arrow> _arrows;
     Arrow _arrow;
@@ -229,9 +191,5 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     //GREEN, TURQUOISE, LIGHTBLUE, BLUE, PURPLE, DARKBLUE, YELLOW, ORANGE, BROWN
     int _planeColor[] = {0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
             0xd14b41, 0x75706b};
-
-    //Points font
-    Text _points[];
-
 
 }

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.image.BufferStrategy;
 
 import ucm.dv.vdm.engine.Logic;
@@ -14,7 +16,7 @@ import ucm.dv.vdm.engine.Rect;
  * simulate the game, call render to update graphics on the screen and update the time passed
  * between frames and also store information about the frames.
  */
-public class Game implements ucm.dv.vdm.engine.Game, Runnable{
+public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener {
 
     /**
      * Constructor of the class.
@@ -46,6 +48,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         _info = _lastFrameTime; // Information about the fps (debug)
         _frames = 0; // Number of frames passed
 
+        _win.addComponentListener(this);
     }
 
     /**
@@ -92,6 +95,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     public void setLogic(Logic l){
         _logic = l;
         _g.setReferenceCanvas(_logic.getCanvasSize());
+
+        resize();
     }
 
     /**
@@ -113,11 +118,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             _lastFrameTime = _currentTime;
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
-            //RESIZE
-            resize();
-
             // Update all Logic
-            update(); // Pasarle el tiempo
+            update();
 
             // Inform about the fps (Debug only)
             if(_currentTime - _info > 1000000000l){
@@ -201,6 +203,18 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
         return _ip;
     }
 
+    @Override
+    public void componentResized(ComponentEvent componentEvent) {
+        resize();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent componentEvent) {}
+    @Override
+    public void componentShown(ComponentEvent componentEvent) {}
+    @Override
+    public void componentHidden(ComponentEvent componentEvent) {}
+
     //---------------------------------------------------------------
     //----------------------Pivate Atributes-------------------------
     //---------------------------------------------------------------
@@ -219,5 +233,4 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     int _height;
     int _frames;
     long _info;
-
 }

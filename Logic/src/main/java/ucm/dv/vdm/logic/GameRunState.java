@@ -5,6 +5,7 @@ import java.util.List;
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Input;
+import ucm.dv.vdm.engine.Sprite;
 
 public class GameRunState extends GameState {
     /**
@@ -26,13 +27,15 @@ public class GameRunState extends GameState {
     @Override
     public void initState(ResourceManager r){
         // Init _go
-        _go = new GameObject[2]; // Player, BallPool, Text for punctuation
+        _go = new GameObject[3]; // Player, BallPool, Text for punctuation
+
+        Text[] _points = new Text[3];
 
         // Init each GO
         _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
         _go[0].setColor(GameObject.Color.BLACK);
         _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, 0, r.getGameObject("Balls"));
-        //_go[2] = null; // TODO: habría que hacer la clase texto, que traduzca un String a texto con nuestra fuente
+        _go[2] = new Points (30, 90, Sprite.spriteMaker(r.getText("Font"), 15, 7), _l.getCanvasSize().getWidth(), this);
     }
 
     /**

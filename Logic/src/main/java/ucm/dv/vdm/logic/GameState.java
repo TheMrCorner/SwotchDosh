@@ -55,6 +55,13 @@ public class GameState{
      */
     public GameState changeState(){ return null; }
 
+    /**
+     * Function to get the points value.
+     */
+    public int get_pts(){
+        return _pts;
+    }
+
     // Saves an instance of Logic in case it is necessary
     Logic _l;
 
