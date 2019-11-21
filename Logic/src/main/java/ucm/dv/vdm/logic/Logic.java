@@ -105,7 +105,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _points = new Text[3];
         for (int i = 0; i < _points.length; i++) {
-            _points[i] = new Text( 1100 + (i*100), 30, _sText);
+            _points[i] = new Text( _canvas.getWidth() + (i*100), 60, _sText);
         }
 
     }
