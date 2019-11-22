@@ -69,8 +69,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     @Override
     public void initLogic() {
 
-        backDest = new Rect(_sArrows.get_rect().getWidth() - 2, 0, 0, _height);
-        backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
+        _backDest = new Rect(_sArrows.get_rect().getWidth(), 0, 0, _height);
+        _backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
         _currentColor = randomBackColor();
 
         initArrow();
@@ -82,7 +82,11 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     void initArrow () {
 
-        _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
+        //Probando a hacer una regla de 3 con el ancho
+        _arrowDest = new Rect(_canvas.getWidth(),
+                0,0, (_canvas.getWidth() * _sArrows.get_rect().getHeight())/_sArrows.get_rect().getWidth());
+
+        _arrow = new Arrow( (_width/2) - (_sArrows.get_rect().getWidth()/2),
                 _canvas.getHeight() - _sArrows.get_rect().getHeight(), _sArrows);
 
     }
@@ -103,10 +107,10 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     void updateArrows (double t){
 
-        if (_arrow.getY() >= _canvas.getHeight()){
+        if (_arrow.getY() >= 25){
 
             // Reposition arrow
-            _arrow.setY(0);
+            _arrow.setY(_canvas.getHeight() - _arrowDest.getHeight());
 
         }
 
@@ -122,9 +126,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         clearBackground();
 
-        _sbackground[_currentColor].draw(_game.getGraphics(), backDest);
+        _sbackground[_currentColor].draw(_game.getGraphics(), _backDest);
 
-        _arrow.render(_game.getGraphics());
+        _arrow.render(_game.getGraphics(), _arrowDest);
 
         _currentGameState.render(_game.getGraphics());
     }
@@ -183,7 +187,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Arrow _arrow;
 
     //Rect of the background
-    Rect backDest;
+    Rect _backDest;
+    Rect _arrowDest;
 
     private Random rnd;
 
