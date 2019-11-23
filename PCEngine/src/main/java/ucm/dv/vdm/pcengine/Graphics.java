@@ -18,40 +18,12 @@ public class Graphics extends AbstractGraphics {
         _refCan = new Rect(0, 0, 0, 0);
     }
 
-    /**
-     * Set a size for the canvas to place objects in the menus and UI
-     * @param c Size of canvas
-     */
-    @Override
-    public void setCanvasSize(Rect c, Rect dim) { // TODO: Recomentar
-        Rect temp; // Temporal rectangle for calculations
-
-        int width = c.getWidth(); //
-        int height = c.getHeight();
-
-        if(width > dim.getWidth()){
-            width = dim.getWidth();
-
-            height = (width * c.getHeight()) / c.getWidth();
-        }
-
-        if(height > dim.getHeight()){
-            height = dim.getHeight();
-
-            width = (height * c.getWidth()) / c.getHeight();
-        }
-
-        temp = new Rect (width, 0, 0, height);
-
-        _can = temp;
-    }
-
-
     //Hacer dos métodos que inicien y acaben el frame
     // Esto es para abstraer t odo el sistema de pintado de la Lógica
 
     /**
      * Creates an Image (type Image from pcengine) and returns it.
+     *
      * @param name The path to the image
      * @return The image created
      */
@@ -73,11 +45,11 @@ public class Graphics extends AbstractGraphics {
     /**
      * This function receives a color and paints the hole screen with that color (white recommended)
      * to clean it from the last painting.
+     *
      * @param color Flat color received to paint the screen
      */
     @Override
     public void clear(int color) {
-
         Color c = new Color(color);
 
         // Set color to paint in the Swing Graphics.
@@ -88,6 +60,7 @@ public class Graphics extends AbstractGraphics {
 
     /**
      * Draws an image in a specific location.
+     *
      * @param image Image that wil be painted
      * @param x Position x of the image
      * @param y Position y of the image
@@ -106,6 +79,7 @@ public class Graphics extends AbstractGraphics {
     /**
      * Draws an image (or a part of it (Sprite)) in a specific location, counting with the values of
      * the image.
+     *
      * @param image Image to paint
      * @param source Image dimensions (Rectangle)
      * @param x Position X to place the image (top left corner)
@@ -132,6 +106,7 @@ public class Graphics extends AbstractGraphics {
 
     /**
      * Draw an image (or a part of it) in a specific rectangle location.
+     *
      * @param image Image to paint
      * @param source Image dimensions
      * @param dest Rectangle in which we will draw
@@ -193,12 +168,11 @@ public class Graphics extends AbstractGraphics {
         } catch (Exception e) {
 
         }
-
-
     }
 
     /**
      * Return the width value of the window.
+     *
      * @return Window Width
      */
     @Override
@@ -217,11 +191,6 @@ public class Graphics extends AbstractGraphics {
     }
 
 
-    // TODO: COmentar de aquí para abajo.
-    @Override
-    public void setCanvasPos(int x, int y) {
-        _can.setPosition(x, y);
-    }
 
     //---------------------------------------------------------------
     //----------------------Pivate Atributes-------------------------

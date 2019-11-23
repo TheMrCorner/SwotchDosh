@@ -23,16 +23,20 @@ public class Arrow {
     public void update (double t){
 
        // Update position
-       _y += _vel*t;
+       _y += _vel * t;
 
        // If Y position is greater than 0, reposition it
        if(_y >= 0){
            _y = _originalY;
        }
-
     }
 
-    public void render (Graphics g, Rect arrowDest){
+    public void render (Graphics g){
+
+        Rect arrowDest = new Rect(_sprite.get_rect().getWidth(),
+                0,0, _sprite.get_rect().getHeight());
+
+        arrowDest.setPosition(_x, _y);
 
         arrowDest.setPosition(_x, _y);
 

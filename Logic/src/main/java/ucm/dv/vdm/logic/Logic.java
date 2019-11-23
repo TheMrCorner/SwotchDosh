@@ -93,10 +93,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _spr.update();
 
-        _arrow.update(t);
-
         // Update everything with the information of ProcessInput
         _currentGameState.update(t);
+        _arrow.update(t);
     }
 
     /**
@@ -109,7 +108,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         _sbackground[_currentColor].draw(_game.getGraphics(), _backDest);
 
-        _arrow.render(_game.getGraphics(), _arrowDest);
+        _arrow.render(_game.getGraphics());
 
         _currentGameState.render(_game.getGraphics());
 

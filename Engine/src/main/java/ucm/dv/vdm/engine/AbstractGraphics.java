@@ -12,6 +12,41 @@ public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar ch
     }
 
     /**
+     * Set a size for the canvas to place objects in the menus and UI
+     * @param c Size of canvas
+     */
+    @Override
+    public void setCanvasSize(Rect c, Rect dim) { // TODO: Recomentar
+        Rect temp; // Temporal rectangle for calculations
+
+        int width = c.getWidth(); //
+        int height = c.getHeight();
+
+        if(width > dim.getWidth()){
+            width = dim.getWidth();
+
+            height = (width * c.getHeight()) / c.getWidth();
+        }
+
+        if(height > dim.getHeight()){
+            height = dim.getHeight();
+
+            width = (height * c.getWidth()) / c.getHeight();
+        }
+
+        temp = new Rect (width, 0, 0, height);
+
+        _can = temp;
+    }
+
+    // TODO: COmentar de aquí para abajo.
+    @Override
+    public void setCanvasPos(int x, int y) {
+        _can.setPosition(x, y);
+    }
+
+
+    /**
      * Change the size of a Rectangle using another rectangle as a reference. Maintains the aspect
      * ratio of the Rectangle (proportions) and returns the new rectangle.
      * @param src Rectangle to be resized

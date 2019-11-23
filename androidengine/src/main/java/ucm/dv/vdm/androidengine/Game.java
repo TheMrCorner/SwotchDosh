@@ -1,6 +1,7 @@
 package ucm.dv.vdm.androidengine;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
@@ -18,7 +19,9 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
         _holder = _mSurface.getHolder();
 
-        _g = new Graphics();
+        _aMan = cont.getAssets();
+
+        _g = new Graphics(_mSurface, _aMan);
 
         _ip = new Input();
 
@@ -176,6 +179,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
     // Instances needed to initialize and get everything working.
     SurfaceView _mSurface;
     SurfaceHolder _holder;
+    AssetManager _aMan;
 
     Thread _renderThread;
 
