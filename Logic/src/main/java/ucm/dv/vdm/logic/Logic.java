@@ -69,8 +69,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     public void initLogic() {
         Sprite _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 1)[0];
 
-        backDest = new Rect(_sArrows.get_rect().getWidth() - 2, 0, 0, _height);
-        backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
+        _backDest = new Rect(_sArrows.get_rect().getWidth(), 0, 0, _height);
+        _backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
         _currentColor = randomBackColor();
 
         _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
@@ -107,9 +107,9 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
         clearBackground();
 
-        _sbackground[_currentColor].draw(_game.getGraphics(), backDest);
+        _sbackground[_currentColor].draw(_game.getGraphics(), _backDest);
 
-        _arrow.render(_game.getGraphics());
+        _arrow.render(_game.getGraphics(), _arrowDest);
 
         _currentGameState.render(_game.getGraphics());
 
@@ -171,7 +171,8 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     Arrow _arrow;
 
     //Rect of the background
-    Rect backDest;
+    Rect _backDest;
+    Rect _arrowDest;
 
     // SPARKLE
     Sparkle _spr;

@@ -32,10 +32,7 @@ public class Arrow {
 
     }
 
-    public void render (Graphics g){
-
-        Rect arrowDest = new Rect(_sprite.get_rect().getWidth(),
-                0,0, _sprite.get_rect().getHeight());
+    public void render (Graphics g, Rect arrowDest){
 
         arrowDest.setPosition(_x, _y);
 
