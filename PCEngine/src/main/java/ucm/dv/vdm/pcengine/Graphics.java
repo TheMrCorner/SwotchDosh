@@ -32,7 +32,7 @@ public class Graphics extends AbstractGraphics {
         Image _image = null; // Temporal variable to store the Image
 
         try { // Try to create the image and if it fails handle the exception
-            _image = new Image((java.awt.Image) javax.imageio.ImageIO.read(new java.io.File(name)));
+            _image = new Image((java.awt.Image) javax.imageio.ImageIO.read(new java.io.File("./Sprites/" + name)));
 
         } catch (Exception e) {
             System.err.println(e);

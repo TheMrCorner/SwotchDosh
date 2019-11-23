@@ -50,7 +50,9 @@ public class GameOverState extends GameState {
 
         Sprite[] font = Sprite.spriteMaker(r.getText("Font"), 15, 7);
 
-        _go[4] = new Points (0, 780, font, (_l._canvas.getWidth()/2), this);
+        int first = (_l.getCanvasSize().getWidth()/2);
+
+        _go[4] = new Points (first, 780, font, this);
         //_go[5] = ; // TODO: Hacer los textos con la clase nueva de KAI
 
         // Initialize alpha value to 1

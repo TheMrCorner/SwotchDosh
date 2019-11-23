@@ -171,7 +171,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     //Rect of the background
     Rect _backDest;
-    Rect _arrowDest;
 
     // SPARKLE
     Sparkle _spr;
@@ -180,7 +179,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     int _currentColor; //Background sprites iterator
     //GREEN, TURQUOISE, LIGHTBLUE, BLUE, PURPLE, DARKBLUE, YELLOW, ORANGE, BROWN
-    int _planeColor[] = {0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
-            0xd14b41, 0x75706b};
+    int _planeColor[] = {0xff41a85f, 0xff00a885, 0xff3d8eb9, 0xff2969b0, 0xff553982, 0xff28324e, 0xfff37934,
+            0xffd14b41, 0xff75706b};
 
 }

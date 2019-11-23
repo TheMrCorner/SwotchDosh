@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 
@@ -17,6 +18,17 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
     public Graphics (SurfaceView sv, AssetManager am){
         _surfaceView = sv;
         _assetManager = am;
+        _paint = new Paint();
+    }
+
+    public void startFrame(Canvas c){
+        _canvas = c;
+    }
+
+    public void drawRect(){
+        _paint.setColor(Color.BLUE);
+
+        _canvas.drawRect((float)_can.getX(), (float)_can.getY(), (float)(_can.getX() + _can.getWidth()), (float)(_can.getY() + _can.getHeight()), _paint);
     }
 
     @Override
@@ -48,7 +60,11 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
 
     @Override
     public void clear(int color) {
-        _canvas.drawColor(color);
+        _paint.setColor(color);
+
+        _canvas.drawRect((float)_can.getX(), (float)_can.getY(), (float)(_can.getX() + _can.getWidth()), (float)(_can.getY() + _can.getHeight()), _paint);
+
+        _paint.reset();
     }
 
     @Override
@@ -56,24 +72,28 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
         if(image != null){
             Image im = (Image) image;
             Bitmap bm = im.getBitmap();
-            _canvas.drawBitmap(bm, x, y, null);
+            _canvas.drawBitmap(bm, x, y, _paint);
         }
     }
 
     @Override
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) {
         try{
+            Rect dst = new Rect(repositionX(source.getWidth()), 0, 0, repositionY(source.getHeight()));
+
             x = _can.getX() + repositionX(x);
             y = _can.getY() + repositionY(y);
 
-            android.graphics.Rect dest = new android.graphics.Rect(x, y, repositionX(source.getWidth()), repositionY(source.getHeight()));
+            dst.setPosition(x, y);
+
+            android.graphics.Rect dest = new android.graphics.Rect(dst.getX(), dst.getY(), dst.getX() + dst.getWidth(), dst.getY() + dst.getHeight());
             //int left, int top, int right, int bottom
             android.graphics.Rect src = new android.graphics.Rect(source.getLeft(), source.getTop(), source.getRight(), source.getBottom());
 
             Image im = (Image) image;
             Bitmap bm = im.getBitmap();
             if(bm != null) {
-                _canvas.drawBitmap(bm, src, dest, null);
+                _canvas.drawBitmap(bm, src, dest, _paint);
             }
         }catch(Exception e){
 
@@ -90,7 +110,7 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
 
             dest.setPosition(x + _can.getX(), y + _can.getY());
 
-            android.graphics.Rect dst = new android.graphics.Rect(dest.getLeft(), dest.getTop(), dest.getRight(), dest.getBottom());
+            android.graphics.Rect dst = new android.graphics.Rect(x, y, x + dest.getWidth(), y + dest.getHeight());
             //int left, int top, int right, int bottom
             android.graphics.Rect src = new android.graphics.Rect(source.getLeft(), source.getTop(), source.getRight(), source.getBottom());
 
@@ -98,7 +118,7 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
             Bitmap bm = im.getBitmap();
 
             if(bm != null) {
-                _canvas.drawBitmap(bm, src, dst, null);
+                _canvas.drawBitmap(bm, src, dst, _paint);
             }
 
         }catch(Exception e){
@@ -123,17 +143,19 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
             Image im = (Image) image;
             Bitmap bm = im.getBitmap();
 
-            Paint _al = new Paint();
+            _paint.setAlpha((int)(alpha * 100));
 
-            _al.setAlpha((int)(alpha * 100));
+            System.out.println(_paint.getAlpha());
 
             if(bm != null) {
-                _canvas.drawBitmap(bm, src, dst, _al);
+                _canvas.drawBitmap(bm, src, dst, _paint);
             }
 
         }catch(Exception e){
 
         }
+
+        _paint.reset();
     }
 
     @Override
@@ -151,5 +173,6 @@ public class  Graphics extends AbstractGraphics { // TODO: Comentar
     private SurfaceView _surfaceView;
     private AssetManager _assetManager;
     private Canvas _canvas;
+    private Paint _paint;
 
 }

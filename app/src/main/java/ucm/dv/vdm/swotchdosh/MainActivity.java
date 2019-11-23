@@ -11,15 +11,12 @@ public class MainActivity extends AppCompatActivity { // TODO: Comentar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        _game = new Game(this);
+        _game = new Game(this, this);
 
         _logic = new Logic(_game);
 
         _game.setLogic(_logic);
-
-        _game.run();
     }
 
     @Override

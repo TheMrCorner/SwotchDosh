@@ -11,10 +11,9 @@ public class Points extends TextContainer {
      * @param x Position X
      * @param y Position Y
      * @param s Sprite array with the Font
-     * @param canWidth Width of the canvas to position it correctly
      * @param g GameState instance to access points value
      */
-    public Points(int x, int y, Sprite[] s, int canWidth, GameState g) {
+    public Points(int x, int y, Sprite[] s, GameState g) {
         super(x, y, s); // Parent Constructor
 
         // Create text array
@@ -24,18 +23,17 @@ public class Points extends TextContainer {
         _gs = g;
 
         // Init the points
-        initPoints(canWidth);
+        initPoints();
     }
 
     /**
      * Initialize the text array width the corresponding coordinates and calculate the space between
      * numbers.
-     *
-     * @param canWidth Canvas width reference
      */
-    public void initPoints(int canWidth){
+    public void initPoints(){
         for (int i = 0; i < _text.length; i++) {
-            _text[i] = new Text(canWidth - (((int)_x + (_sprite[i].get_rect().getWidth() - 60))*i), (int)_y, _sprite);
+            _text[i] = new Text((int)_x - (64 * i), (int)_y, _sprite);
+            _text[i].setActive(false);
         }
     }
 
@@ -54,6 +52,7 @@ public class Points extends TextContainer {
         while(div > 0){
             _text[i].setNumber(div % 10);
             div = div / 10;
+            _text[i].setActive(true);
 
             i++;
         }
@@ -67,7 +66,9 @@ public class Points extends TextContainer {
     @Override
     public void render(Graphics g){
         for(int i = 0; i < _text.length; i++){
-            _text[i].render(g);
+            if(_text[i].getActive()) {
+                _text[i].render(g);
+            }
         }
     }
 

@@ -1,34 +1,42 @@
 package ucm.dv.vdm.androidengine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import ucm.dv.vdm.engine.Logic;
 import ucm.dv.vdm.engine.Rect;
 
 public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
-    public Game(Context cont){
-        DisplayMetrics display = new DisplayMetrics();
-
-        _mSurface = new SurfaceView(cont);
-
-        _holder = _mSurface.getHolder();
+    public Game(Activity act, Context cont){
+        _mSurface = new SurfaceView(act);
 
         _aMan = cont.getAssets();
 
         _g = new Graphics(_mSurface, _aMan);
 
-        _ip = new Input();
+        _ip = new Input(_g);
 
         // Initialize some time values
         _lastFrameTime = System.nanoTime(); // System time in ms
         _info = _lastFrameTime; // Information about the fps (debug)
         _frames = 0; // Number of frames passed
+
+        _mSurface.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        _mSurface.setOnTouchListener(_ip);
+
+        act.setContentView(_mSurface);
     }
 
     @Override
@@ -110,7 +118,13 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
 
     protected void render(){
         Canvas c = _holder.lockCanvas();
+
+        _g.startFrame(c);
+
+        //_g.drawRect();
+
         _logic.render();
+
         _holder.unlockCanvasAndPost(c);
     }
 
@@ -141,6 +155,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             throw new RuntimeException("run() should not be called directly, ditch digger");
         }
 
+        _logic.initLogic();
+
         while(_running && _mSurface.getWidth() == 0);
 
         while(_running){
@@ -152,6 +168,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
             //processInput();
+            resize();
 
             // Update all Logic
             update();
@@ -166,7 +183,10 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable{
             ++_frames; // Update frames
 
             // Render
+            _holder = _mSurface.getHolder();
+
             while(!_holder.getSurface().isValid());
+
             render();
 
         }// while running

@@ -35,7 +35,12 @@ public class GameRunState extends GameState {
         _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
         _go[0].setColor(GameObject.Color.BLACK);
         _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, 0, r.getGameObject("Balls"));
-        _go[2] = new Points (30, 90, Sprite.spriteMaker(r.getText("Font"), 15, 7), _l.getCanvasSize().getWidth(), this);
+
+        Sprite[] font = Sprite.spriteMaker(r.getText("Font"), 15, 7);
+
+        int first = _l.getCanvasSize().getWidth() - font[0].get_rect().getWidth();
+
+        _go[2] = new Points (first, 90, font, this);
     }
 
     /**

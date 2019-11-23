@@ -26,18 +26,6 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     }
 
     /**
-     * FUnction to get access to the Input.
-     * @return Instance of Input
-     */
-    public Input getInput(Window w, Graphics g){
-        if(_inp == null){
-            _inp = new Input(w, g);
-        }
-
-        return _inp;
-    }
-
-    /**
      * Returns an event of touching something in the window (mouse click etc.) Saves the list in a
      * temporary Variable and then clears it.
      * @return TouchEvent List
@@ -73,7 +61,9 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             }
 
             TouchEvent aux = new TouchEvent(x, y, TouchEvent.TouchType.CLICKED, 0);
-            _touchEvn.add(aux);
+            synchronized (this){
+                _touchEvn.add(aux);
+            }
         }
     }
 
@@ -86,7 +76,9 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
         // Click Izquierdo pa probar
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
             TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.PRESSED_DOWN, 0);
-            _touchEvn.add(aux);
+            synchronized (this){
+                _touchEvn.add(aux);
+            }
         }
     }
 
@@ -98,7 +90,9 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     public void mouseReleased(MouseEvent mouseEvent) {
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
             TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.RELEASED, 0);
-            _touchEvn.add(aux);
+            synchronized (this){
+                _touchEvn.add(aux);
+            }
         }
     }
 
@@ -136,7 +130,9 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.MOVED, 0);
-        _touchEvn.add(aux);
+        synchronized (this){
+            _touchEvn.add(aux);
+        }
 
        // System.out.println("MOUSE MOVED");
     }
@@ -150,27 +146,30 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     public void keyTyped(KeyEvent keyEvent) {
         TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_TYPED, (int)keyEvent.getKeyChar());
 
-        _touchEvn.add(aux);
+        synchronized (this){
+            _touchEvn.add(aux);
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_PRESSED, keyEvent.getKeyCode());
 
-        _touchEvn.add(aux);
+        synchronized (this){
+            _touchEvn.add(aux);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_RELEASED, keyEvent.getID());
 
-        _touchEvn.add(aux);
+        synchronized (this){
+            _touchEvn.add(aux);
+        }
     }
 
     //-----------------Atributes---------------
-    // Singleton
-    Input _inp;
-
     // Event list (Or even Queue)
     List<TouchEvent> _touchEvn;
 

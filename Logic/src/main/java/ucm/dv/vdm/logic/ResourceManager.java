@@ -33,23 +33,23 @@ public class ResourceManager {
      */
     private void initResources(Game g){ // We won't save it because we won't need it in the future (I hope)
         // Interfaces
-        _intF.put("Background", g.getGraphics().newImage("./Sprites/backgrounds.png"));
-        _intF.put("Arrows", g.getGraphics().newImage("./Sprites/arrowsBackground.png"));
-        _intF.put("Buttons", g.getGraphics().newImage("./Sprites/buttons.png"));
-        _intF.put("White", g.getGraphics().newImage("./Sprites/white.png"));
+        _intF.put("Background", g.getGraphics().newImage("backgrounds.png"));
+        _intF.put("Arrows", g.getGraphics().newImage("arrowsBackground.png"));
+        _intF.put("Buttons", g.getGraphics().newImage("buttons.png"));
+        _intF.put("White", g.getGraphics().newImage("white.png"));
 
         // GameObjects
-        _gb.put("Balls", g.getGraphics().newImage("./Sprites/balls.png"));
-        _gb.put("Player", g.getGraphics().newImage("./Sprites/players.png"));
+        _gb.put("Balls", g.getGraphics().newImage("balls.png"));
+        _gb.put("Player", g.getGraphics().newImage("players.png"));
 
         // Text
-        _text.put("GameOver", g.getGraphics().newImage("./Sprites/gameOver.png"));
-        _text.put("HowToPlay", g.getGraphics().newImage("./Sprites/howToPlay.png"));
-        _text.put("Instructions", g.getGraphics().newImage("./Sprites/instructions.png"));
-        _text.put("PlayAgain", g.getGraphics().newImage("./Sprites/playAgain.png"));
-        _text.put("Logo", g.getGraphics().newImage("./Sprites/switchDashLogo.png"));
-        _text.put("TapToPlay", g.getGraphics().newImage("./Sprites/tapToPlay.png"));
-        _text.put("Font", g.getGraphics().newImage("./Sprites/scoreFont.png"));
+        _text.put("GameOver", g.getGraphics().newImage("gameOver.png"));
+        _text.put("HowToPlay", g.getGraphics().newImage("howToPlay.png"));
+        _text.put("Instructions", g.getGraphics().newImage("instructions.png"));
+        _text.put("PlayAgain", g.getGraphics().newImage("playAgain.png"));
+        _text.put("Logo", g.getGraphics().newImage("switchDashLogo.png"));
+        _text.put("TapToPlay", g.getGraphics().newImage("tapToPlay.png"));
+        _text.put("Font", g.getGraphics().newImage("scoreFont.png"));
     }
 
     /**
