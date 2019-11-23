@@ -1,12 +1,9 @@
 package ucm.dv.vdm.pcengine;
 
-import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.image.BufferStrategy;
 
 import ucm.dv.vdm.engine.Logic;
 import ucm.dv.vdm.engine.Rect;
@@ -56,7 +53,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
      */
     void update(){ // Deberíamos pensar si esto es realmente útil tho y cambiarlo si eso
         _logic.update(_elapsedTime);
-        //System.out.println(_elapsedTime);
     }
 
     /**
@@ -118,6 +114,8 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
             _lastFrameTime = _currentTime;
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
+            //processInput();
+
             // Update all Logic
             update();
 
@@ -133,7 +131,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
             //Clear and update graphics
             render();
         }
-        // TODO: Deberíamos pensar alguna manera de poner el loop que no sea un while(true) (?)
     }
 
     public void resize(){
@@ -180,11 +177,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
         return _height;
     }
 
-    @Override
-    public Rect getCanvas() {
-        return null;
-    }
-
     /**
      * Returns the Graphics in order to paint things and update the screen.
      * @return Graphics instance saved here.
@@ -202,6 +194,32 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
     public Input getInput() {
         return _ip;
     }
+
+    /*
+    public void processInput(){
+        List<ucm.dv.vdm.engine.Input.TouchEvent> e = _ip.getTouchEvent(); // Get the list of TouchEvents
+
+        int ptr = e.size() - 1; // Pointer to roam the list
+
+        while(!e.isEmpty() && ptr >= -1){ // While list is not empty
+
+            ucm.dv.vdm.engine.Input.TouchEvent te = e.get(ptr); // Get the TouchEvent at the pointer position
+
+            switch(te.getType()){ // Process the type of the TouchEvent
+                case KEY_TYPED:
+                    if(te.getIdf() == 27) {
+                        _win.windowed();
+                    }
+                    break;
+                default:
+                    //Anything else, do nothing.
+                    break;
+            }
+
+            e.remove(ptr); // Remove that TouchEvent from the list
+            ptr--;
+        }
+    }*/
 
     @Override
     public void componentResized(ComponentEvent componentEvent) {

@@ -3,14 +3,10 @@ package ucm.dv.vdm.pcengine;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+import ucm.dv.vdm.engine.AbstractGraphics;
 import ucm.dv.vdm.engine.Rect;
 
-public class Graphics implements ucm.dv.vdm.engine.Graphics {
-
-    public void testCanvas(Window w){ // TODO: Lo dejamos(?)
-        _win.getJGraphics().setColor(Color.pink);
-        _win.getJGraphics().fillRect(_can.getX(), _can.getY(), _can.getWidth(), _can.getHeight());
-    }
+public class Graphics extends AbstractGraphics {
 
     /**
      * Graphics constructor. Saves an instance of the window.
@@ -50,15 +46,6 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
         _can = temp;
     }
 
-    @Override
-    public Rect getCanvas() {
-        return _can;
-    }
-
-    @Override
-    public void setReferenceCanvas(Rect c) {
-        _refCan = c;
-    }
 
     //Hacer dos métodos que inicien y acaben el frame
     // Esto es para abstraer t odo el sistema de pintado de la Lógica
@@ -128,7 +115,6 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
     public void drawImage(ucm.dv.vdm.engine.Image image, Rect source, int x, int y) { // TODO: Comentar
         try {
             Rect temp = new Rect (repositionX(source.getWidth()), 0, 0, repositionY(source.getHeight()));
-            //temp = dimensions(source, temp);
 
             x = _can.getX() + repositionX(x);
             y = _can.getY() + repositionY(y);
@@ -187,8 +173,6 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
 
             Rect temp = new Rect (repositionX(dest.getWidth()), 0, 0, repositionY(dest.getHeight()));
 
-            temp = dimensions(temp, _can);
-
             int x = repositionX(dest.getX());
             int y = repositionY(dest.getY());
 
@@ -232,81 +216,11 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
         return _win.getHeight();
     }
 
-    /**
-     * Change the size of a Rectangle using another rectangle as a reference. Maintains the aspect
-     * ratio of the Rectangle (proportions) and returns the new rectangle.
-     * @param src Rectangle to be resized
-     * @param dim Rectangle to use as a reference.
-     * @return Resized src rectangle maintaining the aspect ratio of it.
-     */
-    @Override
-    public Rect dimensions(Rect src, Rect dim){
-        Rect temp; // Temporal rectangle for calculations
-
-        int width = src.getWidth(); // Save the src width
-        int height = src.getHeight(); // Save the src height
-
-        // If the src width is higher than the reference width
-        if(width > dim.getWidth()){
-            // Set the new width but resized proportionally
-           width = repositionX(width);
-            // Change height keeping proportions
-           height = (width * src.getHeight()) / src.getWidth();
-        }
-
-        // If the src height (or the changed height) is bigger than the reference one
-        if(height > dim.getHeight()){
-            // Set the new height but resized proportionally
-            height = repositionY(height);
-            // Change width proportionally
-            width = (height * src.getWidth()) / src.getHeight();
-        }
-
-        // Save the changes to the new Rectangle
-        temp = new Rect (width, 0, 0, height);
-
-        // Set the original position in canvas of the source Rectangle
-        temp.setPosition(src.getX(), src.getY());
-
-        // Return result
-        return temp;
-    }
 
     // TODO: COmentar de aquí para abajo.
     @Override
     public void setCanvasPos(int x, int y) {
         _can.setPosition(x, y);
-    }
-
-    @Override
-    public boolean isInCanvas(int x, int y) {
-        if( ((x >= _can.getX()) && (x < (_can.getX() + _can.getWidth())))
-                && ((y >= _can.getY()) && (y < (_can.getY() + _can.getHeight())))){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    @Override
-    public int repositionX(int x) {
-        return (x * _can.getWidth()) / _refCan.getWidth();
-    }
-
-    @Override
-    public int repositionY(int y) {
-        return (y * _can.getHeight()) / _refCan.getHeight();
-    }
-
-    @Override
-    public int reverseRepositionX(int x) {
-        return (x * _refCan.getWidth()) / _can.getWidth();
-    }
-
-    @Override
-    public int reverseRepositionY(int y) {
-        return (y * _refCan.getHeight()) / _can.getHeight();
     }
 
     //---------------------------------------------------------------
@@ -318,9 +232,5 @@ public class Graphics implements ucm.dv.vdm.engine.Graphics {
      */
     Window _win;
 
-    // Canvas
-    Rect _can;
-
-    Rect _refCan;
 
 }

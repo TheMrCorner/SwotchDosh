@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
-public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListener, MouseMotionListener, ComponentListener {
+public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListener, MouseMotionListener{
 
     /**
      * Constructor of the Input System. Singleton
@@ -52,11 +52,6 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
         }
 
         return tmp;
-    }
-
-    @Override
-    public WindEvent getWindowEvent(){
-        return _ev;
     }
 
     //-------------------------------------------------
@@ -153,17 +148,23 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
+        TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_TYPED, (int)keyEvent.getKeyChar());
 
+        _touchEvn.add(aux);
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_PRESSED, keyEvent.getKeyCode());
 
+        _touchEvn.add(aux);
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        TouchEvent aux = new TouchEvent(0, 0, TouchEvent.TouchType.KEY_RELEASED, keyEvent.getID());
 
+        _touchEvn.add(aux);
     }
 
     //-----------------Atributes---------------
@@ -173,29 +174,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
     // Event list (Or even Queue)
     List<TouchEvent> _touchEvn;
 
-    // Input de reescalado
-    WindEvent _ev;
 
     // Instance of Graphics for checking position
     Graphics _g;
-
-    @Override
-    public void componentResized(ComponentEvent componentEvent) {
-        _ev = new WindEvent(WindEvent.WinType.RESIZED);
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent componentEvent) {
-
-    }
-
-    @Override
-    public void componentShown(ComponentEvent componentEvent) {
-
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent componentEvent) {
-
-    }
 }

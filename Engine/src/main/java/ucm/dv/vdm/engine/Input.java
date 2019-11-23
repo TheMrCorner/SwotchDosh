@@ -11,7 +11,10 @@ public interface Input {
             PRESSED_DOWN,
             RELEASED,
             MOVED,
-            CLICKED
+            CLICKED,
+            KEY_PRESSED,
+            KEY_RELEASED,
+            KEY_TYPED
         }
 
         /**
@@ -43,6 +46,10 @@ public interface Input {
             return _y;
         }
 
+        public int getIdf(){
+            return _idf;
+        }
+
         /**
          * Return the type of the event, to be handled by the Logic
          * @return TouchType
@@ -64,25 +71,6 @@ public interface Input {
         TouchType _t;
     }
 
-    class WindEvent{
-        public enum WinType {
-            RESIZED
-        }
-
-        public WindEvent(WinType t){
-            _t = t;
-        }
-
-        public WinType getType(){
-            return _t;
-        }
-
-        WinType _t;
-
-    }
-
     List<TouchEvent> getTouchEvent();
-
-    WindEvent getWindowEvent();
 
 }

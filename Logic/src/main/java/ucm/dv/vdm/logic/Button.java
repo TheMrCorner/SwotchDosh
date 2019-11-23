@@ -5,6 +5,9 @@ import ucm.dv.vdm.engine.Sprite;
 
 public class Button extends GameObject {
 
+    /**
+     * Position near the PlayRectangle.
+     */
     public enum Position{
         RIGHT,
         LEFT
@@ -17,22 +20,28 @@ public class Button extends GameObject {
      * @param canWidth Y position
      * @param s Sprite array with the different sprites of the Button.
      */
-    public Button(Position p, int canWidth, Sprite[] s) {
-        super(30, 90, s);
+    public Button(Position p, int canWidth, Sprite[] s, int x, int y) {
+        super(x, y, s);
 
         if(p == Position.RIGHT){ // Check button position
             setPosX(canWidth - (30 + _sprite[0].get_rect().getWidth()));
         }
     }
 
+    /**
+     * Render is called once per frame
+     *
+     * @param g Graphics Instance
+     */
     @Override
     public void render(Graphics g) {
+        // Render current sprite
         _sprite[_spr].draw(g, (int)_x, (int)_y);
     }
 
     /**
-     * Method that changes the sprite that wil be rendered. Adds 1 to the _spr variable, if it
-     * is equal to the _sprite length, then change it to 0.
+     * Method that changes the sprite that will be rendered. Adds 1 to the _spr variable, if it
+     * is equal to the _sprite length, then change it to 0. Generic.
      */
     public void changeButton(){
         // Changes the sprite only if the Button has more than 1 different sprite.
@@ -65,5 +74,6 @@ public class Button extends GameObject {
     }
 
     // Atributes
-    int _spr; // Stores the value of the actual sprite (if we need to change it)
+    // Stores the value of the actual sprite (if we need to change it)
+    int _spr;
 }

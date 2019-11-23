@@ -36,6 +36,7 @@ public class Window extends JFrame{
         //setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set close operation
         //setExtendedState(JFrame.MAXIMIZED_BOTH); // Set window FullScreen
+        //setUndecorated(true);
         setIgnoreRepaint(true); // Active Painting
 
         // Set window Visible
@@ -43,18 +44,17 @@ public class Window extends JFrame{
 
         // Create BufferStrategy
         int tries = 100; // Try to create the buffer strategy 100 times
-        while(tries-- > 0) {
+        while (tries-- > 0) {
             try { // Ideally it will make this only once
                 createBufferStrategy(2);
                 break;
-            }
-            catch(Exception e) { // Handle Exception if it fails
+            } catch (Exception e) { // Handle Exception if it fails
                 _game.HandleException(e);
             }
         }
 
         // Just for debugging
-        if(tries == 0){
+        if (tries == 0) {
             // if buffer strategy is not created
             System.err.println("BufferStrategy not created");
             // End init (maybe return an error or something?)

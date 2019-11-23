@@ -32,7 +32,7 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     //---------------------------
 
     /**
-     * Initialize all resources needed for the game and all gameobjects.
+     * Initialize all resources needed for the game and all GameObjects.
      */
     public void init(){
 
@@ -58,7 +58,6 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         // Load sprites
         // This arrays will save them. After that, the sprites will be assigned to a GO or a CO
         _sbackground = Sprite.spriteMaker(_rm.getInterface("Background"), 9, 1);
-        _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 1)[0];
     }
 
     @Override
@@ -68,23 +67,20 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
 
     @Override
     public void initLogic() {
+        Sprite _sArrows =  Sprite.spriteMaker(_rm.getInterface("Arrows"), 1, 1)[0];
 
         backDest = new Rect(_sArrows.get_rect().getWidth() - 2, 0, 0, _height);
         backDest.setPosition((_width/2) - (_sArrows.get_rect().getWidth()/2), 0);
         _currentColor = randomBackColor();
 
-        initArrow();
+        _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
+                0 - (_sArrows.get_rect().getHeight()/5), _sArrows);
+
+        _spr = new Sparkle(_width, _height, Sprite.spriteMaker(_rm.getInterface("White"), 1, 1)[0]);
 
         _currentGameState = new MainMenuState(this, 0);
 
         _currentGameState.initState(_rm);
-    }
-
-    void initArrow () {
-
-        _arrow = new Arrow((_width/2) - (_sArrows.get_rect().getWidth()/2),
-                _canvas.getHeight() - _sArrows.get_rect().getHeight(), _sArrows);
-
     }
 
     /**
@@ -95,23 +91,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     public void update(double t) {
         _currentGameState.processInput(_game);
 
-        updateArrows(t);
-
-        // Update everything with the information of ProcessInput
-        _currentGameState.update(t);
-    }
-
-    void updateArrows (double t){
-
-        if (_arrow.getY() >= _canvas.getHeight()){
-
-            // Reposition arrow
-            _arrow.setY(0);
-
-        }
+        _spr.update();
 
         _arrow.update(t);
 
+        // Update everything with the information of ProcessInput
+        _currentGameState.update(t);
     }
 
     /**
@@ -127,11 +112,15 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
         _arrow.render(_game.getGraphics());
 
         _currentGameState.render(_game.getGraphics());
+
+        _spr.render(_game.getGraphics());
     }
 
     public void changeState(GameState gs){
+        _arrow.resetVel();
         _currentGameState = gs;
         gs.initState(_rm);
+        _spr.setActive(true);
     }
 
     /**
@@ -177,13 +166,15 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
     GameState _currentGameState;
 
     Sprite _sbackground[];
-    Sprite _sArrows;
+
     // Pool
-    //ArrayDeque<Arrow> _arrows;
     Arrow _arrow;
 
     //Rect of the background
     Rect backDest;
+
+    // SPARKLE
+    Sparkle _spr;
 
     private Random rnd;
 

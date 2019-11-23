@@ -25,11 +25,5 @@ public interface Game {
 
     int getHeight();
 
-    /**
-     * Gets the information about the playing scene, part, zone
-     * @return Returns the canvas size
-     */
-    Rect getCanvas();
-
 
 }

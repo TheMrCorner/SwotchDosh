@@ -13,6 +13,8 @@ public class Arrow {
        _x = x;
        _y = y;
 
+       _originalY = y;
+
        _vel = 384;
        _basicVel = 384;
 
@@ -20,7 +22,13 @@ public class Arrow {
 
     public void update (double t){
 
+       // Update position
        _y += _vel*t;
+
+       // If Y position is greater than 0, reposition it
+       if(_y >= 0){
+           _y = _originalY;
+       }
 
     }
 
@@ -31,7 +39,7 @@ public class Arrow {
 
         arrowDest.setPosition(_x, _y);
 
-        _sprite.draw(g, arrowDest, 0.6f);
+        _sprite.draw(g, arrowDest, 0.5f);
     }
 
     public void resetVel () {
@@ -71,6 +79,8 @@ public class Arrow {
     Sprite _sprite;
     int _x;
     int _y;
+
+    int _originalY;
 
     int _vel;
     int _basicVel;

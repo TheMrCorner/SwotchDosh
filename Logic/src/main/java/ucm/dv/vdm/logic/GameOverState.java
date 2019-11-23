@@ -45,8 +45,8 @@ public class GameOverState extends GameState {
         Sprite[] helpButton = new Sprite[1];
         helpButton[0] = buttons[0];
 
-        _go[2] = new Button (Button.Position.LEFT, _l._canvas.getWidth(), soundButtons); // SoundButton
-        _go[3] = new Button (Button.Position.RIGHT, _l._canvas.getWidth(), helpButton); // HelpMenuButton
+        _go[2] = new Button (Button.Position.LEFT, _l._canvas.getWidth(), soundButtons, 30, 90); // SoundButton
+        _go[3] = new Button (Button.Position.RIGHT, _l._canvas.getWidth(), helpButton, 30, 90); // HelpMenuButton
 
         Sprite[] font = Sprite.spriteMaker(r.getText("Font"), 15, 7);
 

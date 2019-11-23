@@ -1,9 +1,12 @@
 package ucm.dv.vdm.androidengine;
 
+import android.graphics.Canvas;
+
+import ucm.dv.vdm.engine.AbstractGraphics;
 import ucm.dv.vdm.engine.Image;
 import ucm.dv.vdm.engine.Rect;
 
-public class Graphics implements ucm.dv.vdm.engine.Graphics{
+public class  Graphics extends AbstractGraphics {
 
     @Override
     public void setCanvasSize(Rect c, Rect dim) {

@@ -42,7 +42,7 @@ public class HelpMenuState extends GameState {
         Sprite[] crossButton = new Sprite[1];
         crossButton[0] = buttons[1];
 
-        _go[3] = new Button (Button.Position.RIGHT, _l._canvas.getWidth(), crossButton); // CrossButton
+        _go[3] = new Button (Button.Position.RIGHT, _l._canvas.getWidth(), crossButton, 30, 90); // CrossButton
     }
 
     /**
@@ -88,7 +88,7 @@ public class HelpMenuState extends GameState {
             switch(te.getType()){ // Process the type of the TouchEvent
                 case CLICKED:
                     if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
-                        System.out.println("He sido pulsado");
+                        _l.changeState(new MainMenuState(_l, _pts));
                     }
                     else{
                         _l.changeState(new GameRunState(_l, _pts));

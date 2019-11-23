@@ -115,7 +115,7 @@ public class GameRunState extends GameState {
      */
     void colisions(){
         // Get the lower ball and check if it collides with the Player
-        if(_go[0].getPosY() <= ((BallPool)_go[1]).getLowerBall().getPosY()){
+        if(_go[0].getPosY() <= ((BallPool)_go[1]).getLowerBall().getPosY() + (_go[1]._sprite[0].get_rect().getHeight())){
             // If both (player and ball) have the same color...
             if(((BallPool)_go[1]).getLowerBall().getColor() == _go[0].getColor()){
                 // Add Points
