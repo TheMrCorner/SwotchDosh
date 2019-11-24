@@ -1,31 +1,63 @@
 package ucm.dv.vdm.engine;
 
-public class Sprite { // TODO: COmentar esta señora
+/**
+ * Sprite class to divide an image an use it in the game.
+ */
+public class Sprite {
 
+    /**
+     * Constructor. Receives an Image and the rectangle the sprite needs.
+     *
+     * @param i Image that sprite will use.
+     * @param r Rectangle the sprite needs.
+     */
     public Sprite(Image i, Rect r){
-        // Aquí pasan cosas
-        // Tipo la constructora
-
         _image = i;
         _rect = r;
-    }
+    } // Sprite
 
+    /**
+     * Draw the Sprite in a specific location of the screen and canvas.
+     *
+     * @param g Graphics instance
+     * @param x X Coordinate
+     * @param y Y Coordinate
+     */
     public void draw(Graphics g, int x, int y){
         g.drawImage(_image, _rect, x, y);
-    }
+    } // draw
 
+    /**
+     * Draw the Sprite in the destination rectangle.
+     *
+     * @param g Graphics instance
+     * @param dest Destination Rectangle
+     */
     public void draw(Graphics g, Rect dest){
         g.drawImage(_image, _rect, dest);
-    }
+    } // draw
 
+    /**
+     * Draw the sprite in a specific Rectangle with an specific alpha value.
+     *
+     * @param g Graphics instance
+     * @param dest Destination rectangle
+     * @param alpha alpha value
+     */
     public void draw(Graphics g, Rect dest, float alpha){
         g.drawImage(_image, _rect, dest, alpha);
-    }
+    } // draw
 
 
-
-    //Método que divide las imágenes que le pase la lógica y los guarda en un vector que devuelve
-    //Como parámetros pasarán la imagen para coger medidas y actuar sobre ella y el numero de divisiones a realizar
+    /**
+     * Create the sprites from an Image. Receives an image and makes the Sprite array of it with the
+     * dimensions given.
+     *
+     * @param sImage Image to subdivide in Sprites
+     * @param width How many sprites are widely
+     * @param height How many lines of sprites there are
+     * @return A Sprite Array with all sprites
+     */
     public static Sprite[] spriteMaker (Image sImage, int width, int height){ // Width es el nº de sprites que hay a lo ancho y height a lo alto
 
         // Sprite Array
@@ -61,21 +93,28 @@ public class Sprite { // TODO: COmentar esta señora
 
             if(k < width) {
                 k++;
-            }
+            } // if
 
             if(height != 1 && k == width){
                 i++;
                 k = 0;
-            }
-        }
+            } // if
+        } // for
 
         return sprites; // Returns all sprites separated in different images
 
-    } // tiene que devolver un Array de Sprites, de tamaño fijo
+    } // spriteMaker
 
+    /**
+     * Return the Rectangle of this Sprite.
+     *
+     * @return Rectangle of Sprite
+     */
     public Rect get_rect() {
         return _rect;
-    }
+    } // get_rect
+
+    // Private Atributes
 
     private Image _image;
 

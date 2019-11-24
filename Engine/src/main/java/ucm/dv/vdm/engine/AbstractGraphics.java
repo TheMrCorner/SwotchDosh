@@ -1,54 +1,67 @@
 package ucm.dv.vdm.engine;
 
-public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar chiquets
-    //Codigo común de escalado
+/**
+ * Abstract class for Graphics. Contains all the scaling methods, that are common and needed for both
+ * engines. Also contains all common atributes for both engines.
+ */
+public abstract class AbstractGraphics implements Graphics{
 
-    public Rect getCanvas() {
-        return _can;
-    }
-
+    /**
+     * Set the logic canvas for reference to scale every image that wil be drawn.
+     *
+     * @param c Logic canvas
+     */
     public void setReferenceCanvas(Rect c) {
         _refCan = c;
-    }
+    } // setReferenceCanvas
 
     /**
      * Set a size for the canvas to place objects in the menus and UI
+     *
      * @param c Size of canvas
+     * @param dim Reference rectangle to resize canvas
      */
     @Override
-    public void setCanvasSize(Rect c, Rect dim) { // TODO: Recomentar
+    public void setCanvasSize(Rect c, Rect dim) {
         Rect temp; // Temporal rectangle for calculations
 
-        int width = c.getWidth(); //
+        int width = c.getWidth();
         int height = c.getHeight();
 
         if(width > dim.getWidth()){
             width = dim.getWidth();
 
             height = (width * c.getHeight()) / c.getWidth();
-        }
+        } // if
 
         if(height > dim.getHeight()){
             height = dim.getHeight();
 
             width = (height * c.getWidth()) / c.getHeight();
-        }
+        } // if
 
         temp = new Rect (width, 0, 0, height);
 
         _can = temp;
-    }
+    } // setCanvasSize
 
-    // TODO: COmentar de aquí para abajo.
+    /**
+     * Set the position of the physical canvas in the screen (this will be used later to calculate
+     * the position of different images, etc.)
+     *
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     @Override
     public void setCanvasPos(int x, int y) {
         _can.setPosition(x, y);
-    }
+    } // setCanvasPos
 
 
     /**
      * Change the size of a Rectangle using another rectangle as a reference. Maintains the aspect
      * ratio of the Rectangle (proportions) and returns the new rectangle.
+     *
      * @param src Rectangle to be resized
      * @param dim Rectangle to use as a reference.
      * @return Resized src rectangle maintaining the aspect ratio of it.
@@ -65,7 +78,7 @@ public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar ch
             width = repositionX(width);
             // Change height keeping proportions
             height = (width * src.getHeight()) / src.getWidth();
-        }
+        } // if
 
         // If the src height (or the changed height) is bigger than the reference one
         if(height > dim.getHeight()){
@@ -73,7 +86,7 @@ public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar ch
             height = repositionY(height);
             // Change width proportionally
             width = (height * src.getWidth()) / src.getHeight();
-        }
+        } // if
 
         // Save the changes to the new Rectangle
         temp = new Rect (width, 0, 0, height);
@@ -83,39 +96,77 @@ public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar ch
 
         // Return result
         return temp;
-    }
+    } // dimensions
 
+    /**
+     * Method that checks if the given coordinates are inside the Canvas rectangle.
+     *
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return True if the position is inside Canvas, false if not
+     */
     public boolean isInCanvas(int x, int y) {
+        // Checking if coordinates are inside the canvas Rectangle.
         if( ((x >= _can.getX()) && (x < (_can.getX() + _can.getWidth())))
                 && ((y >= _can.getY()) && (y < (_can.getY() + _can.getHeight())))){
             return true;
-        }
+        } // if
         else {
             return false;
-        }
-    }
+        } // else
+    } // isInCanvas
 
+    /**
+     * Receives a X coordinate in logic reference and converts it to physical reference.
+     *
+     * @param x X coordinate in logic reference.
+     * @return X coordinate in physical reference.
+     */
     public int repositionX(int x) {
         return (x * _can.getWidth()) / _refCan.getWidth();
-    }
+    } // repositionX
 
+    /**
+     * Receives a Y coordinate in logic reference and converts it to physical reference.
+     *
+     * @param y Y coordinate in logic reference.
+     * @return Y coordinate in physical reference.
+     */
     public int repositionY(int y) {
         return (y * _can.getHeight()) / _refCan.getHeight();
-    }
+    } // repositionY
 
+    /**
+     * Receives a X coordinate in screen axis system an converts it to logic canvas coordinates.
+     *
+     * @param x X coordinate in physical reference
+     * @return X coordinate in logic reference.
+     */
     public int reverseRepositionX(int x) {
         return (x * _refCan.getWidth()) / _can.getWidth();
-    }
+    } // reverseRepositionX
 
+    /**
+     * Receives a Y coordinate in screen axis system an converts it to logic canvas coordinates.
+     *
+     * @param y Y coordinate in physical reference.
+     * @return Y coordinate in logic reference
+     */
     public int reverseRepositionY(int y) {
         return (y * _refCan.getHeight()) / _can.getHeight();
-    }
+    } // reverseRepositionY
+
+    /**
+     * Return the physic canvas stored here in this object.
+     *
+     * @return _can
+     */
+    public Rect getCanvas() {
+        return _can;
+    } // getCanvas
 
     // Canvas
     public Rect _can;
 
     public Rect _refCan;
-
-    // TODO: Meter aquí toda la parte de escalado y hacer el Graphics de PC que herede de este.
-
 }
