@@ -51,6 +51,10 @@ public class ParticlesSystem extends GameObject {
         // Give the color of the ball
         n.setColor(_c);
 
+        //Sets diferent vel to x and y position of the particle TODO: hacerlo random
+        n.set_velX(60);
+        n.set_velY(60);
+
         // Add it to the last position of the queue
         _particles.add(n);
     }
