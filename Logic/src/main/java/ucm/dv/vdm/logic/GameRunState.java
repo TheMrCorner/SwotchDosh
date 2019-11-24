@@ -40,7 +40,7 @@ public class GameRunState extends GameState {
 
         int first = _l.getCanvasSize().getWidth() - font[0].get_rect().getWidth();
 
-        _go[2] = new Points (first, 90, font, this);
+        _go[2] = new Points (first, 90, font, this, 3);
     }
 
     /**

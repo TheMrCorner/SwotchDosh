@@ -13,11 +13,11 @@ public class Points extends TextContainer {
      * @param s Sprite array with the Font
      * @param g GameState instance to access points value
      */
-    public Points(int x, int y, Sprite[] s, GameState g) {
+    public Points(int x, int y, Sprite[] s, GameState g, int pts) {
         super(x, y, s); // Parent Constructor
 
         // Create text array
-        _text = new Text [3];
+        _text = new Text [pts];
 
         // Save GameState instance
         _gs = g;
@@ -31,8 +31,9 @@ public class Points extends TextContainer {
      * numbers.
      */
     public void initPoints(){
+        int x = (int)_x;
         for (int i = 0; i < _text.length; i++) {
-            _text[i] = new Text((int)_x - (64 * i), (int)_y, _sprite);
+            _text[i] = new Text(x - (64 * i), (int)_y, _sprite);
             _text[i].setActive(false);
         }
     }

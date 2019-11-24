@@ -52,7 +52,17 @@ public class GameOverState extends GameState {
 
         int first = (_l.getCanvasSize().getWidth()/2);
 
-        _go[4] = new Points (first, 780, font, this);
+        int i = 0;
+        int div = _pts;
+
+        // Set the number and it's position
+        while(div > 0){
+            div = div / 10;
+
+            i++;
+        }
+
+        _go[4] = new Points (first, 780, font, this, i);
         //_go[5] = ; // TODO: Hacer los textos con la clase nueva de KAI
 
         // Initialize alpha value to 1

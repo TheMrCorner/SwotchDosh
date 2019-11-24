@@ -12,7 +12,7 @@ import ucm.dv.vdm.engine.Input;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Logic implements ucm.dv.vdm.engine.Logic{
+public class Logic implements ucm.dv.vdm.engine.Logic{ // TODO: Hacerse el sistema de Partículas, comentar todo lo comentable, hacer la memoria, hacer la build
 
     /**
      * Logic Constructor, creates a new instance of Logic.
