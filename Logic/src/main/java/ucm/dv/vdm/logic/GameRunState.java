@@ -1,5 +1,6 @@
 package ucm.dv.vdm.logic;
 
+import java.util.ArrayDeque;
 import java.util.List;
 
 import ucm.dv.vdm.engine.Game;
@@ -39,6 +40,10 @@ public class GameRunState extends GameState {
         int first = _l.getCanvasSize().getWidth() - font[0].get_rect().getWidth();
 
         _go[2] = new Points (first, 90, font, this, 3);
+
+        _sParticle = Sprite.spriteMaker(r.getGameObject("Balls"), 10, 2);
+        // Create the pool
+        _particleSystems = new ArrayDeque<ParticlesSystem>();
     }
 
     /**
@@ -51,6 +56,13 @@ public class GameRunState extends GameState {
         // Update
         for(int i = 0; i < _go.length; i++){
             _go[i].update(t);
+        }
+
+        for(ParticlesSystem ps : _particleSystems){
+            ps.update(t);
+            if (ps.getList().isEmpty()){
+                _particleSystems.pop();
+            }
         }
 
         // Check colision
@@ -68,6 +80,11 @@ public class GameRunState extends GameState {
         for(int i = 0; i < _go.length; i++){
             _go[i].render(g);
         }
+
+        for(ParticlesSystem ps : _particleSystems){
+            ps.render(g);
+        }
+
     }
 
     /**
@@ -107,20 +124,38 @@ public class GameRunState extends GameState {
      * Checks if the player colision with the lowest ball.
      */
     void colisions(){
+
         // Get the lower ball and check if it collides with the Player
         if(_go[0].getPosY() <= ((BallPool)_go[1]).getLowerBall().getPosY() + (_go[1]._sprite[0].get_rect().getHeight())){
+
+            ParticlesSystem ps;
+            int particlesX = (int)((BallPool)_go[1]).getLowerBall().getPosX();
+            int particlesY = (int)((BallPool)_go[1]).getLowerBall().getPosY();
+
             // If both (player and ball) have the same color...
             if(((BallPool)_go[1]).getLowerBall().getColor() == _go[0].getColor()){
                 // Add Points
                 _pts++;
+
+
+                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor() );
 
                 // Destroy ball
                 ((BallPool)_go[1]).destroy();
             }
             // If not, GameOver
             else{
+                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor() );
                 _l.changeState(new GameOverState(_l, _pts), false);
             }
+
+            _particleSystems.add(ps);
+
         }
     }
+
+    Sprite[] _sParticle;
+
+    // Pool of particles system
+    ArrayDeque<ParticlesSystem> _particleSystems;
 }
