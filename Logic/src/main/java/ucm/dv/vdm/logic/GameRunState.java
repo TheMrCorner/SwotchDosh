@@ -130,7 +130,7 @@ public class GameRunState extends GameState {
 
             ParticlesSystem ps;
             int particlesX = (int)((BallPool)_go[1]).getLowerBall().getPosX();
-            int particlesY = (int)((BallPool)_go[1]).getLowerBall().getPosY();
+            int particlesY = (int)((BallPool)_go[1]).getLowerBall().getPosY() + (((BallPool)_go[1])._sprite[0].get_rect().getHeight()/2);
 
             // If both (player and ball) have the same color...
             if(((BallPool)_go[1]).getLowerBall().getColor() == _go[0].getColor()){

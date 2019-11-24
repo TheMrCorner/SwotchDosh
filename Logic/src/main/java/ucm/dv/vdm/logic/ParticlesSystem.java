@@ -46,14 +46,18 @@ public class ParticlesSystem extends GameObject {
         sprt[1] = _sprite[10];
 
         // Create the new Ball
-        Particle n = new Particle(_x, _y, sprt);
+        Particle n = new Particle(_x + (sprt[0].get_rect().getWidth()/2), _y, sprt);
 
         // Give the color of the ball
         n.setColor(_c);
 
-        //Sets diferent vel to x and y position of the particle TODO: hacerlo random
-        n.set_velX(60);
-        n.set_velY(60);
+        //Sets diferent vel to x and y position of the particle
+
+        double x = (Math.random() * 200 + 50);
+        double y = (Math.random() * 200 + 50);
+
+        n.set_velX((int)x);
+        n.set_velY((int)y);
 
         // Add it to the last position of the queue
         _particles.add(n);

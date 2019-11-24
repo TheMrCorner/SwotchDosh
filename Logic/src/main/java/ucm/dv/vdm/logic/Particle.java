@@ -122,7 +122,7 @@ public class Particle extends GameObject {
 
         _alpha -= 0.1;
 
-        _y += _velY * t;
+        _y -= _velY * t;
 
         //Change x position with velX
         if(d == Direction.LEFT) {
@@ -135,6 +135,8 @@ public class Particle extends GameObject {
         if (_alpha <= 0 ){
             _actv = false;
         }
+
+        _dest.setPosition((int)_x, (int)_y);
     }
 
     /**
