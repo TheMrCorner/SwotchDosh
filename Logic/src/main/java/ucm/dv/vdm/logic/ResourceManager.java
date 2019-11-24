@@ -1,7 +1,5 @@
 package ucm.dv.vdm.logic;
 
-
-import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,7 +96,7 @@ public class ResourceManager {
     private static ResourceManager _rscm;
 
     //---------------Images------------------
-    // Interface (Aquí estoy usando mapas, pero que podemos repensarlo si eso)
+    // Interface
     private Map<String, Image> _intF;
 
     // GameObjects/Sprites

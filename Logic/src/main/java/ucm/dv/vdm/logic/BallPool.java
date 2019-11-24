@@ -105,7 +105,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
                 //Create a new ball
                 AddNewBall();
                 // Give it the velocity of all the balls
-                _balls.getLast().set_vel(_balls.peek().getVel()); // TODO: Mirar si guardar la vel aquí en BallPool (Decisions)
+                _balls.getLast().set_vel(_balls.peek().getVel());
             }
             // If there is a ball available
             else {

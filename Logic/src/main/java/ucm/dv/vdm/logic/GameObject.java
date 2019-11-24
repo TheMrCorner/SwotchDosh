@@ -3,7 +3,7 @@ package ucm.dv.vdm.logic;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Sprite;
 
-public class GameObject {
+public class GameObject { //TODO: comentar
 
     public enum Color {
         WHITE,

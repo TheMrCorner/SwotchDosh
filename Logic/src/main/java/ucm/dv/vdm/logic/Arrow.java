@@ -4,7 +4,7 @@ import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Arrow {
+public class Arrow { //TODO: comentar
 
    public Arrow(int x, int y, Sprite s){
 

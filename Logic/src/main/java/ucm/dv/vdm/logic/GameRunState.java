@@ -29,8 +29,6 @@ public class GameRunState extends GameState {
         // Init _go
         _go = new GameObject[3]; // Player, BallPool, Text for punctuation
 
-        Text[] _points = new Text[3];
-
         // Init each GO
         _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
         _go[0].setColor(GameObject.Color.BLACK);
@@ -106,16 +104,6 @@ public class GameRunState extends GameState {
     }
 
     /**
-     * Method that changes to the next state. In this case, it changes to GameOver.
-     */
-    @Override
-    public GameState changeState(){
-        // Crear el nuevo estado y devolverlo con toda la wea.
-
-        return null;
-    }
-
-    /**
      * Checks if the player colision with the lowest ball.
      */
     void colisions(){
@@ -131,7 +119,7 @@ public class GameRunState extends GameState {
             }
             // If not, GameOver
             else{
-                _l.changeState(new GameOverState(_l, _pts));
+                _l.changeState(new GameOverState(_l, _pts), false);
             }
         }
     }

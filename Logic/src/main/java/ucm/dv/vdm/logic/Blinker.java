@@ -4,7 +4,7 @@ import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Blinker extends GameObject {
+public class Blinker extends GameObject { //TODO: comentar
     /**
      * Initializes GameObject. (Create _sprite,
      *

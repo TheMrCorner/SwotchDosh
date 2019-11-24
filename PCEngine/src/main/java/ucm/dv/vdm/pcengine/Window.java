@@ -1,8 +1,6 @@
 package ucm.dv.vdm.pcengine;
 
 import javax.swing.JFrame;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame{
 

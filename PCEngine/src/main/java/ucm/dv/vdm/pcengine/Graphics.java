@@ -91,7 +91,7 @@ public class Graphics extends AbstractGraphics {
             Rect temp = new Rect (repositionX(source.getWidth()), 0,
                     0, repositionY(source.getHeight()));
 
-            // Reposition...
+            // Reposition coordinates to fit the physical canvas
             x = _can.getX() + repositionX(x);
             y = _can.getY() + repositionY(y);
 
@@ -123,7 +123,7 @@ public class Graphics extends AbstractGraphics {
             // Resize dest rect to fit the aspect ratio
             dest = dimensions(dest, _can);
 
-            // Reposition...
+            // Reposition coordinates
             int x = repositionX(dest.getX());
             int y = repositionY(dest.getY());
 
@@ -162,7 +162,7 @@ public class Graphics extends AbstractGraphics {
             Rect temp = new Rect (repositionX(dest.getWidth()), 0,
                     0, repositionY(dest.getHeight()));
 
-            // Reposition...
+            // Reposition coordinates to fit the screen
             int x = repositionX(dest.getX());
             int y = repositionY(dest.getY());
 

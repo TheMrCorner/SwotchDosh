@@ -34,8 +34,12 @@ public class Points extends TextContainer {
         int x = (int)_x;
         for (int i = 0; i < _text.length; i++) {
             _text[i] = new Text(x - (64 * i), (int)_y, _sprite);
-            _text[i].setActive(false);
+            if (i == 0)
+                _text[i].setActive(true);
+            else
+                _text[i].setActive(false);
         }
+
     }
 
     /**
@@ -73,9 +77,13 @@ public class Points extends TextContainer {
         }
     }
 
+    public void setActive(){
+        for (int i = 0; i < _text.length; i++) {
+            _text[i].setActive(true);
+        }
+    }
+
     // Internal values
-    // Points for calculations
-    int _points;
 
     // GameState instance
     GameState _gs;

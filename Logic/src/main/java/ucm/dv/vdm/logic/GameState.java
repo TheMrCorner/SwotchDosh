@@ -51,11 +51,6 @@ public class GameState{
     public void processInput (Game g){}
 
     /**
-     * Method to change to the next state. Each state knows to which state it has to change.
-     */
-    public GameState changeState(){ return null; }
-
-    /**
      * Function to get the points value.
      */
     public int get_pts(){
