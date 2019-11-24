@@ -7,7 +7,7 @@ import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
 /**
- * Logic of the whole Game. 
+ * Logic of the whole Game.
  */
 public class Logic implements ucm.dv.vdm.engine.Logic{
 

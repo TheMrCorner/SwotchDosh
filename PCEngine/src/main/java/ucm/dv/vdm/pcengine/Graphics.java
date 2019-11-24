@@ -169,12 +169,10 @@ public class Graphics extends AbstractGraphics {
             temp.setPosition(x + _can.getX(), y + _can.getY());
 
             // Color with alpha value
-            Color c = new Color(0.0f, 0.0f, 0.0f, alpha);
+            //Color c = new Color(0.0f, 0.0f, 0.0f, alpha);
 
             // Draw image and check if it is not null
             if (image != null) {
-                // Set the window to draw with that alpha value
-                _win.getJGraphics().setColor(c);
 
                 _win.getJGraphics().drawImage(((ucm.dv.vdm.pcengine.Image) image).getImage(),
                         temp.getX(), temp.getY(),temp.getX() + temp.getWidth(),

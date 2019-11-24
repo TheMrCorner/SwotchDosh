@@ -12,7 +12,7 @@ import ucm.dv.vdm.engine.Logic;
 import ucm.dv.vdm.engine.Rect;
 
 /**
- * Game class. Runs the main loop of the app, calling the necesary methods to update the position
+ * Came class. Runs the main loop of the app, calling the necesary methods to update the position
  * of different things and render them on the screen. Also checks the time elapsed between frames
  * and manages all the rendering process (new canvas, wait for Surface to be ready, update holder,
  * etc.)

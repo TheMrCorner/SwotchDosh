@@ -220,7 +220,7 @@ public class BallPool extends GameObject {
     // Distance
     int _d = 395;
 
-    // Counter porque queremos llorar y es lo más rápido de facer
+    // Counter
     double _c = 0.0;
 
     // Generic position (top of the screen)

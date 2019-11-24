@@ -105,7 +105,7 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
 
         //Main Loop
         while(true){
-            // Update width and height of the window
+            // Actualizamos el ancho y alto para calcular mierdas
             _width = _win.getWidth();
             _height = _win.getHeight();
             // Calculate time passed between frames and convert it to seconds
@@ -114,7 +114,6 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
             _lastFrameTime = _currentTime;
             _elapsedTime = (double) _nanoElapsedTime / 1.0E9;
 
-            //Keyboard input
             //processInput();
 
             // Update all Logic

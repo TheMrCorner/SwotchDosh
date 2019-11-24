@@ -36,16 +36,18 @@ public class Blinker extends GameObject {
     public void update(double t){
         // Change alpha value
         if(_inv == true) {
-            _alpha -= 0.001;
+            _alpha -= 0.001 * t;
         } // if
         else{
-            _alpha += 0.001;
+            _alpha += 0.001 * t;
         } // else
 
-        if(_alpha == 1.0){
+        if(_alpha >= 1.0){
+            _alpha = 1.0f;
             _inv = true;
         } // if
         else if(_alpha <= 0.0){
+            _alpha = 0.0f;
             _inv = false;
         } // else if
     } // update
