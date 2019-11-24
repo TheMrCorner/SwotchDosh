@@ -1,7 +1,6 @@
 package ucm.dv.vdm.engine;
 
 public abstract class AbstractGraphics implements Graphics{ // TODO: Comentar chiquets
-    //Codigo común de escalado
 
     public Rect getCanvas() {
         return _can;

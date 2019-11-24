@@ -4,7 +4,7 @@ import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Sparkle {
+public class Sparkle { //TODO: comentar
 
     public Sparkle (int width, int height, Sprite s){
         _white = s;

@@ -5,7 +5,6 @@ import java.util.List;
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Input;
-import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
 public class GameOverState extends GameState {
@@ -27,7 +26,6 @@ public class GameOverState extends GameState {
      */
     @Override
     public void initState(ResourceManager r){ // This one needs GameOverText, SoundButton, HelpMenuButton, PlayAgainText, TextPoints, TextNumber
-        // PlayAgain tambien BLINKEA
         // Init _go
         _go = new GameObject[5]; // Player, BallPool, Text for punctuation
 
@@ -62,7 +60,9 @@ public class GameOverState extends GameState {
             i++;
         }
 
-        _go[4] = new Points (first, 780, font, this, i);
+        Points p = new Points (first, 780, font, this, 3);
+        p.setActive();
+        _go[4] = p;
         //_go[5] = ; // TODO: Hacer los textos con la clase nueva de KAI
 
         // Initialize alpha value to 1
@@ -120,10 +120,10 @@ public class GameOverState extends GameState {
                         ((Button)_go[2]).changeButton();
                     }
                     else if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
-                        _l.changeState(new HelpMenuState(_l, 0));
+                        _l.changeState(new HelpMenuState(_l, 0), false);
                     }
                     else{
-                        _l.changeState(new GameRunState(_l, 0));
+                        _l.changeState(new GameRunState(_l, 0), true);
                     }
                     break;
                 default:
@@ -135,9 +135,6 @@ public class GameOverState extends GameState {
             ptr--;
         }
     }
-
-    // Rectangle to draw the PlayAgain text
-    Rect _paRect;
 
     // Alpha value for the PlayAgain text
     float _alpha;

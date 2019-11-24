@@ -73,7 +73,7 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
      */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        // Click Izquierdo pa probar
+        //Left click
         if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
             TouchEvent aux = new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.TouchType.PRESSED_DOWN, 0);
             synchronized (this){
@@ -134,7 +134,6 @@ public class Input implements ucm.dv.vdm.engine.Input, MouseListener, KeyListene
             _touchEvn.add(aux);
         }
 
-       // System.out.println("MOUSE MOVED");
     }
 
 

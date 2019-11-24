@@ -3,7 +3,7 @@ package ucm.dv.vdm.logic;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Ball extends GameObject{
+public class Ball extends GameObject{ //TODO: comentar
 
     Ball(int x, int y, Sprite[] s){
         super(x, y, s);

@@ -97,10 +97,10 @@ public class MainMenuState extends GameState {
                         ((Button)_go[2]).changeButton();
                     }
                     else if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
-                        _l.changeState(new HelpMenuState(_l, _pts));
+                        _l.changeState(new HelpMenuState(_l, _pts), false);
                     }
                     else{
-                        _l.changeState(new HelpMenuState(_l, _pts));
+                        _l.changeState(new HelpMenuState(_l, _pts), false);
                     }
                     break;
                 default:

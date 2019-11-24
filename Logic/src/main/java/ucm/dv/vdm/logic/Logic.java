@@ -115,11 +115,16 @@ public class Logic implements ucm.dv.vdm.engine.Logic{ // TODO: Hacerse el siste
         _spr.render(_game.getGraphics());
     }
 
-    public void changeState(GameState gs){
+    public void changeState(GameState gs, boolean runState){
         _arrow.resetVel();
         _currentGameState = gs;
         gs.initState(_rm);
         _spr.setActive(true);
+
+        //If next state its run state, changed de background color
+        if (runState){
+            changeBackgroundColor();
+        }
     }
 
     /**
