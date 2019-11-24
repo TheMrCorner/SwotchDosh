@@ -4,7 +4,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 
@@ -15,9 +14,9 @@ import ucm.dv.vdm.engine.Rect;
 
 /**
  * Graphics class that implements the interface from the engine and uses android API to draw images
- * in the phone.
+ * in the phone. Extends AbstractGraphics to use the scaling methods and common atributes.
  */
-public class  Graphics extends AbstractGraphics { // TODO: Comentar
+public class  Graphics extends AbstractGraphics {
 
     /**
      * Constructor. Receives and saves an instance of the SurfaceView to paint there later. Also

@@ -133,6 +133,10 @@ public class Game implements ucm.dv.vdm.engine.Game, Runnable, ComponentListener
         }
     }
 
+    /**
+     * Resize canvas to fit the screen. Only called when the window is resized. (Fullscreen, or
+     * anything else.
+     */
     public void resize(){
         Rect temp;
         Rect temp2;
