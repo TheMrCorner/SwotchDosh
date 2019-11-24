@@ -27,7 +27,7 @@ public class GameOverState extends GameState {
     @Override
     public void initState(ResourceManager r){ // This one needs GameOverText, SoundButton, HelpMenuButton, PlayAgainText, TextPoints, TextNumber
         // Init _go
-        _go = new GameObject[5]; // Player, BallPool, Text for punctuation
+        _go = new GameObject[6]; // Player, BallPool, Text for punctuation
 
         Sprite[] buttons = Sprite.spriteMaker(r.getInterface("Buttons"), 10, 1);
 
@@ -63,7 +63,12 @@ public class GameOverState extends GameState {
         Points p = new Points (first, 780, font, this, 3);
         p.setActive();
         _go[4] = p;
-        //_go[5] = ; // TODO: Hacer los textos con la clase nueva de KAI
+
+        //Position of the text 'POINTS'. Set under number points
+        int x = first + (font[0].get_rect().getWidth() - 32);
+        int y = (int)_go[4].getPosY() + font[0].get_rect().getHeight();
+
+        _go[5] = new TextContainer (x, y, font);
 
         // Initialize alpha value to 1
         _alpha = 1.0f;

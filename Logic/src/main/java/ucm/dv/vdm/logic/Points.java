@@ -77,6 +77,10 @@ public class Points extends TextContainer {
         }
     }
 
+    /**
+     * Set Active. Activates all the point sprite. Only call in game over
+     *
+     */
     public void setActive(){
         for (int i = 0; i < _text.length; i++) {
             _text[i].setActive(true);
