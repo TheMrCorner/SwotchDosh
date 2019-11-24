@@ -4,50 +4,63 @@ import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
-public class Blinker extends GameObject { //TODO: comentar
+/**
+ * Blinker GameObject. Changes it's own alpha value periodically.
+ */
+public class Blinker extends GameObject {
     /**
-     * Initializes GameObject. (Create _sprite,
+     * Create the Blinker GameObject. Receives it's position and the sprite it will use to draw.
      *
-     * @param x
-     * @param y
-     * @param s
+     * @param x int X coordinate of the Blinker
+     * @param y int Y coordinate of the Blinker
+     * @param s Sprite[] it will use to draw
      */
     public Blinker(int x, int y, Sprite[] s) {
         super(x, y, s);
 
-        _alpha = 1.0f;
+        _alpha = 1.0f; // Set initial alpha value
 
-        _inv = true;
+        _inv = true; // _inv indicates if the image is appearing or disappearing.
 
         _paRect = new Rect(x + _sprite[0].get_rect().getWidth(), x, y, y + _sprite[0].get_rect().getHeight());
 
         _paRect.setPosition(x, y);
-    }
+    } // Blinker
 
+    /**
+     * Update the alpha value every frame.
+     *
+     * @param t double Time elapsed since last frame
+     */
     @Override
     public void update(double t){
-        // Change alpha value of PlayAgain
+        // Change alpha value
         if(_inv == true) {
             _alpha -= 0.001;
-        }
+        } // if
         else{
             _alpha += 0.001;
-        }
+        } // else
 
         if(_alpha == 1.0){
             _inv = true;
-        }
+        } // if
         else if(_alpha <= 0.0){
             _inv = false;
-        }
-    }
+        } // else if
+    } // update
 
+    /**
+     * Render method that draws the Blinker with it's alpha value.
+     *
+     * @param g Graphics instance
+     */
     @Override
     public void render(Graphics g){
         for(int i = 0; i < _sprite.length; i++){
             _sprite[i].draw(g, _paRect, _alpha);
-        }
-    }
+        } // for
+    } // render
 
 
     // Rectangle to draw the TapToPlay text

@@ -17,7 +17,7 @@ public class GameOverState extends GameState {
      */
     public GameOverState(Logic l, int score) {
         super(l, score);
-    }
+    } // GameOverState
 
     /**
      * Initializes the GameState with all the sprites needed, provided by the ResourceManager
@@ -58,7 +58,7 @@ public class GameOverState extends GameState {
             div = div / 10;
 
             i++;
-        }
+        } // while
 
         Points p = new Points (first, 780, font, this, 3);
         p.setActive();
@@ -69,7 +69,7 @@ public class GameOverState extends GameState {
         _alpha = 1.0f;
 
         _inv = true;
-    }
+    } // initState
 
     /**
      * Updates all GameObjects in this State with the time passed since the las update.
@@ -81,8 +81,8 @@ public class GameOverState extends GameState {
         // Update
         for(int i = 0; i < _go.length; i++){
             _go[i].update(t);
-        }
-    }
+        } // for
+    } // update
 
     /**
      * Renders all GameObjects in their specific locations. Receives an instance of Graphics
@@ -94,8 +94,8 @@ public class GameOverState extends GameState {
     public void render(Graphics g){
         for(int i = 0; i < _go.length; i++){
             _go[i].render(g);
-        }
-    }
+        } // for
+    } // render
 
     /**
      * Process the Input received from the Logic. If mouse is clicked in a random place of the screen
@@ -118,27 +118,26 @@ public class GameOverState extends GameState {
                 case CLICKED:
                     if(((Button)_go[2]).isPressed(te.getX(), te.getY())){ // Sound Button
                         ((Button)_go[2]).changeButton();
-                    }
+                    } // if
                     else if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
                         _l.changeState(new HelpMenuState(_l, 0), false);
-                    }
+                    } // else if
                     else{
                         _l.changeState(new GameRunState(_l, 0), true);
-                    }
+                    } // else
                     break;
                 default:
                     //Anything else, do nothing.
                     break;
-            }
+            } // switch
 
             e.remove(ptr); // Remove that TouchEvent from the list
             ptr--;
-        }
-    }
+        } // while
+    } // processInput
 
     // Alpha value for the PlayAgain text
     float _alpha;
     boolean _inv; // stores if the text is appearing or disappearing
 
-
-}
+} // GameOverState

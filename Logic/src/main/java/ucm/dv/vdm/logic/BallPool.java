@@ -13,11 +13,12 @@ import ucm.dv.vdm.engine.Sprite;
 /**
  * Simple class to store the Ball pools.
  */
-public class BallPool extends GameObject { // TODO: Illo comenta esta wea
+public class BallPool extends GameObject {
 
     /**
      * Constructor of the BallPool. Initializes it's position, the counter, creates the BallPool in
      * order to instantiate them correctly. Sets available to false. Creates the first ball.
+     *
      * @param x X position on the screen.
      * @param y Y position on the screen.
      * @param sprite Sprite to put in the objects.
@@ -38,8 +39,9 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
         // Set available to false
         _avbl = 0;
 
+        // Add the first Ball
         AddNewBall();
-    }
+    } // BallPool
 
     /**
      * Creates a new ball and add it to the pool of objects. Set it to the generic Y position for all
@@ -64,7 +66,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
         // Add it to the last position of the queue
         _balls.add(n);
-    }
+    } // AddNewBall
 
     /**
      * Removes the lowest element of the queue.
@@ -86,10 +88,11 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
         _avbl++;
 
         _cnt++;
-    }
+    } // destroy
 
     /**
-     * Updates all balls (that are active). Called every frame
+     * Updates all balls (that are active). Called every frame.
+     *
      * @param t Time elapsed since last update
      */
     @Override
@@ -106,7 +109,7 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
                 AddNewBall();
                 // Give it the velocity of all the balls
                 _balls.getLast().set_vel(_balls.peek().getVel());
-            }
+            } // if
             // If there is a ball available
             else {
                 // Searching the older ball destroyed
@@ -121,88 +124,92 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
                         ((Ball)b.next()).setActive(true);
                         // Reduce the number of balls available
                         _avbl--;
-                    }
+                    } // if
                     // Keep searching
                     else {
                         b.next();
-                    }
+                    } // else
                     i--;
-                } while(i > 0);
-            }
+                } while(i > 0); // do while
+            } // else
 
             // Reset interval
             _c = 0.0;
-        }
+        } // if
 
         // Update all the balls that are active
         for(Ball b : _balls){ // Iterator
             if(b.isActive()){
                 b.update(t);
-            }
+            } // if
 
             // Increase velocity when 10 balls are destroyed
             if(_cnt == 10){
                 b.faster();
-            }
-        }
+            } // if
+        } // for
 
         // Reset ball destroyed counter
         if(_cnt == 10) {
             _cnt = 0;
-        }
-    }
+        } // if
+    } // update
 
+    /**
+     * Render the balls if they are active. Draws them in the new updated positions.
+     *
+     * @param g Graphics instance
+     */
     @Override
     public void render(Graphics g) { // Call render for all balls (if they are active)
         for(Ball b : _balls){ // Iterator
             if(b.isActive()){
                 b.render(g);
-            }
-        }
-    }
+            } // if
+        } // for
+    } // render
 
     /**
      * Get a reference to the lower ball.
+     *
      * @return Lower ball
      */
     public Ball getLowerBall(){
         return _balls.peek();
-    }
+    } // getLowerBall
 
     /**
-     * Get the number of balls registered in the pool.
-     * @return Size of the pool (int).
+     * Select a new color for the balls depending of the ball beneath it.
+     *
+     * @return Color (GameObject.Color (Black or White))
      */
-    public int getNBalls(){
-        return _balls.size();
-    }
-
     Color randomColor (){
+        // Generate a random number between 0 and 1 (double)
         double r = (Math.random() *((1 - 0) + 1)) + 0;
 
         if(_balls.isEmpty()){
             if((int)r == 1){
                 return Color.WHITE;
-            }
+            } // else
             else{
                 return Color.BLACK;
-            }
-        }
+            } // else
+        } // if
         else{
             Color last = _balls.getLast().getColor();
             if(r <= 0.7){
                 return last;
-            }
+            } // if
             else{
                 if(last == Color.WHITE){
                     return Color.BLACK;
-                }
+                } // if
                 else {
                     return Color.WHITE;
-                }
-            }
-        }
-    }
+                } // else
+            } // else
+        } // else
+    } // randomColor
 
     // Pool
     ArrayDeque<Ball> _balls;
@@ -221,7 +228,5 @@ public class BallPool extends GameObject { // TODO: Illo comenta esta wea
 
     // Balls get
     int _cnt;
-
-
 }
 

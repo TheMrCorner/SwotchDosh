@@ -24,7 +24,7 @@ public class Points extends TextContainer {
 
         // Init the points
         initPoints();
-    }
+    } // Points
 
     /**
      * Initialize the text array width the corresponding coordinates and calculate the space between
@@ -38,9 +38,8 @@ public class Points extends TextContainer {
                 _text[i].setActive(true);
             else
                 _text[i].setActive(false);
-        }
-
-    }
+        } // for
+    } // initPoints
 
     /**
      * Update. Is called once per frame.
@@ -60,8 +59,8 @@ public class Points extends TextContainer {
             _text[i].setActive(true);
 
             i++;
-        }
-    }
+        } // while
+    } // update
 
     /**
      * Render. Is called once per frame.
@@ -73,15 +72,18 @@ public class Points extends TextContainer {
         for(int i = 0; i < _text.length; i++){
             if(_text[i].getActive()) {
                 _text[i].render(g);
-            }
-        }
-    }
+            } // if
+        } // for
+    } // render
 
+    /**
+     * Sets Active all points.
+     */
     public void setActive(){
         for (int i = 0; i < _text.length; i++) {
             _text[i].setActive(true);
-        }
-    }
+        } // for
+    } // setActive
 
     // Internal values
 
