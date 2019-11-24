@@ -13,6 +13,32 @@ public class TextContainer extends GameObject {
      */
     public TextContainer(int x, int y, Sprite[] s) {
         super(x, y, s);
+
+        initText();
+
+    }
+
+    /**
+     * Initialize all font sprites. Create the Text array
+     *
+     */
+    void initText(){
+
+        // Create text array
+        _text = new Text [6];
+
+        int x = (int)_x;
+        for (int i = 0; i < _text.length; i++) {
+            _text[i] = new Text(x - (64 * i), (int)_y, _sprite);
+        }
+
+        _text[0].setCharacter('S');
+        _text[1].setCharacter('T');
+        _text[2].setCharacter('N');
+        _text[3].setCharacter('I');
+        _text[4].setCharacter('O');
+        _text[5].setCharacter('P');
+
     }
 
     /**
@@ -31,6 +57,11 @@ public class TextContainer extends GameObject {
      */
     @Override
     public void render(Graphics g){
+
+        for(int i = 0; i < _text.length; i++){
+            _text[i].render(g);
+        }
+
     }
 
     // Internal variables
