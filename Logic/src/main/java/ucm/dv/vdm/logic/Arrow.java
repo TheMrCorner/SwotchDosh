@@ -55,7 +55,7 @@ public class Arrow {
         Rect arrowDest = new Rect(_sprite.get_rect().getWidth(),
                 0,0, _sprite.get_rect().getHeight());
 
-        arrowDest.setPosition(_x, _y);
+        arrowDest.setPosition((int)_x, (int)_y);
 
         // draw arrows
         _sprite.draw(g, arrowDest, 0.5f);
@@ -80,7 +80,7 @@ public class Arrow {
      *
      * @return X
      */
-    public int getX(){
+    public double getX(){
         return _x;
     }
 
@@ -89,7 +89,7 @@ public class Arrow {
      *
      * @return Y
      */
-    public int getY(){
+    public double getY(){
         return _y;
     } // getY
 
@@ -127,8 +127,8 @@ public class Arrow {
 
     // Private atributes.
     Sprite _sprite;
-    int _x;
-    int _y;
+    double _x;
+    double _y;
 
     // original Y position of the Arrows.
     int _originalY;

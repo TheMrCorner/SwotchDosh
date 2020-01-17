@@ -7,6 +7,7 @@ public class Window extends JFrame{
     /**
      * Window constructor. Sets the values for JFrame, saves Game instance in the atributes and
      * initialize in the init() function with the width and height values.
+     *
      * @param width Width of the window
      * @param height Height of the window
      * @param title Title that the window will have
@@ -24,6 +25,7 @@ public class Window extends JFrame{
      * It is configured to use active painting.
      * Then creates the StrategyBuffer to be used while painting. Sets that BufferStrategy to
      * the Graphics.
+     *
      * @param w width of the window
      * @param h height of the window
      */

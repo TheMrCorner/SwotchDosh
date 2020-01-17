@@ -5,7 +5,6 @@ import java.util.List;
 import ucm.dv.vdm.engine.Game;
 import ucm.dv.vdm.engine.Graphics;
 import ucm.dv.vdm.engine.Input;
-import ucm.dv.vdm.engine.Rect;
 import ucm.dv.vdm.engine.Sprite;
 
 public class HelpMenuState extends GameState {

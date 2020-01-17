@@ -120,7 +120,7 @@ public class Particle extends GameObject {
     @Override
     public void update(double t) {
 
-        _alpha -= 0.1;
+        _alpha -= 0.05;
 
         _y -= _velY * t;
 
