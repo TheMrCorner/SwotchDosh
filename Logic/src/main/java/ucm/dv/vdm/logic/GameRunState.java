@@ -36,7 +36,7 @@ public class GameRunState extends GameState {
         // Init each GO
         _go[0] = new Player(_l.getCanvasSize().getWidth()/2, 1200, r.getGameObject("Player"));
         _go[0].setColor(GameObject.Color.BLACK);
-        _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, 0, r.getGameObject("Balls"));
+        _go[1] = new BallPool(_l.getCanvasSize().getWidth()/2, -200, r.getGameObject("Balls"));
 
         Sprite[] font = Sprite.spriteMaker(r.getText("Font"), 15, 7);
 
@@ -149,6 +149,7 @@ public class GameRunState extends GameState {
             // If not, GameOver
             else{
                 ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor());
+                // TODO: mirar lo de incrementar la velocidad de las flechas
                 _l.resetArrowsVel();
                 _l.changeState(new GameOverState(_l, _pts));
             }

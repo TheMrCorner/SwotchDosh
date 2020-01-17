@@ -18,6 +18,8 @@ public class ResourceManager {
      * @param g Game instance to initialize images.
      */
     private ResourceManager(Game g){ // Create the ResourceManager and initialize the resources
+        // TODO: esto estaba por organización, pero podemos mirar de meterlo todo en una misma tabla
+        // TODO: dunno.
         _intF = new HashMap<String, Image>();
         _gb = new HashMap<String, Image>();
         _text = new HashMap<String, Image>();
