@@ -141,14 +141,15 @@ public class GameRunState extends GameState {
                 _pts++;
 
 
-                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor() );
+                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor());
 
                 // Destroy ball
                 ((BallPool)_go[1]).destroy();
             }
             // If not, GameOver
             else{
-                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor() );
+                ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor());
+                _l.resetArrowsVel();
                 _l.changeState(new GameOverState(_l, _pts));
             }
 

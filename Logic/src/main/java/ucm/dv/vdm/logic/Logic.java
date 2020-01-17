@@ -146,11 +146,17 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      * @param gs GameState
      */
     public void changeState(GameState gs){
-        _arrow.resetVel();
         _currentGameState = gs;
         gs.initState(_rm);
         _spr.setActive(true);
     } // changeState
+
+    /**
+     * Function used to reset arrows velocity.
+     */
+    public void resetArrowsVel(){
+        _arrow.resetVel();
+    }
 
     /**
      * Generates a random iterator to the background color
