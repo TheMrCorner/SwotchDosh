@@ -39,6 +39,9 @@ public class BallPool extends GameObject {
         // Set available to false
         _avbl = 0;
 
+        // Set the velocity increasing
+        setIncreasingVelocity(90);
+
         // Add the first Ball
         AddNewBall();
     } // BallPool
@@ -145,7 +148,7 @@ public class BallPool extends GameObject {
 
             // Increase velocity when 10 balls are destroyed
             if(_cnt == 10){
-                b.faster();
+                b.faster(incr);
             } // if
         } // for
 
@@ -177,6 +180,16 @@ public class BallPool extends GameObject {
     public Ball getLowerBall(){
         return _balls.peek();
     } // getLowerBall
+
+    /**
+     * Function used to set the value that will increase the velocity of the balls after the time
+     * set.
+     *
+     * @param vel increasing value to be added to balls' velocity.
+     */
+    public void setIncreasingVelocity(int vel){
+        incr = vel;
+    }
 
     /**
      * Select a new color for the balls depending of the ball beneath it.
@@ -225,6 +238,9 @@ public class BallPool extends GameObject {
 
     // Generic position (top of the screen)
     int _x, _y;
+
+    // Velocity increasing
+    int incr;
 
     // Balls get
     int _cnt;

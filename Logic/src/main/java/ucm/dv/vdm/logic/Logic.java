@@ -144,18 +144,12 @@ public class Logic implements ucm.dv.vdm.engine.Logic{
      * Changes current state to the new state received as a parameter.
      *
      * @param gs GameState
-     * @param runState
      */
-    public void changeState(GameState gs, boolean runState){
+    public void changeState(GameState gs){
         _arrow.resetVel();
         _currentGameState = gs;
         gs.initState(_rm);
         _spr.setActive(true);
-
-        //If next state is run state, change de background color
-        if (runState){
-            changeBackgroundColor();
-        } // if
     } // changeState
 
     /**

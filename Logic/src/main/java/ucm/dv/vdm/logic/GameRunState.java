@@ -27,6 +27,9 @@ public class GameRunState extends GameState {
      */
     @Override
     public void initState(ResourceManager r){
+        // Change background color
+        _l.changeBackgroundColor();
+
         // Init _go
         _go = new GameObject[3]; // Player, BallPool, Text for punctuation
 
@@ -146,7 +149,7 @@ public class GameRunState extends GameState {
             // If not, GameOver
             else{
                 ps = new ParticlesSystem(particlesX, particlesY, _sParticle, ((BallPool)_go[1]).getLowerBall().getColor() );
-                _l.changeState(new GameOverState(_l, _pts), false);
+                _l.changeState(new GameOverState(_l, _pts));
             }
 
             _particleSystems.add(ps);

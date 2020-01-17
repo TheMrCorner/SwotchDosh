@@ -125,10 +125,10 @@ public class GameOverState extends GameState {
                         ((Button)_go[2]).changeButton();
                     } // if
                     else if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
-                        _l.changeState(new HelpMenuState(_l, 0), false);
+                        _l.changeState(new HelpMenuState(_l, 0));
                     } // else if
                     else{
-                        _l.changeState(new GameRunState(_l, 0), true);
+                        _l.changeState(new GameRunState(_l, 0));
                     } // else
                     break;
                 default:

@@ -89,9 +89,11 @@ public class Ball extends GameObject{
 
     /**
      * Augments the velocity of the ball (when 10 are destroyed)
+     *
+     * @param incr Value that will increase the velocity of the ball
      */
-    public void faster(){
-        _vel += 90;
+    public void faster(int incr){
+        _vel += incr;
     } // faster
 
     // Active

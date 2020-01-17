@@ -87,10 +87,10 @@ public class HelpMenuState extends GameState {
             switch(te.getType()){ // Process the type of the TouchEvent
                 case CLICKED:
                     if(((Button)_go[3]).isPressed(te.getX(), te.getY())){ // Help Button
-                        _l.changeState(new MainMenuState(_l, _pts), false);
+                        _l.changeState(new MainMenuState(_l, _pts));
                     }
                     else{
-                        _l.changeState(new GameRunState(_l, _pts), true);
+                        _l.changeState(new GameRunState(_l, _pts));
                     }
                     break;
                 default:
